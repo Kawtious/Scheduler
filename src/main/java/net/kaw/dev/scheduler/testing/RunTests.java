@@ -106,7 +106,7 @@ public class RunTests {
     private List<ISeparatable> readCSV(Path filepath, Class<?> type) throws FileNotFoundException {
         List<ISeparatable> objects = new ArrayList<>();
 
-        if (type != Teacher.class || type != Schedule.class || type != ScheduleType.class || type != Subject.class) {
+        if (type != Teacher.class && type != Schedule.class && type != ScheduleType.class && type != Subject.class) {
             return objects;
         }
 
