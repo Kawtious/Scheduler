@@ -112,7 +112,7 @@ public class Career implements ISeparatable {
 
     public static boolean validate(Career career) {
         return !career.getId().isEmpty() && !career.getSubjectKey().isEmpty()
-                && career.getTrajectory_1() >= 0 && career.getTrajectory_2() >= 0;
+                && career.getTrajectory_1() >= 0 && career.getTrajectory_2() >= -1;
     }
 
     @Override
