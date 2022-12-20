@@ -29,22 +29,22 @@ public class Schedule implements ISeparatable {
 
     private int offset;
 
-    private String scheduleMask;
+    private String mask;
 
-    private String scheduleDescription;
+    private String description;
 
-    public Schedule(int type, int offset, String scheduleMask, String scheduleDescription) {
+    public Schedule(int type, int offset, String mask, String description) {
         this.type = type;
         this.offset = offset;
-        this.scheduleMask = scheduleMask;
-        this.scheduleDescription = scheduleDescription;
+        this.mask = mask;
+        this.description = description;
     }
 
     public Schedule(int type, int offset, ScheduleType scheduleType) {
         this.type = type;
         this.offset = offset;
-        this.scheduleMask = scheduleType.getMask();
-        this.scheduleDescription = scheduleType.getDescription();
+        this.mask = scheduleType.getMask();
+        this.description = scheduleType.getDescription();
     }
 
     public int getType() {
@@ -63,20 +63,20 @@ public class Schedule implements ISeparatable {
         this.offset = offset;
     }
 
-    public String getScheduleMask() {
-        return scheduleMask;
+    public String getMask() {
+        return mask;
     }
 
-    public void setScheduleMask(String scheduleMask) {
-        this.scheduleMask = scheduleMask;
+    public void setMask(String mask) {
+        this.mask = mask;
     }
 
-    public String getScheduleDescription() {
-        return scheduleDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setScheduleDescription(String scheduleDescription) {
-        this.scheduleDescription = scheduleDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public static List<ISeparatable> getDummySchedules() {
@@ -212,8 +212,6 @@ public class Schedule implements ISeparatable {
 
         int type = -1;
         int offset = -1;
-        String scheduleMask;
-        String scheduleDescription;
 
         try {
             type = Integer.parseInt(values[0]);
@@ -225,10 +223,10 @@ public class Schedule implements ISeparatable {
         } catch (NumberFormatException e) {
         }
 
-        scheduleMask = values[2];
-        scheduleDescription = values[3];
+        String mask = values[2];
+        String description = values[3];
 
-        Schedule schedule = new Schedule(type, offset, scheduleMask, scheduleDescription);
+        Schedule schedule = new Schedule(type, offset, mask, description);
 
         if (validate(schedule)) {
             return schedule;
@@ -239,17 +237,17 @@ public class Schedule implements ISeparatable {
 
     public static boolean validate(Schedule schedule) {
         return schedule.getType() >= 0 && schedule.getOffset() >= 0
-                && !schedule.getScheduleMask().isEmpty() && !schedule.getScheduleDescription().isEmpty();
+                && !schedule.getMask().isEmpty() && !schedule.getDescription().isEmpty();
     }
 
     @Override
     public String toCSV() {
-        return type + "," + offset + "," + scheduleMask + "," + scheduleDescription;
+        return type + "," + offset + "," + mask + "," + description;
     }
 
     @Override
     public String toString() {
-        return "Schedule{" + "type=" + type + ", offset=" + offset + ", scheduleMask=" + scheduleMask + ", scheduleDescription=" + scheduleDescription + '}';
+        return "Schedule{" + "type=" + type + ", offset=" + offset + ", mask=" + mask + ", description=" + description + '}';
     }
 
 }
