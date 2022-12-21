@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.kaw.dev.scheduler.files.CSV;
+import net.kaw.dev.scheduler.model.Career;
 import net.kaw.dev.scheduler.model.ClassroomManager;
 import net.kaw.dev.scheduler.model.ISeparatable;
 import net.kaw.dev.scheduler.model.Schedule;
@@ -60,6 +61,7 @@ public class RunTests {
     private final List<ISeparatable> scheduleTypesList = ScheduleType.getDummyScheduleTypes();
     private final List<ISeparatable> schedulesList = Schedule.getDummySchedules();
     private final List<ISeparatable> subjectsList = Subject.getDummySubjects();
+    private final List<ISeparatable> careersList = Career.getDummyCareers();
 
     /**
      *
@@ -89,6 +91,9 @@ public class RunTests {
             sb.append("\n");
 
             readCSV(TAB_MATERIAS, Subject.class).forEach((item) -> sb.append(item).append("\n"));
+            sb.append("\n");
+
+            readCSV(TAB_SEMCARR, Career.class).forEach((item) -> sb.append(item).append("\n"));
 
             System.out.print(sb.toString());
         } catch (FileNotFoundException ex) {
@@ -101,12 +106,13 @@ public class RunTests {
         CSV.createCSV(scheduleTypesList, DEF_HORS);
         CSV.createCSV(schedulesList, TIPO_HORS);
         CSV.createCSV(subjectsList, TAB_MATERIAS);
+        CSV.createCSV(careersList, TAB_SEMCARR);
     }
 
     private List<ISeparatable> readCSV(Path filepath, Class<?> type) throws FileNotFoundException {
         List<ISeparatable> objects = new ArrayList<>();
 
-        if (type != Teacher.class && type != Schedule.class && type != ScheduleType.class && type != Subject.class) {
+        if (type != Teacher.class && type != Schedule.class && type != ScheduleType.class && type != Subject.class && type != Career.class) {
             return objects;
         }
 
@@ -123,6 +129,8 @@ public class RunTests {
                 item = ScheduleType.fromCSV(string);
             } else if (type == Subject.class) {
                 item = Subject.fromCSV(string);
+            } else if (type == Career.class) {
+                item = Career.fromCSV(string);
             } else {
                 continue;
             }
