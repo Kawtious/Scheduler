@@ -168,7 +168,7 @@ public class Career implements ISeparatable {
         String id = values[0];
         String subjectKey = values[1];
         int trajectory_1 = -1;
-        int trajectory_2 = -1;
+        int trajectory_2 = -2;
 
         try {
             trajectory_1 = Integer.parseInt(values[0]);
