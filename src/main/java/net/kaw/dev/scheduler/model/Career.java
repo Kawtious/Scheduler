@@ -171,12 +171,12 @@ public class Career implements ISeparatable {
         int trajectory_2 = -2;
 
         try {
-            trajectory_1 = Integer.parseInt(values[0]);
+            trajectory_1 = Integer.parseInt(values[2]);
         } catch (NumberFormatException e) {
         }
 
         try {
-            trajectory_2 = Integer.parseInt(values[1]);
+            trajectory_2 = Integer.parseInt(values[3]);
         } catch (NumberFormatException e) {
         }
 
