@@ -33,15 +33,15 @@ public class Career implements ISeparatable {
 
     private String subjectKey;
 
-    private int trajectory_1;
+    private int trajectoryStart;
 
-    private int trajectory_2;
+    private int trajectoryEnd;
 
-    public Career(String id, String subjectKey, int trajectory_1, int trajectory_2) {
+    public Career(String id, String subjectKey, int trajectoryStart, int trajectoryEnd) {
         this.id = id;
         this.subjectKey = subjectKey;
-        this.trajectory_1 = trajectory_1;
-        this.trajectory_2 = trajectory_2;
+        this.trajectoryStart = trajectoryStart;
+        this.trajectoryEnd = trajectoryEnd;
     }
 
     public String getId() {
@@ -60,20 +60,20 @@ public class Career implements ISeparatable {
         this.subjectKey = subjectKey;
     }
 
-    public int getTrajectory_1() {
-        return trajectory_1;
+    public int getTrajectoryStart() {
+        return trajectoryStart;
     }
 
-    public void setTrajectory_1(int trajectory_1) {
-        this.trajectory_1 = trajectory_1;
+    public void setTrajectoryStart(int trajectoryStart) {
+        this.trajectoryStart = trajectoryStart;
     }
 
-    public int getTrajectory_2() {
-        return trajectory_2;
+    public int getTrajectoryEnd() {
+        return trajectoryEnd;
     }
 
-    public void setTrajectory_2(int trajectory_2) {
-        this.trajectory_2 = trajectory_2;
+    public void setTrajectoryEnd(int trajectoryEnd) {
+        this.trajectoryEnd = trajectoryEnd;
     }
 
     public static List<ISeparatable> getDummyCareers() {
@@ -167,20 +167,20 @@ public class Career implements ISeparatable {
 
         String id = values[0];
         String subjectKey = values[1];
-        int trajectory_1 = -1;
-        int trajectory_2 = -2;
+        int trajectoryStart = -1;
+        int trajectoryEnd = -2;
 
         try {
-            trajectory_1 = Integer.parseInt(values[2]);
+            trajectoryStart = Integer.parseInt(values[2]);
         } catch (NumberFormatException e) {
         }
 
         try {
-            trajectory_2 = Integer.parseInt(values[3]);
+            trajectoryEnd = Integer.parseInt(values[3]);
         } catch (NumberFormatException e) {
         }
 
-        Career career = new Career(id, subjectKey, trajectory_1, trajectory_2);
+        Career career = new Career(id, subjectKey, trajectoryStart, trajectoryEnd);
 
         if (validate(career)) {
             return career;
@@ -191,17 +191,17 @@ public class Career implements ISeparatable {
 
     public static boolean validate(Career career) {
         return !career.getId().isEmpty() && !career.getSubjectKey().isEmpty()
-                && career.getTrajectory_1() >= 0 && career.getTrajectory_2() >= -1;
+                && career.getTrajectoryStart() >= 0 && career.getTrajectoryEnd() >= -1;
     }
 
     @Override
     public String toCSV() {
-        return id + "," + subjectKey + "," + trajectory_1 + "," + trajectory_2;
+        return id + "," + subjectKey + "," + trajectoryStart + "," + trajectoryEnd;
     }
 
     @Override
     public String toString() {
-        return "Career{" + "id=" + id + ", subjectKey=" + subjectKey + ", trajectory_1=" + trajectory_1 + ", trajectory_2=" + trajectory_2 + '}';
+        return "Career{" + "id=" + id + ", subjectKey=" + subjectKey + ", trajectoryStart=" + trajectoryStart + ", trajectoryEnd=" + trajectoryEnd + '}';
     }
 
 }
