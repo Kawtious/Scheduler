@@ -77,30 +77,26 @@ public class HexUtils {
         return Integer.parseInt(hex, 16);
     }
 
-    public static char[] intToHex(int val, int padding) {
+    private static char[] toHexPadded(String str, int padding) {
         StringBuilder sb = new StringBuilder();
 
-        String intString = Integer.toHexString(val);
-        for (int i = 0; i < padding - intString.length(); i++) {
+        for (int i = 0; i < padding - str.length(); i++) {
             sb.append("0");
         }
 
-        sb.append(intString);
+        sb.append(str);
 
         return sb.toString().toCharArray();
     }
 
+    public static char[] intToHex(int val, int padding) {
+        String intString = Integer.toHexString(val);
+        return toHexPadded(intString, padding);
+    }
+
     public static char[] stringToHex(String str, int padding) {
-        StringBuilder sb = new StringBuilder();
-
         String hexStr = String.format("%x", new BigInteger(1, str.getBytes(/*YOUR_CHARSET?*/)));
-        for (int i = 0; i < padding - hexStr.length(); i++) {
-            sb.append("0");
-        }
-
-        sb.append(hexStr);
-
-        return sb.toString().toCharArray();
+        return toHexPadded(hexStr, padding);
     }
 
 }
