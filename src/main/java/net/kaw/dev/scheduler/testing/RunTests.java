@@ -21,47 +21,44 @@
 package net.kaw.dev.scheduler.testing;
 
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.kaw.dev.scheduler.files.CSV;
-import net.kaw.dev.scheduler.model.Career;
-import net.kaw.dev.scheduler.model.ClassroomManager;
-import net.kaw.dev.scheduler.model.ISeparatable;
-import net.kaw.dev.scheduler.model.Schedule;
-import net.kaw.dev.scheduler.model.ScheduleType;
-import net.kaw.dev.scheduler.model.Subject;
-import net.kaw.dev.scheduler.model.Teacher;
+import net.kaw.dev.scheduler.csv.CsvFactory;
+import net.kaw.dev.scheduler.csv.CsvFactory.SeparableType;
+import net.kaw.dev.scheduler.data.hexable.Classroom;
+import net.kaw.dev.scheduler.interfaces.ISeparable;
+import net.kaw.dev.scheduler.io.ClassroomManager;
+import net.kaw.dev.scheduler.io.CsvManager;
 
 public class RunTests {
 
     /**
      * text files
      */
-    private final Path MAESTROS = Paths.get("./maestros.txt");
-    private final Path DEF_HORS = Paths.get("./defHors.txt");
-    private final Path TAB_GRUPOS = Paths.get("./tabGrupos.txt");
-    private final Path TAB_MATERIAS = Paths.get("./tabMaterias.txt");
-    private final Path TAB_SEMCARR = Paths.get("./tabSemCarr.txt");
-    private final Path TIPO_HORS = Paths.get("./tipoHors.txt");
+    private final String MAESTROS = "./output/maestros.txt";
+    private final String DEF_HORS = "./output/defHors.txt";
+    private final String TAB_GRUPOS = "./output/tabGrupos.txt";
+    private final String TAB_MATERIAS = "./output/tabMaterias.txt";
+    private final String TAB_SEMCARR = "./output/tabSemCarr.txt";
+    private final String TIPO_HORS = "./output/tipoHors.txt";
 
     /**
      * .dat files
      */
-    private final Path TAB_AULAS = Paths.get("./tabTest.dat");
-    private final Path TAB_MAES = Paths.get("./tabMaes.dat");
+    private final String TAB_AULAS = "./output/tabTest.dat";
+    private final String TAB_MAES = "./output/tabMaes.dat";
 
     /**
-     * Test lists
+     * Dummy data
      */
-    private final List<ISeparatable> teachersList = Teacher.getDummyTeachers();
-    private final List<ISeparatable> scheduleTypesList = ScheduleType.getDummyScheduleTypes();
-    private final List<ISeparatable> schedulesList = Schedule.getDummySchedules();
-    private final List<ISeparatable> subjectsList = Subject.getDummySubjects();
-    private final List<ISeparatable> careersList = Career.getDummyCareers();
+    private final List<ISeparable> dummyTeachers = DummyData.getDummyTeachers();
+    private final List<ISeparable> dummyScheduleTypes = DummyData.getDummyScheduleTypes();
+    private final List<ISeparable> dummySchedules = DummyData.getDummySchedules();
+    private final List<ISeparable> dummySubjects = DummyData.getDummySubjects();
+    private final List<ISeparable> dummyCareers = DummyData.getDummyCareers();
+    private final List<Classroom> dummyClassrooms = DummyData.getDummyClassrooms();
 
     /**
      *
@@ -74,26 +71,35 @@ public class RunTests {
     public void run() {
         createTestFiles();
         readTestFiles();
-        ClassroomManager.create(TAB_AULAS, ClassroomManager.getDummyClassrooms());
+    }
+
+    private void createTestFiles() {
+        CsvManager.createCSV(dummyTeachers, MAESTROS);
+        CsvManager.createCSV(dummyScheduleTypes, DEF_HORS);
+        CsvManager.createCSV(dummySchedules, TIPO_HORS);
+        CsvManager.createCSV(dummySubjects, TAB_MATERIAS);
+        CsvManager.createCSV(dummyCareers, TAB_SEMCARR);
+
+        ClassroomManager.create(dummyClassrooms, TAB_AULAS);
     }
 
     private void readTestFiles() {
         try {
             StringBuilder sb = new StringBuilder();
 
-            readCSV(MAESTROS, Teacher.class).forEach((item) -> sb.append(item).append("\n"));
+            readCSV(MAESTROS, SeparableType.TEACHER).forEach((item) -> sb.append(item).append("\n"));
             sb.append("\n");
 
-            readCSV(TIPO_HORS, Schedule.class).forEach((item) -> sb.append(item).append("\n"));
+            readCSV(TIPO_HORS, SeparableType.SCHEDULE).forEach((item) -> sb.append(item).append("\n"));
             sb.append("\n");
 
-            readCSV(DEF_HORS, ScheduleType.class).forEach((item) -> sb.append(item).append("\n"));
+            readCSV(DEF_HORS, SeparableType.SCHEDULE_TYPE).forEach((item) -> sb.append(item).append("\n"));
             sb.append("\n");
 
-            readCSV(TAB_MATERIAS, Subject.class).forEach((item) -> sb.append(item).append("\n"));
+            readCSV(TAB_MATERIAS, SeparableType.SUBJECT).forEach((item) -> sb.append(item).append("\n"));
             sb.append("\n");
 
-            readCSV(TAB_SEMCARR, Career.class).forEach((item) -> sb.append(item).append("\n"));
+            readCSV(TAB_SEMCARR, SeparableType.CAREER).forEach((item) -> sb.append(item).append("\n"));
 
             System.out.print(sb.toString());
         } catch (FileNotFoundException ex) {
@@ -101,39 +107,15 @@ public class RunTests {
         }
     }
 
-    private void createTestFiles() {
-        CSV.createCSV(teachersList, MAESTROS);
-        CSV.createCSV(scheduleTypesList, DEF_HORS);
-        CSV.createCSV(schedulesList, TIPO_HORS);
-        CSV.createCSV(subjectsList, TAB_MATERIAS);
-        CSV.createCSV(careersList, TAB_SEMCARR);
-    }
+    private List<ISeparable> readCSV(String filepath, SeparableType separableType) throws FileNotFoundException {
+        List<ISeparable> objects = new ArrayList<>();
 
-    private List<ISeparatable> readCSV(Path filepath, Class<?> type) throws FileNotFoundException {
-        List<ISeparatable> objects = new ArrayList<>();
-
-        if (type != Teacher.class && type != Schedule.class && type != ScheduleType.class && type != Subject.class && type != Career.class) {
-            return objects;
-        }
-
-        List<String> list = CSV.asList(filepath);
+        List<String> list = CsvManager.asList(filepath);
 
         for (String string : list) {
-            ISeparatable item;
+            ISeparable item;
 
-            if (type == Teacher.class) {
-                item = Teacher.fromCSV(string);
-            } else if (type == Schedule.class) {
-                item = Schedule.fromCSV(string);
-            } else if (type == ScheduleType.class) {
-                item = ScheduleType.fromCSV(string);
-            } else if (type == Subject.class) {
-                item = Subject.fromCSV(string);
-            } else if (type == Career.class) {
-                item = Career.fromCSV(string);
-            } else {
-                continue;
-            }
+            item = CsvFactory.build(separableType, string);
 
             if (item != null) {
                 objects.add(item);

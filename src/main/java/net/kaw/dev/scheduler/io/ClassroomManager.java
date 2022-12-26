@@ -18,36 +18,35 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package net.kaw.dev.scheduler.model;
+package net.kaw.dev.scheduler.io;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.kaw.dev.scheduler.files.Hex;
+import net.kaw.dev.scheduler.data.hexable.Classroom;
 import net.kaw.dev.scheduler.testing.RunTests;
+import net.kaw.dev.scheduler.utils.HexUtils;
 
 public class ClassroomManager {
 
-    public static void create(Path filepath, List<Classroom> classrooms) {
+    public static void create(List<Classroom> classrooms, String filepath) {
         try {
             StringBuilder sb = new StringBuilder();
 
             // define amount of classes
             int classroomCount = 9;
-            sb.append(Hex.intToHex(classroomCount, 8));
+            sb.append(HexUtils.intToHex(classroomCount, 8));
 
             for (Classroom classroom : classrooms) {
                 sb.append(classroom.toHex());
             }
 
-            save(filepath, sb.toString());
+            writeToFile(filepath, sb.toString());
         } catch (IOException ex) {
             Logger.getLogger(RunTests.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -59,10 +58,10 @@ public class ClassroomManager {
      * @param string filepath
      * @return a char[] containing files binary data in hexadecimal
      * @throws IOException If file, given by filepath, cannot be read.
-     * @see Hex#bytesToHex( byte[] )
+     * @see HexUtils#bytesToHex(byte[])
      */
-    private String open(Path filepath) throws IOException {
-        File file = filepath.toFile();
+    private String readFile(String filepath) throws IOException {
+        File file = new File(filepath);
         byte[] file_bytes = new byte[(int) file.length()];
         try (final FileInputStream fis = new FileInputStream(file)) {
             int bytes_read;
@@ -70,56 +69,20 @@ public class ClassroomManager {
                 bytes_read = fis.read(file_bytes);
             } while (bytes_read != -1);
 
-            return new String(Hex.bytesToHex(file_bytes));
+            return new String(HexUtils.bytesToHex(file_bytes));
         }
     }
 
     /**
      * Saves the content of a string to a file.
      *
-     * @param filepath The file path to save to
+     * @param filepath The file path to writeToFile to
      * @throws FileNotFoundException If file cannot be written due to unexpected condition.
      */
-    public static void save(Path filepath, String hexString) throws IOException, FileNotFoundException {
-        byte[] file_hex_bytes = Hex.hexToBytes(hexString.toCharArray());
-        FileOutputStream file_save = new FileOutputStream(filepath.toFile());
+    public static void writeToFile(String filepath, String hexString) throws IOException, FileNotFoundException {
+        byte[] file_hex_bytes = HexUtils.hexToBytes(hexString.toCharArray());
+        FileOutputStream file_save = new FileOutputStream(new File(filepath));
         file_save.write(file_hex_bytes);
-    }
-
-    public static List<Classroom> getDummyClassrooms() {
-        List<Classroom> classrooms = new ArrayList<>();
-
-        Classroom cr1 = new Classroom("L6");
-        Classroom cr2 = new Classroom("L4");
-        Classroom cr3 = new Classroom("L2");
-        Classroom cr4 = new Classroom("AV");
-        Classroom cr5 = new Classroom("AC");
-        Classroom cr6 = new Classroom("LC");
-        Classroom cr7 = new Classroom("L1");
-        Classroom cr8 = new Classroom("L3");
-        Classroom cr9 = new Classroom("L5");
-
-        cr1.setAll(1);
-        cr2.setAll(1);
-        cr3.setAll(1);
-        cr4.setAll(30);
-        cr5.setAll(3);
-        cr6.setAll(2);
-        cr7.setAll(1);
-        cr8.setAll(1);
-        cr9.setAll(1);
-
-        classrooms.add(cr1);
-        classrooms.add(cr2);
-        classrooms.add(cr3);
-        classrooms.add(cr4);
-        classrooms.add(cr5);
-        classrooms.add(cr6);
-        classrooms.add(cr7);
-        classrooms.add(cr8);
-        classrooms.add(cr9);
-
-        return classrooms;
     }
 
 }

@@ -2,7 +2,7 @@
  * Copyright 2012, Z.Alem
  * License: http://opensource.org/licenses/bsd-license.php The BSD License
  */
-package net.kaw.dev.scheduler.files;
+package net.kaw.dev.scheduler.utils;
 
 import java.math.BigInteger;
 
@@ -12,7 +12,7 @@ import java.math.BigInteger;
  * @author Z. Alem <info@alemcode.com> {@link http://alemcode.com}
  * @since HexEditor1.0
  */
-public class Hex {
+public class HexUtils {
 
     /**
      * Stores charaters of the hexadecimal numeral system
@@ -101,9 +101,6 @@ public class Hex {
         sb.append(hexStr);
 
         return sb.toString().toCharArray();
-    }
-
-    private Hex() {
     }
 
 }
