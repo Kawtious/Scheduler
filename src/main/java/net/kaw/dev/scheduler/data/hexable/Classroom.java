@@ -41,7 +41,7 @@ public class Classroom implements IHexable {
     /*
      * This represents the classroom type key for identification
      */
-    private final String type;
+    private String type;
 
     /*
      * A sequence of integers that correspond to the mapping matrix of half hours in the schedule,
@@ -60,6 +60,14 @@ public class Classroom implements IHexable {
     public Classroom(String type, int valueToMap) {
         this.type = type;
         setAllValuesInMap(valueToMap);
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public final void setAllValuesInMap(int value) {
