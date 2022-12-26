@@ -24,12 +24,25 @@ import net.kaw.dev.scheduler.interfaces.ISeparable;
 
 public class Schedule implements ISeparable {
 
+    /*
+     * Schedule type number
+     */
     private int type;
 
+    /*
+     * Offset that is given to this schedule in half hours from the
+     * lowest possible hour where the schedule can be placed (7:00AM)
+     */
     private int offset;
 
+    /*
+     * The schedule's session mask
+     */
     private String mask;
 
+    /*
+     * The schedule's description
+     */
     private String description;
 
     public Schedule(int type, int offset, String mask, String description) {

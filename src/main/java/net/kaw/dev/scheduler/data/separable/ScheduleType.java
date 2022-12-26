@@ -24,10 +24,21 @@ import net.kaw.dev.scheduler.interfaces.ISeparable;
 
 public class ScheduleType implements ISeparable {
 
+    /*
+     * Represents the name to describe the type of schedule
+     */
     private String description;
 
+    /*
+     * Indicates in hexadecimal all the possible hours at which
+     * you can start that session (and therefore the number of variants
+     * that this type of schedule has)
+     */
     private String availableHours;
 
+    /*
+     * The “half-hour” mask that occupies this type of schedule
+     */
     private String mask;
 
     public ScheduleType(String description, String availableHours, String mask) {

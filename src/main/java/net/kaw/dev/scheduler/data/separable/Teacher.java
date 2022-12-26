@@ -30,9 +30,9 @@ public class Teacher implements ISeparable {
     private char type;
 
     /*
-     * Teacher ID Number
+     * The teacher's control number
      */
-    private int id;
+    private int controlNumber;
 
     /*
      * The teacher's name
@@ -44,9 +44,9 @@ public class Teacher implements ISeparable {
      */
     private String lastName;
 
-    public Teacher(char type, int id, String firstName, String lastName) {
+    public Teacher(char type, int controlNumber, String firstName, String lastName) {
         this.type = type;
-        this.id = id;
+        this.controlNumber = controlNumber;
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -59,12 +59,12 @@ public class Teacher implements ISeparable {
         this.type = type;
     }
 
-    public int getId() {
-        return id;
+    public int getControlNumber() {
+        return controlNumber;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setControlNumber(int controlNumber) {
+        this.controlNumber = controlNumber;
     }
 
     public String getFirstName() {
@@ -85,12 +85,12 @@ public class Teacher implements ISeparable {
 
     @Override
     public String toCSV() {
-        return type + "," + id + "," + firstName + "," + lastName;
+        return type + "," + controlNumber + "," + firstName + "," + lastName;
     }
 
     @Override
     public String toString() {
-        return "Teacher{" + "type=" + type + ", id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + '}';
+        return "Teacher{" + "type=" + type + ", controlNumber=" + controlNumber + ", firstName=" + firstName + ", lastName=" + lastName + '}';
     }
 
 }

@@ -188,7 +188,7 @@ public class CsvFactory {
     }
 
     private static boolean validate(Teacher teacher) {
-        return teacher.getId() >= 0
+        return teacher.getControlNumber() >= 0
                 && !teacher.getFirstName().isEmpty() && !teacher.getLastName().isEmpty();
     }
 

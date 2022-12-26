@@ -34,8 +34,15 @@ public class Subject implements ISeparable {
      */
     private String classKey;
 
+    /*
+     * Represents a number in hexadecimal in which each bit represents a type of
+     * schedule to which the subject can be assigned
+     */
     private String schedule;
 
+    /*
+     * Description of the schedule
+     */
     private String description;
 
     public Subject(String subjectKey, String classKey, String schedule, String description) {
