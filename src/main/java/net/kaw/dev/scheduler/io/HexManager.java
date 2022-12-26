@@ -28,25 +28,25 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.kaw.dev.scheduler.data.hexable.Classroom;
+import net.kaw.dev.scheduler.interfaces.IHexable;
 import net.kaw.dev.scheduler.testing.RunTests;
 import net.kaw.dev.scheduler.utils.HexUtils;
 
-public class ClassroomManager {
+public class HexManager {
 
-    public static void create(List<Classroom> classrooms, String filepath) {
+    public static void create(List<IHexable> items, String filepath) {
         try {
             StringBuilder sb = new StringBuilder();
 
-            // define amount of classes
-            int classroomCount = 9;
-            sb.append(HexUtils.intToHex(classroomCount, 8));
+            // Store amount of items from the list
+            int itemsCount = items.size();
+            sb.append(HexUtils.intToHex(itemsCount, 8));
 
-            for (Classroom classroom : classrooms) {
-                sb.append(classroom.toHex());
+            for (IHexable item : items) {
+                sb.append(item.toHex());
             }
 
-            writeToFile(filepath, sb.toString());
+            HexManager.writeToFile(filepath, sb.toString());
         } catch (IOException ex) {
             Logger.getLogger(RunTests.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -60,29 +60,33 @@ public class ClassroomManager {
      * @throws IOException If file, given by filepath, cannot be read.
      * @see HexUtils#bytesToHex(byte[])
      */
-    private String readFile(String filepath) throws IOException {
+    public static String readFile(String filepath) throws IOException {
         File file = new File(filepath);
-        byte[] file_bytes = new byte[(int) file.length()];
-        try (final FileInputStream fis = new FileInputStream(file)) {
-            int bytes_read;
-            do {
-                bytes_read = fis.read(file_bytes);
-            } while (bytes_read != -1);
+        byte[] bytes = new byte[(int) file.length()];
 
-            return new String(HexUtils.bytesToHex(file_bytes));
+        try (final FileInputStream fis = new FileInputStream(file)) {
+            int bytesRead;
+
+            do {
+                bytesRead = fis.read(bytes);
+            } while (bytesRead != -1);
+
+            return new String(HexUtils.bytesToHex(bytes));
         }
     }
 
     /**
      * Saves the content of a string to a file.
      *
-     * @param filepath The file path to writeToFile to
+     * @param filepath The file path to create to
      * @throws FileNotFoundException If file cannot be written due to unexpected condition.
      */
-    public static void writeToFile(String filepath, String hexString) throws IOException, FileNotFoundException {
-        byte[] file_hex_bytes = HexUtils.hexToBytes(hexString.toCharArray());
-        FileOutputStream file_save = new FileOutputStream(new File(filepath));
-        file_save.write(file_hex_bytes);
+    private static void writeToFile(String filepath, String hexString) throws IOException, FileNotFoundException {
+        byte[] bytes = HexUtils.hexToBytes(hexString.toCharArray());
+
+        try (final FileOutputStream fos = new FileOutputStream(new File(filepath))) {
+            fos.write(bytes);
+        }
     }
 
 }

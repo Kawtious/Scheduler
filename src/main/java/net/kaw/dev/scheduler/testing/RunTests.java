@@ -27,10 +27,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.kaw.dev.scheduler.csv.CsvFactory;
 import net.kaw.dev.scheduler.csv.CsvFactory.SeparableType;
-import net.kaw.dev.scheduler.data.hexable.Classroom;
+import net.kaw.dev.scheduler.interfaces.IHexable;
 import net.kaw.dev.scheduler.interfaces.ISeparable;
-import net.kaw.dev.scheduler.io.ClassroomManager;
 import net.kaw.dev.scheduler.io.CsvManager;
+import net.kaw.dev.scheduler.io.HexManager;
 
 public class RunTests {
 
@@ -47,7 +47,7 @@ public class RunTests {
     /**
      * .dat files
      */
-    private final String TAB_AULAS = "./output/tabTest.dat";
+    private final String TAB_AULAS = "./output/tabAulas.dat";
     private final String TAB_MAES = "./output/tabMaes.dat";
 
     /**
@@ -58,7 +58,7 @@ public class RunTests {
     private final List<ISeparable> dummySchedules = DummyData.getDummySchedules();
     private final List<ISeparable> dummySubjects = DummyData.getDummySubjects();
     private final List<ISeparable> dummyCareers = DummyData.getDummyCareers();
-    private final List<Classroom> dummyClassrooms = DummyData.getDummyClassrooms();
+    private final List<IHexable> dummyClassrooms = DummyData.getDummyClassrooms();
 
     /**
      *
@@ -80,7 +80,7 @@ public class RunTests {
         CsvManager.createCSV(dummySubjects, TAB_MATERIAS);
         CsvManager.createCSV(dummyCareers, TAB_SEMCARR);
 
-        ClassroomManager.create(dummyClassrooms, TAB_AULAS);
+        HexManager.create(dummyClassrooms, TAB_AULAS);
     }
 
     private void readTestFiles() {

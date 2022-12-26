@@ -29,6 +29,7 @@ import net.kaw.dev.scheduler.data.separable.Schedule;
 import net.kaw.dev.scheduler.data.separable.ScheduleType;
 import net.kaw.dev.scheduler.data.separable.Subject;
 import net.kaw.dev.scheduler.data.separable.Teacher;
+import net.kaw.dev.scheduler.interfaces.IHexable;
 import net.kaw.dev.scheduler.interfaces.ISeparable;
 
 public class DummyData {
@@ -386,8 +387,8 @@ public class DummyData {
         return careers;
     }
 
-    protected static List<Classroom> getDummyClassrooms() {
-        List<Classroom> classrooms = new ArrayList<>();
+    protected static List<IHexable> getDummyClassrooms() {
+        List<IHexable> classrooms = new ArrayList<>();
 
         Classroom cr1 = new Classroom("L6", 1);
         Classroom cr2 = new Classroom("L4", 1);

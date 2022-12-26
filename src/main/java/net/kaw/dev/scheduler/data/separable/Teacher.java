@@ -20,9 +20,10 @@
  */
 package net.kaw.dev.scheduler.data.separable;
 
+import net.kaw.dev.scheduler.interfaces.IHexable;
 import net.kaw.dev.scheduler.interfaces.ISeparable;
 
-public class Teacher implements ISeparable {
+public class Teacher implements ISeparable, IHexable {
 
     /*
      * This indicates the type of teacher
@@ -86,6 +87,11 @@ public class Teacher implements ISeparable {
     @Override
     public String toCSV() {
         return type + "," + controlNumber + "," + firstName + "," + lastName;
+    }
+
+    @Override
+    public String toHex() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
