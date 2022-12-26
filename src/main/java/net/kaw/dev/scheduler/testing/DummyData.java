@@ -413,4 +413,16 @@ public class DummyData {
         return classrooms;
     }
 
+    protected static List<IHexable> getDummyTeachersHex() {
+        List<IHexable> teachers = new ArrayList<>();
+
+        List<ISeparable> _teachers = getDummyTeachers();
+
+        for (ISeparable _teacher : _teachers) {
+            teachers.add((IHexable) _teacher);
+        }
+
+        return teachers;
+    }
+
 }

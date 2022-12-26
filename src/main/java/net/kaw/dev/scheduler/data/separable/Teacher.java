@@ -22,6 +22,7 @@ package net.kaw.dev.scheduler.data.separable;
 
 import net.kaw.dev.scheduler.interfaces.IHexable;
 import net.kaw.dev.scheduler.interfaces.ISeparable;
+import net.kaw.dev.scheduler.utils.HexUtils;
 
 public class Teacher implements ISeparable, IHexable {
 
@@ -45,11 +46,20 @@ public class Teacher implements ISeparable, IHexable {
      */
     private String lastName;
 
+    /*
+     * A sequence of integers that correspond to the mapping matrix of half hours in the schedule,
+     * the matrix is 5 rows and 28 columns, the first data corresponds to the first hour of Monday,
+     * second, third until reaching 27, then continues the first hour on Tuesday, the second,....,
+     * etc, then Wednesday and so on until Friday. "Zero" means schedule unavailability and "one" availability.
+     */
+    private final boolean[][] availabilityMap = new boolean[5][28];
+
     public Teacher(char type, int controlNumber, String firstName, String lastName) {
         this.type = type;
         this.controlNumber = controlNumber;
         this.firstName = firstName;
         this.lastName = lastName;
+        setAllValuesInMap(true);
     }
 
     public char getType() {
@@ -84,6 +94,18 @@ public class Teacher implements ISeparable, IHexable {
         this.lastName = lastName;
     }
 
+    private void setAllValuesInMap(boolean value) {
+        for (int day = 0; day < 5; day++) {
+            for (int halfhour = 0; halfhour < 28; halfhour++) {
+                setValueInMap(day, halfhour, value);
+            }
+        }
+    }
+
+    public void setValueInMap(int day, int halfhour, boolean value) {
+        availabilityMap[day][halfhour] = value;
+    }
+
     @Override
     public String toCSV() {
         return type + "," + controlNumber + "," + firstName + "," + lastName;
@@ -91,7 +113,23 @@ public class Teacher implements ISeparable, IHexable {
 
     @Override
     public String toHex() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(HexUtils.stringToHex(Character.toString(type), 8));
+
+        sb.append(HexUtils.intToHex(controlNumber, 8));
+
+        sb.append(HexUtils.stringToHex(firstName));
+
+        sb.append(HexUtils.stringToHex(lastName));
+
+        for (int day = 0; day < 5; day++) {
+            for (int halfhour = 0; halfhour < 28; halfhour++) {
+                sb.append(HexUtils.booleanToHex(availabilityMap[day][halfhour], 8));
+            }
+        }
+
+        return sb.toString();
     }
 
     @Override

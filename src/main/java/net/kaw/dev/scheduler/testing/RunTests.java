@@ -59,6 +59,7 @@ public class RunTests {
     private final List<ISeparable> dummySubjects = DummyData.getDummySubjects();
     private final List<ISeparable> dummyCareers = DummyData.getDummyCareers();
     private final List<IHexable> dummyClassrooms = DummyData.getDummyClassrooms();
+    private final List<IHexable> dummyTeachersHex = DummyData.getDummyTeachersHex();
 
     /**
      *
@@ -81,6 +82,7 @@ public class RunTests {
         CsvManager.createCSV(dummyCareers, TAB_SEMCARR);
 
         HexManager.create(dummyClassrooms, TAB_AULAS);
+        HexManager.create(dummyTeachersHex, TAB_MAES);
     }
 
     private void readTestFiles() {

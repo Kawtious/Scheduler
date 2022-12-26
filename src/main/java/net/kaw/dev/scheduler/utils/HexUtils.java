@@ -77,26 +77,48 @@ public class HexUtils {
         return Integer.parseInt(hex, 16);
     }
 
-    private static char[] toHexPadded(String str, int padding) {
+    private static String toHexPadded(String str, int padding, boolean backPadding) {
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < padding - str.length(); i++) {
-            sb.append("0");
+        if (!backPadding) {
+            sb.append(str);
+            System.out.println(str);
+            System.out.println(str.length());
+            System.out.println(padding);
+
+            for (int i = str.length(); i < padding; i++) {
+                sb.append("0");
+            }
+        } else {
+            for (int i = 0; i < padding - str.length(); i++) {
+                sb.append("0");
+            }
+
+            sb.append(str);
         }
 
-        sb.append(str);
-
-        return sb.toString().toCharArray();
+        return sb.toString();
     }
 
-    public static char[] intToHex(int val, int padding) {
+    public static String intToHex(int val, int padding) {
         String intString = Integer.toHexString(val);
-        return toHexPadded(intString, padding);
+        return toHexPadded(intString, padding, true);
     }
 
-    public static char[] stringToHex(String str, int padding) {
-        String hexStr = String.format("%x", new BigInteger(1, str.getBytes(/*YOUR_CHARSET?*/)));
-        return toHexPadded(hexStr, padding);
+    public static String stringToHex(String str) {
+        return String.format("%x", new BigInteger(1, str.getBytes(/*YOUR_CHARSET?*/))) + "00";
+    }
+
+    public static String stringToHex(String str, int padding) {
+        // This behaves a little differently than the other stringToHex method
+        String hexStr = stringToHex(str);
+        return toHexPadded(hexStr, padding, false);
+    }
+
+    public static String booleanToHex(boolean value, int padding) {
+        // true: 1, false: 0
+        int intValue = value ? 1 : 0;
+        return intToHex(intValue, padding);
     }
 
 }
