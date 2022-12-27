@@ -69,8 +69,8 @@ public class Classroom implements IHexable {
         StringBuilder sb = new StringBuilder();
         sb.append(HexUtils.stringToHex(type, 8));
 
-        for (int day = 0; day < 5; day++) {
-            for (int halfhour = 0; halfhour < 28; halfhour++) {
+        for (int day = 0; day < ScheduleMap.DAYS; day++) {
+            for (int halfhour = 0; halfhour < ScheduleMap.HALFHOURS; halfhour++) {
                 sb.append(HexUtils.intToHex(scheduleMap.getMapValue(day, halfhour), 8));
             }
         }

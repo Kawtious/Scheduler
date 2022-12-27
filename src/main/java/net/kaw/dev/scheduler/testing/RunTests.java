@@ -124,6 +124,9 @@ public class RunTests {
             StringBuilder sb = new StringBuilder();
 
             readHex(TAB_AULAS, HexableType.CLASSROOM).forEach((item) -> sb.append(item).append("\n"));
+            sb.append("\n");
+
+            readHex(TAB_MAES, HexableType.TEACHER).forEach((item) -> sb.append(item).append("\n"));
 
             System.out.print(sb.toString());
         } catch (FileNotFoundException ex) {

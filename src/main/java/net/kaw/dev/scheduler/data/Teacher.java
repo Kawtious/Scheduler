@@ -99,6 +99,10 @@ public class Teacher implements ISeparable, IHexable {
         this.lastName = lastName;
     }
 
+    public ScheduleMap<Boolean> getScheduleMap() {
+        return scheduleMap;
+    }
+
     @Override
     public String toCsv() {
         return type + "," + controlNumber + "," + firstName + "," + lastName;
@@ -116,8 +120,8 @@ public class Teacher implements ISeparable, IHexable {
 
         sb.append(HexUtils.stringToHex(lastName));
 
-        for (int day = 0; day < 5; day++) {
-            for (int halfhour = 0; halfhour < 28; halfhour++) {
+        for (int day = 0; day < ScheduleMap.DAYS; day++) {
+            for (int halfhour = 0; halfhour < ScheduleMap.HALFHOURS; halfhour++) {
                 sb.append(HexUtils.booleanToHex(scheduleMap.getMapValue(day, halfhour), 8));
             }
         }
@@ -132,7 +136,7 @@ public class Teacher implements ISeparable, IHexable {
 
     @Override
     public String toString() {
-        return "Teacher{" + "type=" + type + ", controlNumber=" + controlNumber + ", firstName=" + firstName + ", lastName=" + lastName + '}';
+        return "Teacher{" + "type=" + type + ", controlNumber=" + controlNumber + ", firstName=" + firstName + ", lastName=" + lastName + ", scheduleMap=" + scheduleMap + '}';
     }
 
 }

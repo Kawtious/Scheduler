@@ -88,6 +88,10 @@ public class HexUtils {
         return output.toString();
     }
 
+    public static boolean hexToBoolean(String hex) {
+        return hexToInt(hex) > 0;
+    }
+
     private static String toHexPadded(String str, int padding, boolean backPadding) {
         StringBuilder sb = new StringBuilder();
 
