@@ -45,6 +45,12 @@ public class Group implements ISeparable {
         this.int_2 = int_2;
     }
 
+    protected Group(Subject subject, int int_1, int int_2) {
+        this.subjectKey = subject.getSubjectKey();
+        this.int_1 = int_1;
+        this.int_2 = int_2;
+    }
+
     public String getSubjectKey() {
         return subjectKey;
     }

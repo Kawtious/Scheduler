@@ -45,6 +45,13 @@ public class Career implements ISeparable {
         this.trajectoryEnd = trajectoryEnd;
     }
 
+    protected Career(String id, Subject subject, int trajectoryStart, int trajectoryEnd) {
+        this.id = id;
+        this.subjectKey = subject.getSubjectKey();
+        this.trajectoryStart = trajectoryStart;
+        this.trajectoryEnd = trajectoryEnd;
+    }
+
     public String getId() {
         return id;
     }
