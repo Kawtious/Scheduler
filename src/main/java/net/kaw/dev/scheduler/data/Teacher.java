@@ -24,6 +24,11 @@ import net.kaw.dev.scheduler.data.interfaces.IHexable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 import net.kaw.dev.scheduler.utils.HexUtils;
 
+/**
+ * Contains the identification information of the teacher and their schedule availability and is used as data entry for each teacher.
+ * <p>
+ * It is used to avoid having to type this data into the program that captures teacher schedules.
+ */
 public class Teacher implements ISeparable, IHexable {
 
     /*

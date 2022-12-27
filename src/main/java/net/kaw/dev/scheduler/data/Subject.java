@@ -22,6 +22,9 @@ package net.kaw.dev.scheduler.data;
 
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
+/**
+ * Contains information about a subject
+ */
 public class Subject implements ISeparable {
 
     /*

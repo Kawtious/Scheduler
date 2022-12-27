@@ -24,17 +24,7 @@ import net.kaw.dev.scheduler.data.interfaces.IHexable;
 import net.kaw.dev.scheduler.utils.HexUtils;
 
 /**
- * Data file that contains information about the types of classrooms that exist and their schedule availability.
- * <p>
- * The file structure is:
- * <blockquote><pre>
- * An integer (int) that indicates the number of classroom types in the file, and then they appear as many times as that integer indicated by the following data structure:
- * Sequence of indefinite byte size ending in "0" that corresponds to the String that represents the key of a type of classroom to identify them;
- * sequence of indefinite byte size ending in "0" that represents the string that describes this type of classroom,
- * sequence of integers (int) that correspond to the mapping matrix of half hours in the schedule, the matrix is 5 lines long and 28 columns,
- * the first data corresponds to the first hour of Monday, second, third until reaching 27, then follows the first hour of Tuesday, second,...., etc,
- * then Wednesday and so on until Friday. Each integer represents the number of available classrooms of that type in that “half hour”.
- * </pre></blockquote>
+ * Contains information about the types of classrooms that exist and their schedule availability.
  */
 public class Classroom implements IHexable {
 

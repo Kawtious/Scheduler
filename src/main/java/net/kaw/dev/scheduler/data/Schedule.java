@@ -22,6 +22,9 @@ package net.kaw.dev.scheduler.data;
 
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
+/**
+ * It is used to define the types of schedules that are available as options
+ */
 public class Schedule implements ISeparable {
 
     /*
