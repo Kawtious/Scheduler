@@ -40,16 +40,16 @@ public class Classroom implements IHexable {
      * then Wednesday and so on until Friday. Each integer represents the number of available classrooms
      * of that type in that “half hour”.
      */
-    private final int[][] halfHourMap = new int[5][28];
+    private final ScheduleMap<Integer> scheduleMap;
 
     public Classroom(String type) {
         this.type = type;
-        setAllValuesInMap(0);
+        this.scheduleMap = new ScheduleMap<>(0);
     }
 
     public Classroom(String type, int valueToMap) {
         this.type = type;
-        setAllValuesInMap(valueToMap);
+        this.scheduleMap = new ScheduleMap<>(valueToMap);
     }
 
     public String getType() {
@@ -60,18 +60,6 @@ public class Classroom implements IHexable {
         this.type = type;
     }
 
-    public final void setAllValuesInMap(int value) {
-        for (int day = 0; day < 5; day++) {
-            for (int halfhour = 0; halfhour < 28; halfhour++) {
-                setValueInMap(day, halfhour, value);
-            }
-        }
-    }
-
-    public void setValueInMap(int day, int halfhour, int value) {
-        halfHourMap[day][halfhour] = value;
-    }
-
     @Override
     public String toHex() {
         StringBuilder sb = new StringBuilder();
@@ -79,7 +67,7 @@ public class Classroom implements IHexable {
 
         for (int day = 0; day < 5; day++) {
             for (int halfhour = 0; halfhour < 28; halfhour++) {
-                sb.append(HexUtils.intToHex(halfHourMap[day][halfhour], 8));
+                sb.append(HexUtils.intToHex(scheduleMap.getMapValue(day, halfhour), 8));
             }
         }
         return sb.toString();
