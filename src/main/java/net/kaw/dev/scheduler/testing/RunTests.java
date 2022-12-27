@@ -27,8 +27,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.kaw.dev.scheduler.csv.CsvFactory;
 import net.kaw.dev.scheduler.csv.CsvFactory.SeparableType;
-import net.kaw.dev.scheduler.interfaces.IHexable;
-import net.kaw.dev.scheduler.interfaces.ISeparable;
+import net.kaw.dev.scheduler.data.interfaces.IHexable;
+import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 import net.kaw.dev.scheduler.io.CsvManager;
 import net.kaw.dev.scheduler.io.HexManager;
 
@@ -58,6 +58,7 @@ public class RunTests {
     private final List<ISeparable> dummySchedules = DummyData.getDummySchedules();
     private final List<ISeparable> dummySubjects = DummyData.getDummySubjects();
     private final List<ISeparable> dummyCareers = DummyData.getDummyCareers();
+    private final List<ISeparable> dummyGroups = DummyData.getDummyGroups();
     private final List<IHexable> dummyClassrooms = DummyData.getDummyClassrooms();
     private final List<IHexable> dummyTeachersHex = DummyData.getDummyTeachersHex();
 
@@ -80,6 +81,7 @@ public class RunTests {
         CsvManager.createCSV(dummySchedules, TIPO_HORS);
         CsvManager.createCSV(dummySubjects, TAB_MATERIAS);
         CsvManager.createCSV(dummyCareers, TAB_SEMCARR);
+        CsvManager.createCSV(dummyGroups, TAB_GRUPOS);
 
         HexManager.create(dummyClassrooms, TAB_AULAS);
         HexManager.create(dummyTeachersHex, TAB_MAES);
@@ -102,6 +104,9 @@ public class RunTests {
             sb.append("\n");
 
             readCSV(TAB_SEMCARR, SeparableType.CAREER).forEach((item) -> sb.append(item).append("\n"));
+            sb.append("\n");
+
+            readCSV(TAB_GRUPOS, SeparableType.GROUP).forEach((item) -> sb.append(item).append("\n"));
 
             System.out.print(sb.toString());
         } catch (FileNotFoundException ex) {

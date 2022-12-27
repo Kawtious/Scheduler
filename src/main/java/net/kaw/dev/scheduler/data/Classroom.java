@@ -18,9 +18,9 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package net.kaw.dev.scheduler.data.hexable;
+package net.kaw.dev.scheduler.data;
 
-import net.kaw.dev.scheduler.interfaces.IHexable;
+import net.kaw.dev.scheduler.data.interfaces.IHexable;
 import net.kaw.dev.scheduler.utils.HexUtils;
 
 /**

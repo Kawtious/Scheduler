@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.kaw.dev.scheduler.interfaces.ISeparable;
+import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
 public class CsvManager {
 

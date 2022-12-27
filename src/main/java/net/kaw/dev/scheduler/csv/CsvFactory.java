@@ -22,17 +22,18 @@ package net.kaw.dev.scheduler.csv;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.kaw.dev.scheduler.data.separable.Career;
-import net.kaw.dev.scheduler.data.separable.Schedule;
-import net.kaw.dev.scheduler.data.separable.ScheduleType;
-import net.kaw.dev.scheduler.data.separable.Subject;
-import net.kaw.dev.scheduler.data.separable.Teacher;
-import net.kaw.dev.scheduler.interfaces.ISeparable;
+import net.kaw.dev.scheduler.data.Career;
+import net.kaw.dev.scheduler.data.Group;
+import net.kaw.dev.scheduler.data.Schedule;
+import net.kaw.dev.scheduler.data.ScheduleType;
+import net.kaw.dev.scheduler.data.Subject;
+import net.kaw.dev.scheduler.data.Teacher;
+import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
 public class CsvFactory {
 
     public enum SeparableType {
-        SCHEDULE, SCHEDULE_TYPE, SUBJECT, TEACHER, CAREER
+        SCHEDULE, SCHEDULE_TYPE, SUBJECT, TEACHER, CAREER, GROUP
     }
 
     public static ISeparable build(SeparableType separableType, String csvString) {
@@ -57,6 +58,8 @@ public class CsvFactory {
                 return buildTeacher(values);
             case CAREER:
                 return buildCareer(values);
+            case GROUP:
+                return buildGroup(values);
             default:
                 return null;
         }
@@ -150,6 +153,24 @@ public class CsvFactory {
                 return scheduleType;
             }
         } catch (IndexOutOfBoundsException ex) {
+            Logger.getLogger(CsvFactory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
+    private static Group buildGroup(String[] groupValues) {
+        try {
+            String subjectKey = groupValues[0];
+            int int_1 = Integer.parseInt(groupValues[1]);
+            int int_2 = Integer.parseInt(groupValues[2]);
+
+            Group group = new Group(subjectKey, int_1, int_2);
+
+            if (group.validate()) {
+                return group;
+            }
+        } catch (IndexOutOfBoundsException | NumberFormatException ex) {
             Logger.getLogger(CsvFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
 

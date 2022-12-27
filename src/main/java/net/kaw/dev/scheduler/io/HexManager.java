@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.kaw.dev.scheduler.interfaces.IHexable;
+import net.kaw.dev.scheduler.data.interfaces.IHexable;
 import net.kaw.dev.scheduler.testing.RunTests;
 import net.kaw.dev.scheduler.utils.HexUtils;
 
