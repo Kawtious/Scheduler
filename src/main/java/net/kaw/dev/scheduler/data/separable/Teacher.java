@@ -133,6 +133,11 @@ public class Teacher implements ISeparable, IHexable {
     }
 
     @Override
+    public boolean validate() {
+        return controlNumber >= 0 && !firstName.isEmpty() && !lastName.isEmpty();
+    }
+
+    @Override
     public String toString() {
         return "Teacher{" + "type=" + type + ", controlNumber=" + controlNumber + ", firstName=" + firstName + ", lastName=" + lastName + '}';
     }

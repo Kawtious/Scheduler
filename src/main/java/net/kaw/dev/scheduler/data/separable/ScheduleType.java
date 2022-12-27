@@ -77,6 +77,11 @@ public class ScheduleType implements ISeparable {
     }
 
     @Override
+    public boolean validate() {
+        return !description.isEmpty() && !availableHours.isEmpty() && !sessionMask.isEmpty();
+    }
+
+    @Override
     public String toString() {
         return "ScheduleType{" + "description=" + description + ", availableHours=" + availableHours + ", sessionMask=" + sessionMask + '}';
     }

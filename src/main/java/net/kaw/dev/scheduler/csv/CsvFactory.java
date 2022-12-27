@@ -71,7 +71,7 @@ public class CsvFactory {
 
             Career career = new Career(id, subjectKey, trajectoryStart, trajectoryEnd);
 
-            if (validate(career)) {
+            if (career.validate()) {
                 return career;
             }
         } catch (IndexOutOfBoundsException | NumberFormatException ex) {
@@ -90,7 +90,7 @@ public class CsvFactory {
 
             Teacher teacher = new Teacher(type, controlNumber, firstName, lastName);
 
-            if (validate(teacher)) {
+            if (teacher.validate()) {
                 return teacher;
             }
         } catch (IndexOutOfBoundsException | NumberFormatException ex) {
@@ -109,7 +109,7 @@ public class CsvFactory {
 
             Subject subject = new Subject(subjectKey, classKey, schedule, description);
 
-            if (validate(subject)) {
+            if (subject.validate()) {
                 return subject;
             }
         } catch (IndexOutOfBoundsException ex) {
@@ -128,7 +128,7 @@ public class CsvFactory {
 
             Schedule schedule = new Schedule(type, offset, sessionMask, description);
 
-            if (validate(schedule)) {
+            if (schedule.validate()) {
                 return schedule;
             }
         } catch (IndexOutOfBoundsException | NumberFormatException ex) {
@@ -146,7 +146,7 @@ public class CsvFactory {
 
             ScheduleType scheduleType = new ScheduleType(description, availableHours, sessionMask);
 
-            if (validate(scheduleType)) {
+            if (scheduleType.validate()) {
                 return scheduleType;
             }
         } catch (IndexOutOfBoundsException ex) {
@@ -154,31 +154,6 @@ public class CsvFactory {
         }
 
         return null;
-    }
-
-    private static boolean validate(Schedule schedule) {
-        return schedule.getType() >= 0 && schedule.getOffset() >= 0
-                && !schedule.getSessionMask().isEmpty() && !schedule.getDescription().isEmpty();
-    }
-
-    private static boolean validate(Subject subject) {
-        return !subject.getSubjectKey().isEmpty() && !subject.getClassKey().isEmpty()
-                && !subject.getSchedule().isEmpty() && !subject.getDescription().isEmpty();
-    }
-
-    private static boolean validate(Teacher teacher) {
-        return teacher.getControlNumber() >= 0
-                && !teacher.getFirstName().isEmpty() && !teacher.getLastName().isEmpty();
-    }
-
-    private static boolean validate(Career career) {
-        return !career.getId().isEmpty() && !career.getSubjectKey().isEmpty()
-                && career.getTrajectoryStart() >= 0 && career.getTrajectoryEnd() >= -1;
-    }
-
-    private static boolean validate(ScheduleType scheduleType) {
-        return !scheduleType.getDescription().isEmpty() && !scheduleType.getAvailableHours().isEmpty()
-                && !scheduleType.getSessionMask().isEmpty();
     }
 
 }

@@ -90,6 +90,11 @@ public class Subject implements ISeparable {
     }
 
     @Override
+    public boolean validate() {
+        return !subjectKey.isEmpty() && !classKey.isEmpty() && !schedule.isEmpty() && !description.isEmpty();
+    }
+
+    @Override
     public String toString() {
         return "Subject{" + "subjectKey=" + subjectKey + ", classKey=" + classKey + ", schedule=" + schedule + ", description=" + description + '}';
     }

@@ -83,6 +83,11 @@ public class Career implements ISeparable {
     }
 
     @Override
+    public boolean validate() {
+        return !id.isEmpty() && !subjectKey.isEmpty() && trajectoryStart >= 0 && trajectoryEnd >= -1;
+    }
+
+    @Override
     public String toString() {
         return "Career{" + "id=" + id + ", subjectKey=" + subjectKey + ", trajectoryStart=" + trajectoryStart + ", trajectoryEnd=" + trajectoryEnd + '}';
     }

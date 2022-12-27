@@ -97,6 +97,11 @@ public class Schedule implements ISeparable {
     }
 
     @Override
+    public boolean validate() {
+        return type >= 0 && offset >= 0 && !sessionMask.isEmpty() && !description.isEmpty();
+    }
+
+    @Override
     public String toString() {
         return "Schedule{" + "type=" + type + ", offset=" + offset + ", sessionMask=" + sessionMask + ", description=" + description + '}';
     }

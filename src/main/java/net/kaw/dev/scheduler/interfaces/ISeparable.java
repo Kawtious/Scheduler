@@ -24,4 +24,6 @@ public interface ISeparable {
 
     public String toCSV();
 
+    public boolean validate();
+
 }
