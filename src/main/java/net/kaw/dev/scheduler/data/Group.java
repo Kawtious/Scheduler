@@ -70,7 +70,7 @@ public class Group implements ISeparable {
     }
 
     @Override
-    public String toCSV() {
+    public String toCsv() {
         return subjectKey + "," + int_1 + "," + int_2;
     }
 

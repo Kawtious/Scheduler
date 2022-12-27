@@ -23,7 +23,7 @@ public class CsvManager {
     public static void createCSV(List<ISeparable> items, String filepath) {
         StringBuilder sb = new StringBuilder();
         for (ISeparable item : items) {
-            sb.append(item.toCSV()).append("\n");
+            sb.append(item.toCsv()).append("\n");
         }
 
         try {

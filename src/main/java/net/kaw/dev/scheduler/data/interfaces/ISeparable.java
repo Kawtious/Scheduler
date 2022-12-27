@@ -22,7 +22,7 @@ package net.kaw.dev.scheduler.data.interfaces;
 
 public interface ISeparable {
 
-    public String toCSV();
+    public String toCsv();
 
     public boolean validate();
 

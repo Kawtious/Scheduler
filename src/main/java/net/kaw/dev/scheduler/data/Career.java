@@ -78,7 +78,7 @@ public class Career implements ISeparable {
     }
 
     @Override
-    public String toCSV() {
+    public String toCsv() {
         return id + "," + subjectKey + "," + trajectoryStart + "," + trajectoryEnd;
     }
 

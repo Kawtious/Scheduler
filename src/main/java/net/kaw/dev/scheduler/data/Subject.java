@@ -88,7 +88,7 @@ public class Subject implements ISeparable {
     }
 
     @Override
-    public String toCSV() {
+    public String toCsv() {
         return subjectKey + "," + classKey + "," + schedule + "," + description;
     }
 

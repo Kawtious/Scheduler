@@ -75,7 +75,7 @@ public class ScheduleType implements ISeparable {
     }
 
     @Override
-    public String toCSV() {
+    public String toCsv() {
         return description + "," + availableHours + "," + sessionMask;
     }
 

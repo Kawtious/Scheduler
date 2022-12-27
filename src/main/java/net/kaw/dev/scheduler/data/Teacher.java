@@ -100,7 +100,7 @@ public class Teacher implements ISeparable, IHexable {
     }
 
     @Override
-    public String toCSV() {
+    public String toCsv() {
         return type + "," + controlNumber + "," + firstName + "," + lastName;
     }
 
