@@ -37,7 +37,7 @@ public class ScheduleMap<T> {
      */
     private final List<List<T>> map;
 
-    private final int DAYS = 5, HALFHOURS = 28;
+    protected static final int DAYS = 5, HALFHOURS = 28;
 
     public ScheduleMap(T initValue) {
         this.map = new ArrayList<>(DAYS);

@@ -60,6 +60,10 @@ public class Classroom implements IHexable {
         this.type = type;
     }
 
+    public ScheduleMap<Integer> getScheduleMap() {
+        return scheduleMap;
+    }
+
     @Override
     public String toHex() {
         StringBuilder sb = new StringBuilder();
@@ -71,6 +75,11 @@ public class Classroom implements IHexable {
             }
         }
         return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "Classroom{" + "type=" + type + ", scheduleMap=" + scheduleMap + '}';
     }
 
 }

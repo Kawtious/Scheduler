@@ -21,10 +21,13 @@
 package net.kaw.dev.scheduler.testing;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.kaw.dev.scheduler.data.HexableFactory;
+import net.kaw.dev.scheduler.data.HexableFactory.HexableType;
 import net.kaw.dev.scheduler.data.SeparableFactory;
 import net.kaw.dev.scheduler.data.SeparableFactory.SeparableType;
 import net.kaw.dev.scheduler.data.interfaces.IHexable;
@@ -72,7 +75,8 @@ public class RunTests {
 
     public void run() {
         createTestFiles();
-        readTestFiles();
+        readTestFilesCsv();
+        readTestFilesDat();
     }
 
     private void createTestFiles() {
@@ -87,26 +91,27 @@ public class RunTests {
         HexManager.create(dummyTeachersHex, TAB_MAES);
     }
 
-    private void readTestFiles() {
+    private void readTestFilesCsv() {
         try {
             StringBuilder sb = new StringBuilder();
 
-            readCSV(MAESTROS, SeparableType.TEACHER).forEach((item) -> sb.append(item).append("\n"));
+            readCsv(MAESTROS, SeparableType.TEACHER).forEach((item) -> sb.append(item).append("\n"));
             sb.append("\n");
 
-            readCSV(TIPO_HORS, SeparableType.SCHEDULE).forEach((item) -> sb.append(item).append("\n"));
+            readCsv(TIPO_HORS, SeparableType.SCHEDULE).forEach((item) -> sb.append(item).append("\n"));
             sb.append("\n");
 
-            readCSV(DEF_HORS, SeparableType.SCHEDULE_TYPE).forEach((item) -> sb.append(item).append("\n"));
+            readCsv(DEF_HORS, SeparableType.SCHEDULE_TYPE).forEach((item) -> sb.append(item).append("\n"));
             sb.append("\n");
 
-            readCSV(TAB_MATERIAS, SeparableType.SUBJECT).forEach((item) -> sb.append(item).append("\n"));
+            readCsv(TAB_MATERIAS, SeparableType.SUBJECT).forEach((item) -> sb.append(item).append("\n"));
             sb.append("\n");
 
-            readCSV(TAB_SEMCARR, SeparableType.CAREER).forEach((item) -> sb.append(item).append("\n"));
+            readCsv(TAB_SEMCARR, SeparableType.CAREER).forEach((item) -> sb.append(item).append("\n"));
             sb.append("\n");
 
-            readCSV(TAB_GRUPOS, SeparableType.GROUP).forEach((item) -> sb.append(item).append("\n"));
+            readCsv(TAB_GRUPOS, SeparableType.GROUP).forEach((item) -> sb.append(item).append("\n"));
+            sb.append("\n");
 
             System.out.print(sb.toString());
         } catch (FileNotFoundException ex) {
@@ -114,7 +119,19 @@ public class RunTests {
         }
     }
 
-    private List<ISeparable> readCSV(String filepath, SeparableType separableType) throws FileNotFoundException {
+    private void readTestFilesDat() {
+        try {
+            StringBuilder sb = new StringBuilder();
+
+            readHex(TAB_AULAS, HexableType.CLASSROOM).forEach((item) -> sb.append(item).append("\n"));
+
+            System.out.print(sb.toString());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(RunTests.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private List<ISeparable> readCsv(String filepath, SeparableType separableType) throws FileNotFoundException {
         List<ISeparable> objects = new ArrayList<>();
 
         List<String> list = CsvManager.asList(filepath);
@@ -127,6 +144,19 @@ public class RunTests {
             if (item != null) {
                 objects.add(item);
             }
+        }
+
+        return objects;
+    }
+
+    private List<IHexable> readHex(String filepath, HexableType hexableType) throws FileNotFoundException {
+        List<IHexable> objects = new ArrayList<>();
+
+        try {
+            String hexString = HexManager.readFile(filepath);
+            objects = HexableFactory.build(hexableType, hexString);
+        } catch (IOException ex) {
+            Logger.getLogger(RunTests.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return objects;
