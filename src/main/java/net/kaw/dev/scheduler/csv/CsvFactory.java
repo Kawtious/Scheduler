@@ -66,22 +66,15 @@ public class CsvFactory {
         try {
             String id = careerValues[0];
             String subjectKey = careerValues[1];
-            int trajectoryStart;
-            int trajectoryEnd;
-
-            try {
-                trajectoryStart = Integer.parseInt(careerValues[2]);
-                trajectoryEnd = Integer.parseInt(careerValues[3]);
-            } catch (NumberFormatException e) {
-                return null;
-            }
+            int trajectoryStart = Integer.parseInt(careerValues[2]);
+            int trajectoryEnd = Integer.parseInt(careerValues[3]);
 
             Career career = new Career(id, subjectKey, trajectoryStart, trajectoryEnd);
 
             if (validate(career)) {
                 return career;
             }
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException | NumberFormatException ex) {
             Logger.getLogger(CsvFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -91,22 +84,16 @@ public class CsvFactory {
     private static Teacher buildTeacher(String[] teacherValues) {
         try {
             char type = teacherValues[0].charAt(0);
-            int controlNumber;
+            int controlNumber = Integer.parseInt(teacherValues[1]);
             String firstName = teacherValues[2];
             String lastName = teacherValues[3];
-
-            try {
-                controlNumber = Integer.parseInt(teacherValues[1]);
-            } catch (NumberFormatException e) {
-                return null;
-            }
 
             Teacher teacher = new Teacher(type, controlNumber, firstName, lastName);
 
             if (validate(teacher)) {
                 return teacher;
             }
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException | NumberFormatException ex) {
             Logger.getLogger(CsvFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -134,16 +121,8 @@ public class CsvFactory {
 
     private static Schedule buildSchedule(String[] scheduleValues) {
         try {
-            int type;
-            int offset;
-
-            try {
-                type = Integer.parseInt(scheduleValues[0]);
-                offset = Integer.parseInt(scheduleValues[1]);
-            } catch (NumberFormatException e) {
-                return null;
-            }
-
+            int type = Integer.parseInt(scheduleValues[0]);
+            int offset = Integer.parseInt(scheduleValues[1]);
             String mask = scheduleValues[2];
             String description = scheduleValues[3];
 
@@ -152,7 +131,7 @@ public class CsvFactory {
             if (validate(schedule)) {
                 return schedule;
             }
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException | NumberFormatException ex) {
             Logger.getLogger(CsvFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
 
