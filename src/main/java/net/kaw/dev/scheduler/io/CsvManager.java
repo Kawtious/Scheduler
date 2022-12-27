@@ -51,8 +51,6 @@ public class CsvManager {
                 // read next line
                 line = reader.readLine();
             }
-
-            reader.close();
         } catch (IOException ex) {
             Logger.getLogger(CsvManager.class.getName()).log(Level.SEVERE, null, ex);
         }
