@@ -123,10 +123,10 @@ public class CsvFactory {
         try {
             int type = Integer.parseInt(scheduleValues[0]);
             int offset = Integer.parseInt(scheduleValues[1]);
-            String mask = scheduleValues[2];
+            String sessionMask = scheduleValues[2];
             String description = scheduleValues[3];
 
-            Schedule schedule = new Schedule(type, offset, mask, description);
+            Schedule schedule = new Schedule(type, offset, sessionMask, description);
 
             if (validate(schedule)) {
                 return schedule;
@@ -142,9 +142,9 @@ public class CsvFactory {
         try {
             String description = scheduleTypeValues[0];
             String availableHours = scheduleTypeValues[1];
-            String mask = scheduleTypeValues[2];
+            String sessionMask = scheduleTypeValues[2];
 
-            ScheduleType scheduleType = new ScheduleType(description, availableHours, mask);
+            ScheduleType scheduleType = new ScheduleType(description, availableHours, sessionMask);
 
             if (validate(scheduleType)) {
                 return scheduleType;
@@ -158,7 +158,7 @@ public class CsvFactory {
 
     private static boolean validate(Schedule schedule) {
         return schedule.getType() >= 0 && schedule.getOffset() >= 0
-                && !schedule.getMask().isEmpty() && !schedule.getDescription().isEmpty();
+                && !schedule.getSessionMask().isEmpty() && !schedule.getDescription().isEmpty();
     }
 
     private static boolean validate(Subject subject) {
@@ -178,7 +178,7 @@ public class CsvFactory {
 
     private static boolean validate(ScheduleType scheduleType) {
         return !scheduleType.getDescription().isEmpty() && !scheduleType.getAvailableHours().isEmpty()
-                && !scheduleType.getMask().isEmpty();
+                && !scheduleType.getSessionMask().isEmpty();
     }
 
 }

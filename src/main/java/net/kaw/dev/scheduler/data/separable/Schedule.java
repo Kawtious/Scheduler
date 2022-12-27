@@ -36,26 +36,26 @@ public class Schedule implements ISeparable {
     private int offset;
 
     /*
-     * The schedule's session mask
+     * The schedule's session sessionMask
      */
-    private String mask;
+    private String sessionMask;
 
     /*
      * The schedule's description
      */
     private String description;
 
-    public Schedule(int type, int offset, String mask, String description) {
+    public Schedule(int type, int offset, String sessionMask, String description) {
         this.type = type;
         this.offset = offset;
-        this.mask = mask;
+        this.sessionMask = sessionMask;
         this.description = description;
     }
 
     public Schedule(int type, int offset, ScheduleType scheduleType) {
         this.type = type;
         this.offset = offset;
-        this.mask = scheduleType.getMask();
+        this.sessionMask = scheduleType.getSessionMask();
         this.description = scheduleType.getDescription();
     }
 
@@ -75,12 +75,12 @@ public class Schedule implements ISeparable {
         this.offset = offset;
     }
 
-    public String getMask() {
-        return mask;
+    public String getSessionMask() {
+        return sessionMask;
     }
 
-    public void setMask(String mask) {
-        this.mask = mask;
+    public void setSessionMask(String sessionMask) {
+        this.sessionMask = sessionMask;
     }
 
     public String getDescription() {
@@ -93,12 +93,12 @@ public class Schedule implements ISeparable {
 
     @Override
     public String toCSV() {
-        return type + "," + offset + "," + mask + "," + description;
+        return type + "," + offset + "," + sessionMask + "," + description;
     }
 
     @Override
     public String toString() {
-        return "Schedule{" + "type=" + type + ", offset=" + offset + ", mask=" + mask + ", description=" + description + '}';
+        return "Schedule{" + "type=" + type + ", offset=" + offset + ", sessionMask=" + sessionMask + ", description=" + description + '}';
     }
 
 }

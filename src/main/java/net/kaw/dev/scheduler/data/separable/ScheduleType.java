@@ -37,14 +37,14 @@ public class ScheduleType implements ISeparable {
     private String availableHours;
 
     /*
-     * The “half-hour” mask that occupies this type of schedule
+     * The “half-hour” sessionMask that occupies this type of schedule
      */
-    private String mask;
+    private String sessionMask;
 
-    public ScheduleType(String description, String availableHours, String mask) {
+    public ScheduleType(String description, String availableHours, String sessionMask) {
         this.description = description;
         this.availableHours = availableHours;
-        this.mask = mask;
+        this.sessionMask = sessionMask;
     }
 
     public String getDescription() {
@@ -63,22 +63,22 @@ public class ScheduleType implements ISeparable {
         this.availableHours = availableHours;
     }
 
-    public String getMask() {
-        return mask;
+    public String getSessionMask() {
+        return sessionMask;
     }
 
-    public void setMask(String mask) {
-        this.mask = mask;
+    public void setSessionMask(String sessionMask) {
+        this.sessionMask = sessionMask;
     }
 
     @Override
     public String toCSV() {
-        return description + "," + availableHours + "," + mask;
+        return description + "," + availableHours + "," + sessionMask;
     }
 
     @Override
     public String toString() {
-        return "ScheduleType{" + "description=" + description + ", availableHours=" + availableHours + ", mask=" + mask + '}';
+        return "ScheduleType{" + "description=" + description + ", availableHours=" + availableHours + ", sessionMask=" + sessionMask + '}';
     }
 
 }
