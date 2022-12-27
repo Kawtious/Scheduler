@@ -22,7 +22,7 @@ package net.kaw.dev.scheduler.testing;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.kaw.dev.scheduler.csv.CsvFactory;
+import net.kaw.dev.scheduler.data.SeparableFactory;
 import net.kaw.dev.scheduler.data.Career;
 import net.kaw.dev.scheduler.data.Classroom;
 import net.kaw.dev.scheduler.data.Group;
@@ -51,7 +51,7 @@ public class DummyData {
             "P,131,Roy,Kshlerin"};
 
         for (String value : values) {
-            Teacher teacher = (Teacher) CsvFactory.build(CsvFactory.SeparableType.TEACHER, value);
+            Teacher teacher = (Teacher) SeparableFactory.build(SeparableFactory.SeparableType.TEACHER, value);
 
             if (teacher != null) {
                 teachers.add(teacher);
@@ -164,7 +164,7 @@ public class DummyData {
             "ETLE,L2,000003E0h,LAB DE CIRCUITOS ELEC"};
 
         for (String value : values) {
-            Subject subject = (Subject) CsvFactory.build(CsvFactory.SeparableType.SUBJECT, value);
+            Subject subject = (Subject) SeparableFactory.build(SeparableFactory.SeparableType.SUBJECT, value);
 
             if (subject != null) {
                 subjects.add(subject);
@@ -194,7 +194,7 @@ public class DummyData {
             "LuMaMiJuVi(1.0),05550555h,000000001F1Fh"};
 
         for (String value : values) {
-            ScheduleType scheduleType = (ScheduleType) CsvFactory.build(CsvFactory.SeparableType.SCHEDULE_TYPE, value);
+            ScheduleType scheduleType = (ScheduleType) SeparableFactory.build(SeparableFactory.SeparableType.SCHEDULE_TYPE, value);
 
             if (scheduleType != null) {
                 scheduleTypes.add(scheduleType);
@@ -303,7 +303,7 @@ public class DummyData {
             "14,26,000000001F1Fh,LuMaMiJuVi(1.0)"};
 
         for (String value : values) {
-            Schedule schedule = (Schedule) CsvFactory.build(CsvFactory.SeparableType.SCHEDULE, value);
+            Schedule schedule = (Schedule) SeparableFactory.build(SeparableFactory.SeparableType.SCHEDULE, value);
 
             if (schedule != null) {
                 schedules.add(schedule);
@@ -379,7 +379,7 @@ public class DummyData {
             "IEL7,EP01,7,-1"};
 
         for (String value : values) {
-            Career career = (Career) CsvFactory.build(CsvFactory.SeparableType.CAREER, value);
+            Career career = (Career) SeparableFactory.build(SeparableFactory.SeparableType.CAREER, value);
 
             if (career != null) {
                 careers.add(career);
@@ -584,7 +584,7 @@ public class DummyData {
             "ETL4,1,424"};
 
         for (String value : values) {
-            Group group = (Group) CsvFactory.build(CsvFactory.SeparableType.GROUP, value);
+            Group group = (Group) SeparableFactory.build(SeparableFactory.SeparableType.GROUP, value);
 
             if (group != null) {
                 groups.add(group);

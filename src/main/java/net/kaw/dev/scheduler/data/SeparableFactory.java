@@ -18,19 +18,13 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package net.kaw.dev.scheduler.csv;
+package net.kaw.dev.scheduler.data;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.kaw.dev.scheduler.data.Career;
-import net.kaw.dev.scheduler.data.Group;
-import net.kaw.dev.scheduler.data.Schedule;
-import net.kaw.dev.scheduler.data.ScheduleType;
-import net.kaw.dev.scheduler.data.Subject;
-import net.kaw.dev.scheduler.data.Teacher;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
-public class CsvFactory {
+public class SeparableFactory {
 
     public enum SeparableType {
         SCHEDULE, SCHEDULE_TYPE, SUBJECT, TEACHER, CAREER, GROUP
@@ -78,7 +72,7 @@ public class CsvFactory {
                 return career;
             }
         } catch (IndexOutOfBoundsException | NumberFormatException ex) {
-            Logger.getLogger(CsvFactory.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SeparableFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
@@ -97,7 +91,7 @@ public class CsvFactory {
                 return teacher;
             }
         } catch (IndexOutOfBoundsException | NumberFormatException ex) {
-            Logger.getLogger(CsvFactory.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SeparableFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
@@ -116,7 +110,7 @@ public class CsvFactory {
                 return subject;
             }
         } catch (IndexOutOfBoundsException ex) {
-            Logger.getLogger(CsvFactory.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SeparableFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
@@ -135,7 +129,7 @@ public class CsvFactory {
                 return schedule;
             }
         } catch (IndexOutOfBoundsException | NumberFormatException ex) {
-            Logger.getLogger(CsvFactory.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SeparableFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
@@ -153,7 +147,7 @@ public class CsvFactory {
                 return scheduleType;
             }
         } catch (IndexOutOfBoundsException ex) {
-            Logger.getLogger(CsvFactory.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SeparableFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
@@ -171,7 +165,7 @@ public class CsvFactory {
                 return group;
             }
         } catch (IndexOutOfBoundsException | NumberFormatException ex) {
-            Logger.getLogger(CsvFactory.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SeparableFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;

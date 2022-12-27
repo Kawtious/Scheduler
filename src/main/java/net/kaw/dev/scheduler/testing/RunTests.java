@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.kaw.dev.scheduler.csv.CsvFactory;
-import net.kaw.dev.scheduler.csv.CsvFactory.SeparableType;
+import net.kaw.dev.scheduler.data.SeparableFactory;
+import net.kaw.dev.scheduler.data.SeparableFactory.SeparableType;
 import net.kaw.dev.scheduler.data.interfaces.IHexable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 import net.kaw.dev.scheduler.io.CsvManager;
@@ -122,7 +122,7 @@ public class RunTests {
         for (String string : list) {
             ISeparable item;
 
-            item = CsvFactory.build(separableType, string);
+            item = SeparableFactory.build(separableType, string);
 
             if (item != null) {
                 objects.add(item);

@@ -44,7 +44,7 @@ public class ScheduleType implements ISeparable {
      */
     private String sessionMask;
 
-    public ScheduleType(String description, String availableHours, String sessionMask) {
+    protected ScheduleType(String description, String availableHours, String sessionMask) {
         this.description = description;
         this.availableHours = availableHours;
         this.sessionMask = sessionMask;

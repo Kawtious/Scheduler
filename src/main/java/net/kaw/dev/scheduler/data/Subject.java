@@ -48,7 +48,7 @@ public class Subject implements ISeparable {
      */
     private String description;
 
-    public Subject(String subjectKey, String classKey, String schedule, String description) {
+    protected Subject(String subjectKey, String classKey, String schedule, String description) {
         this.subjectKey = subjectKey;
         this.classKey = classKey;
         this.schedule = schedule;

@@ -57,9 +57,9 @@ public class Teacher implements ISeparable, IHexable {
      * second, third until reaching 27, then continues the first hour on Tuesday, the second,....,
      * etc, then Wednesday and so on until Friday. "Zero" means schedule unavailability and "one" availability.
      */
-    private final boolean[][] availabilityMap = new boolean[5][28];
+    private final boolean[][] map = new boolean[5][28];
 
-    public Teacher(char type, int controlNumber, String firstName, String lastName) {
+    protected Teacher(char type, int controlNumber, String firstName, String lastName) {
         this.type = type;
         this.controlNumber = controlNumber;
         this.firstName = firstName;
@@ -108,7 +108,7 @@ public class Teacher implements ISeparable, IHexable {
     }
 
     public void setValueInMap(int day, int halfhour, boolean value) {
-        availabilityMap[day][halfhour] = value;
+        map[day][halfhour] = value;
     }
 
     @Override
@@ -130,7 +130,7 @@ public class Teacher implements ISeparable, IHexable {
 
         for (int day = 0; day < 5; day++) {
             for (int halfhour = 0; halfhour < 28; halfhour++) {
-                sb.append(HexUtils.booleanToHex(availabilityMap[day][halfhour], 8));
+                sb.append(HexUtils.booleanToHex(map[day][halfhour], 8));
             }
         }
 

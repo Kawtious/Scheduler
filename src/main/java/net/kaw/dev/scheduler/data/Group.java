@@ -39,7 +39,7 @@ public class Group implements ISeparable {
      */
     private int int_2;
 
-    public Group(String subjectKey, int int_1, int int_2) {
+    protected Group(String subjectKey, int int_1, int int_2) {
         this.subjectKey = subjectKey;
         this.int_1 = int_1;
         this.int_2 = int_2;

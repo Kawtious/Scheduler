@@ -38,7 +38,7 @@ public class Career implements ISeparable {
 
     private int trajectoryEnd;
 
-    public Career(String id, String subjectKey, int trajectoryStart, int trajectoryEnd) {
+    protected Career(String id, String subjectKey, int trajectoryStart, int trajectoryEnd) {
         this.id = id;
         this.subjectKey = subjectKey;
         this.trajectoryStart = trajectoryStart;

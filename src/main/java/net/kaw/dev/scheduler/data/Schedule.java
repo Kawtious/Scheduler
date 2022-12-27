@@ -48,14 +48,14 @@ public class Schedule implements ISeparable {
      */
     private String description;
 
-    public Schedule(int type, int offset, String sessionMask, String description) {
+    protected Schedule(int type, int offset, String sessionMask, String description) {
         this.type = type;
         this.offset = offset;
         this.sessionMask = sessionMask;
         this.description = description;
     }
 
-    public Schedule(int type, int offset, ScheduleType scheduleType) {
+    protected Schedule(int type, int offset, ScheduleType scheduleType) {
         this.type = type;
         this.offset = offset;
         this.sessionMask = scheduleType.getSessionMask();
