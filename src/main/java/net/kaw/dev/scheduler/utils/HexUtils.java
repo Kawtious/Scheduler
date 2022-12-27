@@ -82,9 +82,6 @@ public class HexUtils {
 
         if (!backPadding) {
             sb.append(str);
-            System.out.println(str);
-            System.out.println(str.length());
-            System.out.println(padding);
 
             for (int i = str.length(); i < padding; i++) {
                 sb.append("0");
