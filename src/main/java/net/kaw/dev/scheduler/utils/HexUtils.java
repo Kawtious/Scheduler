@@ -118,7 +118,14 @@ public class HexUtils {
     }
 
     public static String stringToHex(String str) {
-        return String.format("%x", new BigInteger(1, str.getBytes(/*YOUR_CHARSET?*/))) + "00";
+        String result = String.format("%x", new BigInteger(1, str.getBytes(/*YOUR_CHARSET?*/)));
+
+        // Add null terminator
+        if (!result.endsWith("00")) {
+            return result + "00";
+        }
+
+        return result;
     }
 
     public static String stringToHex(String str, int padding) {
