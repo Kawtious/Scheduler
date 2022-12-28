@@ -35,12 +35,18 @@ public class SeparableFactory {
             return null;
         }
 
+        /*
+         * Split all values in the string using commas
+         */
         String[] values = csvString.split(",");
 
         if (values.length == 0) {
             return null;
         }
 
+        /*
+         * Check what type of data must be built, and use the corresponding build method
+         */
         switch (separableType) {
             case SCHEDULE:
                 return buildSchedule(values);
