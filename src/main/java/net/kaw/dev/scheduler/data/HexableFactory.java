@@ -127,7 +127,7 @@ public class HexableFactory {
                 int currentIndexControlNumberEnd = currentIndexControlNumberStart + 8;
 
                 int currentIndexFirstNameStart = currentIndexControlNumberEnd;
-                int currentIndexFirstNameEnd = currentIndexFirstNameStart + 2; // <- fix
+                int currentIndexFirstNameEnd = currentIndexFirstNameStart + 2;
 
                 String[] hexByteFirstName = data.substring(currentIndexFirstNameStart, data.length()).split("(?<=\\G.{2})");
 
@@ -139,7 +139,7 @@ public class HexableFactory {
                 }
 
                 int currentIndexLastNameStart = currentIndexFirstNameEnd;
-                int currentIndexLastNameEnd = currentIndexLastNameStart + 2; // <- fix
+                int currentIndexLastNameEnd = currentIndexLastNameStart + 2;
 
                 String[] hexByteLastName = data.substring(currentIndexLastNameStart, data.length()).split("(?<=\\G.{2})");
 
