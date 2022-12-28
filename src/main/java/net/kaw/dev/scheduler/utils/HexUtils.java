@@ -113,34 +113,6 @@ public class HexUtils {
     }
 
     /**
-     * Adds padding to an hexadecimal string
-     *
-     * @param str         Original hexadecimal string
-     * @param padding     Amounts of zeroes to be added
-     * @param backPadding Will zeroes be added to the front (left) or the back (right)?
-     * @return Hexadecimal string with the padding zeroes
-     */
-    private static String toHexPadded(String str, int padding, boolean backPadding) {
-        StringBuilder sb = new StringBuilder();
-
-        if (!backPadding) {
-            sb.append(str);
-
-            for (int i = str.length(); i < padding; i++) {
-                sb.append("0");
-            }
-        } else {
-            for (int i = 0; i < padding - str.length(); i++) {
-                sb.append("0");
-            }
-
-            sb.append(str);
-        }
-
-        return sb.toString();
-    }
-
-    /**
      * Converts an integer value into an hexadecimal string
      *
      * @param val     Integer value to convert
@@ -193,6 +165,34 @@ public class HexUtils {
         // true: 1, false: 0
         int intValue = value ? 1 : 0;
         return intToHex(intValue, padding);
+    }
+
+    /**
+     * Adds padding to an hexadecimal string
+     *
+     * @param str         Original hexadecimal string
+     * @param padding     Amounts of zeroes to be added
+     * @param backPadding Will zeroes be added to the front (left) or the back (right)?
+     * @return Hexadecimal string with the padding zeroes
+     */
+    private static String toHexPadded(String str, int padding, boolean backPadding) {
+        StringBuilder sb = new StringBuilder();
+
+        if (!backPadding) {
+            sb.append(str);
+
+            for (int i = str.length(); i < padding; i++) {
+                sb.append("0");
+            }
+        } else {
+            for (int i = 0; i < padding - str.length(); i++) {
+                sb.append("0");
+            }
+
+            sb.append(str);
+        }
+
+        return sb.toString();
     }
 
 }
