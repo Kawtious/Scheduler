@@ -144,8 +144,10 @@ public class HexableFactory {
                 String[] mapValues = data.substring(currentIndexClassMapStart, currentIndexClassMapEnd).split("(?<=\\G.{8})");
 
                 for (int day = 0; day < ScheduleMap.DAYS; day++) {
+                    int dayIndex = day * ScheduleMap.HALFHOURS;
+
                     for (int halfhour = 0; halfhour < ScheduleMap.HALFHOURS; halfhour++) {
-                        String mapValue = mapValues[halfhour + (day * ScheduleMap.HALFHOURS)];
+                        String mapValue = mapValues[halfhour + (dayIndex)];
                         classroom.getScheduleMap().setMapValue(day, halfhour, HexUtils.hexToInt(mapValue));
                     }
                 }
@@ -277,8 +279,10 @@ public class HexableFactory {
                 String[] mapValues = data.substring(currentIndexClassMapStart, currentIndexClassMapEnd).split("(?<=\\G.{8})");
 
                 for (int day = 0; day < ScheduleMap.DAYS; day++) {
+                    int dayIndex = day * ScheduleMap.HALFHOURS;
+
                     for (int halfhour = 0; halfhour < ScheduleMap.HALFHOURS; halfhour++) {
-                        String mapValue = mapValues[halfhour + (day * ScheduleMap.HALFHOURS)];
+                        String mapValue = mapValues[halfhour + (dayIndex)];
                         teacher.getScheduleMap().setMapValue(day, halfhour, HexUtils.hexToBoolean(mapValue));
                     }
                 }
