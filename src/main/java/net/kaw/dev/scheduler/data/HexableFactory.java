@@ -38,7 +38,10 @@ public class HexableFactory {
     }
 
     public static List<IHexable> build(HexableType hexableType, String hexString) {
-        if (hexString.isEmpty()) {
+        /*
+         * Make sure hexString is a valid hexadecimal string
+         */
+        if (!hexString.matches("^[0-9a-fA-F]+$")) {
             return null;
         }
 
