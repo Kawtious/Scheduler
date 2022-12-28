@@ -40,17 +40,21 @@ public class CsvManager {
         }
     }
 
-    public static List<ISeparable> read(String filepath, SeparableType separableType) throws FileNotFoundException {
+    public static List<ISeparable> read(String filepath, SeparableType separableType) {
         List<ISeparable> objects = new ArrayList<>();
 
-        List<String> list = CsvManager.asList(filepath);
+        try {
+            List<String> list = CsvManager.asList(filepath);
 
-        for (String string : list) {
-            ISeparable item = SeparableFactory.build(separableType, string);
+            for (String string : list) {
+                ISeparable item = SeparableFactory.build(separableType, string);
 
-            if (item != null) {
-                objects.add(item);
+                if (item != null) {
+                    objects.add(item);
+                }
             }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(CsvManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return objects;

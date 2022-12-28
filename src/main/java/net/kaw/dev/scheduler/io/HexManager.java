@@ -32,7 +32,6 @@ import java.util.logging.Logger;
 import net.kaw.dev.scheduler.data.HexableFactory;
 import net.kaw.dev.scheduler.data.HexableFactory.HexableType;
 import net.kaw.dev.scheduler.data.interfaces.IHexable;
-import net.kaw.dev.scheduler.testing.RunTests;
 import net.kaw.dev.scheduler.utils.HexUtils;
 
 public class HexManager {
@@ -51,18 +50,18 @@ public class HexManager {
 
             HexManager.writeToFile(filepath, sb.toString());
         } catch (IOException ex) {
-            Logger.getLogger(RunTests.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HexManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static List<IHexable> read(String filepath, HexableType hexableType) throws FileNotFoundException {
+    public static List<IHexable> read(String filepath, HexableType hexableType) {
         List<IHexable> objects = new ArrayList<>();
 
         try {
             String hexString = HexManager.readFile(filepath);
             objects = HexableFactory.build(hexableType, hexString);
         } catch (IOException ex) {
-            Logger.getLogger(RunTests.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HexManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return objects;
