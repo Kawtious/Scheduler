@@ -16,11 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.kaw.dev.scheduler.data.SeparableFactory;
+import net.kaw.dev.scheduler.data.SeparableFactory.SeparableType;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
 public class CsvManager {
 
-    public static void createCSV(List<ISeparable> items, String filepath) {
+    public static void write(List<ISeparable> items, String filepath) {
         StringBuilder sb = new StringBuilder();
         for (ISeparable item : items) {
             sb.append(item.toCsv()).append("\n");
@@ -38,7 +40,23 @@ public class CsvManager {
         }
     }
 
-    public static List<String> asList(String filepath) throws FileNotFoundException {
+    public static List<ISeparable> read(String filepath, SeparableType separableType) throws FileNotFoundException {
+        List<ISeparable> objects = new ArrayList<>();
+
+        List<String> list = CsvManager.asList(filepath);
+
+        for (String string : list) {
+            ISeparable item = SeparableFactory.build(separableType, string);
+
+            if (item != null) {
+                objects.add(item);
+            }
+        }
+
+        return objects;
+    }
+
+    private static List<String> asList(String filepath) throws FileNotFoundException {
         List<String> list = new ArrayList<>();
 
         try (final BufferedReader reader = new BufferedReader(new FileReader(new File(filepath)))) {

@@ -25,16 +25,19 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.kaw.dev.scheduler.data.HexableFactory;
+import net.kaw.dev.scheduler.data.HexableFactory.HexableType;
 import net.kaw.dev.scheduler.data.interfaces.IHexable;
 import net.kaw.dev.scheduler.testing.RunTests;
 import net.kaw.dev.scheduler.utils.HexUtils;
 
 public class HexManager {
 
-    public static void create(List<IHexable> items, String filepath) {
+    public static void write(List<IHexable> items, String filepath) {
         try {
             StringBuilder sb = new StringBuilder();
 
@@ -52,6 +55,19 @@ public class HexManager {
         }
     }
 
+    public static List<IHexable> read(String filepath, HexableType hexableType) throws FileNotFoundException {
+        List<IHexable> objects = new ArrayList<>();
+
+        try {
+            String hexString = HexManager.readFile(filepath);
+            objects = HexableFactory.build(hexableType, hexString);
+        } catch (IOException ex) {
+            Logger.getLogger(RunTests.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return objects;
+    }
+
     /**
      * Get a hexadecimal string from a file
      *
@@ -60,7 +76,7 @@ public class HexManager {
      * @throws IOException If file, given by filepath, cannot be read.
      * @see HexUtils#bytesToHex(byte[])
      */
-    public static String readFile(String filepath) throws IOException {
+    private static String readFile(String filepath) throws IOException {
         File file = new File(filepath);
         byte[] bytes = new byte[(int) file.length()];
 
@@ -78,7 +94,7 @@ public class HexManager {
     /**
      * Saves the content of a string to a file.
      *
-     * @param filepath The file path to create to
+     * @param filepath The file path to write to
      * @throws FileNotFoundException If file cannot be written due to unexpected condition.
      */
     private static void writeToFile(String filepath, String hexString) throws IOException, FileNotFoundException {
