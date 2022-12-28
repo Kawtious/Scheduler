@@ -73,10 +73,22 @@ public class HexUtils {
         return Character.digit(hex_char, 16) << position * 4;
     }
 
+    /**
+     * Parses an hexadecimal string into an integer value
+     *
+     * @param hex The hexadecimal string to convert
+     * @return The integer value of the hexadecimal string
+     */
     public static int hexToInt(String hex) {
         return Integer.parseInt(hex, 16);
     }
 
+    /**
+     * Converts each hexadecimal value in a string into characters and convert it into a string
+     *
+     * @param hex The hexadecimal string to convert
+     * @return String of characters built from a hexadecimal string (e.g. 4C36 = L6)
+     */
     public static String hexToString(String hex) {
         StringBuilder output = new StringBuilder();
 
@@ -88,10 +100,26 @@ public class HexUtils {
         return output.toString();
     }
 
+    /**
+     * Converts an hexadecimal string into a boolean value.
+     * <p>
+     * This only converts the hexadecimal into a string and then checks if the value is bigger than 0
+     *
+     * @param hex The hexadecimal string to convert
+     * @return True if the value is bigger than 0, otherwise it'll return false
+     */
     public static boolean hexToBoolean(String hex) {
         return hexToInt(hex) > 0;
     }
 
+    /**
+     * Adds padding to an hexadecimal string
+     *
+     * @param str         Original hexadecimal string
+     * @param padding     Amounts of zeroes to be added
+     * @param backPadding Will zeroes be added to the front (left) or the back (right)?
+     * @return Hexadecimal string with the padding zeroes
+     */
     private static String toHexPadded(String str, int padding, boolean backPadding) {
         StringBuilder sb = new StringBuilder();
 
@@ -112,11 +140,24 @@ public class HexUtils {
         return sb.toString();
     }
 
+    /**
+     * Converts an integer value into an hexadecimal string
+     *
+     * @param val     Integer value to convert
+     * @param padding Hexadecimal string padding
+     * @return Hexadecimal string equivalent of the integer value
+     */
     public static String intToHex(int val, int padding) {
         String intString = Integer.toHexString(val);
         return toHexPadded(intString, padding, true);
     }
 
+    /**
+     * Converts each character in a string to their respective hexadecimal values
+     *
+     * @param val Integer value to convert
+     * @return Hexadecimal string equivalent of the integer value
+     */
     public static String stringToHex(String str) {
         String result = String.format("%x", new BigInteger(1, str.getBytes(/*YOUR_CHARSET?*/)));
 
@@ -128,12 +169,26 @@ public class HexUtils {
         return result;
     }
 
+    /**
+     * Converts each character in a string to their respective hexadecimal values
+     *
+     * @param val     Integer value to convert
+     * @param padding Hexadecimal string padding
+     * @return Hexadecimal string equivalent of the string value
+     */
     public static String stringToHex(String str, int padding) {
         // This behaves a little differently than the other stringToHex method
         String hexStr = stringToHex(str);
         return toHexPadded(hexStr, padding, false);
     }
 
+    /**
+     * Converts a boolean value to an hexadecimal value. True = 01, false = 00
+     *
+     * @param value   Boolean value to convert
+     * @param padding Hexadecimal string padding
+     * @return Hexadecimal string equivalent of the boolean value
+     */
     public static String booleanToHex(boolean value, int padding) {
         // true: 1, false: 0
         int intValue = value ? 1 : 0;
