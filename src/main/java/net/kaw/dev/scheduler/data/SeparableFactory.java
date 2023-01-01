@@ -44,25 +44,39 @@ public class SeparableFactory {
             return null;
         }
 
+        ISeparable separable;
+
         /*
          * Check what type of data must be built, and use the corresponding build method
          */
         switch (separableType) {
             case SCHEDULE:
-                return buildSchedule(values);
+                separable = buildSchedule(values);
+                break;
             case SCHEDULE_TYPE:
-                return buildScheduleType(values);
+                separable = buildScheduleType(values);
+                break;
             case SUBJECT:
-                return buildSubject(values);
+                separable = buildSubject(values);
+                break;
             case TEACHER:
-                return buildTeacher(values);
+                separable = buildTeacher(values);
+                break;
             case CAREER:
-                return buildCareer(values);
+                separable = buildCareer(values);
+                break;
             case GROUP:
-                return buildGroup(values);
+                separable = buildGroup(values);
+                break;
             default:
                 return null;
         }
+
+        if (separable != null && separable.validate()) {
+            return separable;
+        }
+
+        return null;
     }
 
     private static Career buildCareer(String[] careerValues) {
@@ -72,11 +86,7 @@ public class SeparableFactory {
             int trajectoryStart = Integer.parseInt(careerValues[2]);
             int trajectoryEnd = Integer.parseInt(careerValues[3]);
 
-            Career career = new Career(id, subjectKey, trajectoryStart, trajectoryEnd);
-
-            if (career.validate()) {
-                return career;
-            }
+            return new Career(id, subjectKey, trajectoryStart, trajectoryEnd);
         } catch (IndexOutOfBoundsException | NumberFormatException ex) {
             Logger.getLogger(SeparableFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -91,11 +101,7 @@ public class SeparableFactory {
             String firstName = teacherValues[2];
             String lastName = teacherValues[3];
 
-            Teacher teacher = new Teacher(type, controlNumber, firstName, lastName);
-
-            if (teacher.validate()) {
-                return teacher;
-            }
+            return new Teacher(type, controlNumber, firstName, lastName);
         } catch (IndexOutOfBoundsException | NumberFormatException ex) {
             Logger.getLogger(SeparableFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -110,11 +116,7 @@ public class SeparableFactory {
             String schedule = subjectValues[2];
             String description = subjectValues[3];
 
-            Subject subject = new Subject(subjectKey, classKey, schedule, description);
-
-            if (subject.validate()) {
-                return subject;
-            }
+            return new Subject(subjectKey, classKey, schedule, description);
         } catch (IndexOutOfBoundsException ex) {
             Logger.getLogger(SeparableFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -129,11 +131,7 @@ public class SeparableFactory {
             String sessionMask = scheduleValues[2];
             String description = scheduleValues[3];
 
-            Schedule schedule = new Schedule(type, offset, sessionMask, description);
-
-            if (schedule.validate()) {
-                return schedule;
-            }
+            return new Schedule(type, offset, sessionMask, description);
         } catch (IndexOutOfBoundsException | NumberFormatException ex) {
             Logger.getLogger(SeparableFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -147,11 +145,7 @@ public class SeparableFactory {
             String availableHours = scheduleTypeValues[1];
             String sessionMask = scheduleTypeValues[2];
 
-            ScheduleType scheduleType = new ScheduleType(description, availableHours, sessionMask);
-
-            if (scheduleType.validate()) {
-                return scheduleType;
-            }
+            return new ScheduleType(description, availableHours, sessionMask);
         } catch (IndexOutOfBoundsException ex) {
             Logger.getLogger(SeparableFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -165,11 +159,7 @@ public class SeparableFactory {
             int int_1 = Integer.parseInt(groupValues[1]);
             int int_2 = Integer.parseInt(groupValues[2]);
 
-            Group group = new Group(subjectKey, int_1, int_2);
-
-            if (group.validate()) {
-                return group;
-            }
+            return new Group(subjectKey, int_1, int_2);
         } catch (IndexOutOfBoundsException | NumberFormatException ex) {
             Logger.getLogger(SeparableFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
