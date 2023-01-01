@@ -45,31 +45,37 @@ public class HexableFactory {
             return null;
         }
 
+        List<IHexable> hexable = null;
+
         /*
          * Check what type of data must be built, and use the corresponding build method
          */
         switch (hexableType) {
             case CLASSROOM:
-                return buildClassrooms(hexString);
+                hexable = buildClassrooms(hexString);
+                break;
             case TEACHER:
-                return buildTeachers(hexString);
-            default:
-                return null;
+                hexable = buildTeachers(hexString);
+                break;
         }
+
+        return hexable;
     }
 
     private static List<IHexable> buildClassrooms(String classroomsHexString) {
-        /*
-         * Classroom data is structured in a funny way.
-         * The first 8 bytes represent the size of the list of classrooms in the data,
-         * which thankfully lets us save memory by setting a fixed size on the ArrayList.
-         * 
-         * This reads the first 8 bytes and creates the new ArrayList
-         */
-        int listSize = HexUtils.hexToInt(classroomsHexString.substring(0, 8));
-        List<IHexable> classrooms = new ArrayList<>(listSize);
+        List<IHexable> classrooms = null;
 
         try {
+            /*
+             * Classroom data is structured in a funny way.
+             * The first 8 bytes represent the size of the list of classrooms in the data,
+             * which thankfully lets us save memory by setting a fixed size on the ArrayList.
+             * 
+             * This reads the first 8 bytes and creates the new ArrayList
+             */
+            int listSize = HexUtils.hexToInt(classroomsHexString.substring(0, 8));
+            classrooms = new ArrayList<>(listSize);
+
             /*
              * AAAAAAARRRGHHH MAAAAAAATH NOOOOOOOOOOOOO
              *
@@ -165,18 +171,20 @@ public class HexableFactory {
     }
 
     private static List<IHexable> buildTeachers(String teachersHexString) {
-        /*
-         * I'll just copy comments from buildClassrooms to save time.
-         *
-         * The first 8 bytes represent the size of the list of teachers in the data,
-         * which thankfully lets us save memory by setting a fixed size on the ArrayList.
-         * 
-         * This reads the first 8 bytes and creates the new ArrayList
-         */
-        int listSize = HexUtils.hexToInt(teachersHexString.substring(0, 8));
-        List<IHexable> teachers = new ArrayList<>(listSize);
+        List<IHexable> teachers = null;
 
         try {
+            /*
+             * I'll just copy comments from buildClassrooms to save time.
+             *
+             * The first 8 bytes represent the size of the list of teachers in the data,
+             * which thankfully lets us save memory by setting a fixed size on the ArrayList.
+             * 
+             * This reads the first 8 bytes and creates the new ArrayList
+             */
+            int listSize = HexUtils.hexToInt(teachersHexString.substring(0, 8));
+            teachers = new ArrayList<>(listSize);
+
             /*
              * Data here is formatted in a slightly more complex way compared to Classroom.
              * We make use of null terminators to determine when we should stop reading
