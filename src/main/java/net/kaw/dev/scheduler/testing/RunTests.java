@@ -80,9 +80,6 @@ public class RunTests {
         CsvManager.write(dummySubjects, TAB_MATERIAS);
         CsvManager.write(dummyCareers, TAB_SEMCARR);
         CsvManager.write(dummyGroups, TAB_GRUPOS);
-
-        HexManager.write(dummyClassrooms, TAB_AULAS);
-        HexManager.write(dummyTeachersHex, TAB_MAES);
     }
 
     private void createTestFilesDat() {
