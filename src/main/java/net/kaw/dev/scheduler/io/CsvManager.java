@@ -39,18 +39,15 @@ import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 public class CsvManager {
 
     public static void write(List<ISeparable> items, String filepath) {
-        StringBuilder sb = new StringBuilder();
-        for (ISeparable item : items) {
-            sb.append(item.toCsv()).append("\n");
-        }
-
         try {
+            String csv = convertToCsv(items);
+
             File file = new File(filepath);
             if (!file.exists()) {
                 file.createNewFile();
             }
 
-            Files.writeString(Paths.get(filepath), sb.toString(), StandardCharsets.UTF_8);
+            Files.writeString(Paths.get(filepath), csv, StandardCharsets.UTF_8);
         } catch (IOException ex) {
             Logger.getLogger(CsvManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -60,15 +57,8 @@ public class CsvManager {
         List<ISeparable> objects = new ArrayList<>();
 
         try {
-            List<String> list = CsvManager.asList(filepath);
-
-            for (String string : list) {
-                ISeparable item = SeparableFactory.build(separableType, string);
-
-                if (item != null) {
-                    objects.add(item);
-                }
-            }
+            List<String> lines = CsvManager.getFileLines(filepath);
+            convertToSeparables(lines, separableType);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(CsvManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -76,15 +66,15 @@ public class CsvManager {
         return objects;
     }
 
-    private static List<String> asList(String filepath) throws FileNotFoundException {
-        List<String> list = new ArrayList<>();
+    private static List<String> getFileLines(String filepath) throws FileNotFoundException {
+        List<String> lines = new ArrayList<>();
 
         try (final BufferedReader reader = new BufferedReader(new FileReader(new File(filepath)))) {
             String line = reader.readLine();
 
             while (line != null) {
                 if (!line.isEmpty()) {
-                    list.add(line);
+                    lines.add(line);
                 }
                 // read next line
                 line = reader.readLine();
@@ -93,7 +83,31 @@ public class CsvManager {
             Logger.getLogger(CsvManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return list;
+        return lines;
+    }
+
+    private static List<ISeparable> convertToSeparables(List<String> list, SeparableType separableType) {
+        List<ISeparable> objects = new ArrayList<>();
+
+        for (String string : list) {
+            ISeparable item = SeparableFactory.build(separableType, string);
+
+            if (item != null) {
+                objects.add(item);
+            }
+        }
+
+        return objects;
+    }
+
+    private static String convertToCsv(List<ISeparable> items) {
+        StringBuilder sb = new StringBuilder();
+
+        for (ISeparable item : items) {
+            sb.append(item.toCsv()).append("\n");
+        }
+
+        return sb.toString();
     }
 
 }

@@ -20,9 +20,12 @@
  */
 package net.kaw.dev.scheduler.data;
 
+import java.util.HashMap;
+import java.util.Map;
+import net.kaw.dev.scheduler.data.interfaces.IMappable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
-public class Career implements ISeparable {
+public class Career implements IMappable, ISeparable {
 
     /*
      * Career semester identifier
@@ -92,6 +95,18 @@ public class Career implements ISeparable {
     @Override
     public boolean validate() {
         return !id.isEmpty() && !subjectKey.isEmpty() && trajectoryStart >= 0 && trajectoryEnd >= -1;
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>(4);
+
+        map.put("id", id);
+        map.put("subjectKey", subjectKey);
+        map.put("trajectoryStart", trajectoryStart);
+        map.put("trajectoryEnd", trajectoryEnd);
+
+        return map;
     }
 
     @Override

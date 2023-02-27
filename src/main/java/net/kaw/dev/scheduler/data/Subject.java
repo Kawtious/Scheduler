@@ -20,12 +20,15 @@
  */
 package net.kaw.dev.scheduler.data;
 
+import java.util.HashMap;
+import java.util.Map;
+import net.kaw.dev.scheduler.data.interfaces.IMappable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
 /**
  * Contains information about a subject
  */
-public class Subject implements ISeparable {
+public class Subject implements IMappable, ISeparable {
 
     /*
      * The subject's key
@@ -48,7 +51,7 @@ public class Subject implements ISeparable {
      */
     private String description;
 
-    protected Subject(String subjectKey, String classKey, String schedule, String description) {
+    public Subject(String subjectKey, String classKey, String schedule, String description) {
         this.subjectKey = subjectKey;
         this.classKey = classKey;
         this.schedule = schedule;
@@ -95,6 +98,18 @@ public class Subject implements ISeparable {
     @Override
     public boolean validate() {
         return !subjectKey.isEmpty() && !classKey.isEmpty() && !schedule.isEmpty() && !description.isEmpty();
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>(3);
+
+        map.put("subjectKey", subjectKey);
+        map.put("classKey", classKey);
+        map.put("schedule", schedule);
+        map.put("description", description);
+
+        return map;
     }
 
     @Override

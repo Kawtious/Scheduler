@@ -20,9 +20,12 @@
  */
 package net.kaw.dev.scheduler.data;
 
+import java.util.HashMap;
+import java.util.Map;
+import net.kaw.dev.scheduler.data.interfaces.IMappable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
-public class Group implements ISeparable {
+public class Group implements IMappable, ISeparable {
 
     /*
      * The subject's key
@@ -83,6 +86,17 @@ public class Group implements ISeparable {
     @Override
     public boolean validate() {
         return !subjectKey.isEmpty() && int_1 >= 0 && int_2 >= 0;
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>(3);
+
+        map.put("subjectKey", subjectKey);
+        map.put("int_1", int_1);
+        map.put("int_2", int_2);
+
+        return map;
     }
 
     @Override

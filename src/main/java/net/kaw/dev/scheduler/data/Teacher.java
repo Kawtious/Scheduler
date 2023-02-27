@@ -20,7 +20,10 @@
  */
 package net.kaw.dev.scheduler.data;
 
+import java.util.HashMap;
+import java.util.Map;
 import net.kaw.dev.scheduler.data.interfaces.IHexable;
+import net.kaw.dev.scheduler.data.interfaces.IMappable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 import net.kaw.dev.scheduler.utils.HexUtils;
 
@@ -29,7 +32,7 @@ import net.kaw.dev.scheduler.utils.HexUtils;
  * <p>
  * It is used to avoid having to type this data into the program that captures teacher schedules.
  */
-public class Teacher implements ISeparable, IHexable {
+public class Teacher implements IMappable, ISeparable, IHexable {
 
     /*
      * This indicates the type of teacher
@@ -57,14 +60,22 @@ public class Teacher implements ISeparable, IHexable {
      * second, third until reaching 27, then continues the first hour on Tuesday, the second,....,
      * etc, then Wednesday and so on until Friday. "Zero" means schedule unavailability and "one" availability.
      */
-    private final ScheduleMap<Boolean> scheduleMap;
+    private final ScheduleMap scheduleMap;
 
     protected Teacher(char type, int controlNumber, String firstName, String lastName) {
         this.type = type;
         this.controlNumber = controlNumber;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.scheduleMap = new ScheduleMap<>(true);
+        this.scheduleMap = new ScheduleMap(0);
+    }
+
+    protected Teacher(char type, int controlNumber, String firstName, String lastName, ScheduleMap scheduleMap) {
+        this.type = type;
+        this.controlNumber = controlNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.scheduleMap = scheduleMap;
     }
 
     public char getType() {
@@ -99,7 +110,7 @@ public class Teacher implements ISeparable, IHexable {
         this.lastName = lastName;
     }
 
-    public ScheduleMap<Boolean> getScheduleMap() {
+    public ScheduleMap getScheduleMap() {
         return scheduleMap;
     }
 
@@ -122,7 +133,7 @@ public class Teacher implements ISeparable, IHexable {
 
         for (int day = 0; day < ScheduleMap.DAYS; day++) {
             for (int halfhour = 0; halfhour < ScheduleMap.HALFHOURS; halfhour++) {
-                sb.append(HexUtils.booleanToHex(scheduleMap.getMapValue(day, halfhour), 8));
+                sb.append(HexUtils.intToHex(scheduleMap.getMapValue(day, halfhour), 8));
             }
         }
 
@@ -132,6 +143,19 @@ public class Teacher implements ISeparable, IHexable {
     @Override
     public boolean validate() {
         return controlNumber >= 0 && !firstName.isEmpty() && !lastName.isEmpty();
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>(4);
+
+        map.put("type", type);
+        map.put("controlNumber", controlNumber);
+        map.put("firstName", firstName);
+        map.put("lastName", lastName);
+        map.put("scheduleMap", scheduleMap.toMap());
+
+        return map;
     }
 
     @Override

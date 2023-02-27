@@ -21,13 +21,16 @@
 package net.kaw.dev.scheduler.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import net.kaw.dev.scheduler.data.interfaces.IMappable;
 
 /**
  *
  * @author Waffle#4265 on Discord
  */
-public class ScheduleMap<T> {
+public class ScheduleMap implements IMappable {
 
     /*
      * A sequence that corresponds to the mapping matrix of half hours in the schedule,
@@ -35,22 +38,26 @@ public class ScheduleMap<T> {
      * second, third until reaching 27, then continues the first hour on Tuesday, the second,....,
      * etc, then Wednesday and so on until Friday.
      */
-    private final List<List<T>> map;
+    private final List<List<Integer>> scheduleMap;
 
-    protected static final int DAYS = 5, HALFHOURS = 28;
+    public static final int DAYS = 5, HALFHOURS = 28;
 
-    public ScheduleMap(T initValue) {
-        this.map = new ArrayList<>(DAYS);
+    public ScheduleMap(Integer initValue) {
+        this.scheduleMap = new ArrayList<>(DAYS);
 
         for (int i = 0; i < DAYS; i++) {
-            map.add(new ArrayList<>(HALFHOURS));
+            scheduleMap.add(new ArrayList<>(HALFHOURS));
         }
 
         setAllMapValues(initValue);
     }
 
-    public final void setAllMapValues(T value) {
-        for (List<T> day : map) {
+    public ScheduleMap(List<List<Integer>> map) {
+        this.scheduleMap = map;
+    }
+
+    private void setAllMapValues(Integer value) {
+        for (List<Integer> day : scheduleMap) {
             day.clear();
 
             for (int i = 0; i < HALFHOURS; i++) {
@@ -59,17 +66,64 @@ public class ScheduleMap<T> {
         }
     }
 
-    public void setMapValue(int day, int halfhour, T value) {
-        map.get(day).set(halfhour, value);
+    public void setMapValue(int day, int halfhour, Integer value) {
+        scheduleMap.get(day).set(halfhour, value);
     }
 
-    public T getMapValue(int day, int halfhour) {
-        return map.get(day).get(halfhour);
+    public Integer getMapValue(int day, int halfhour) {
+        return scheduleMap.get(day).get(halfhour);
+    }
+
+    private Map<String, Object> toMapDay(int day) {
+        Map<String, Object> map = new HashMap<>(HALFHOURS);
+
+        map.put("0700", getMapValue(day, 0));
+        map.put("0730", getMapValue(day, 1));
+        map.put("0800", getMapValue(day, 2));
+        map.put("0830", getMapValue(day, 3));
+        map.put("0900", getMapValue(day, 4));
+        map.put("0930", getMapValue(day, 5));
+        map.put("1000", getMapValue(day, 6));
+        map.put("1030", getMapValue(day, 7));
+        map.put("1100", getMapValue(day, 8));
+        map.put("1130", getMapValue(day, 9));
+        map.put("1200", getMapValue(day, 10));
+        map.put("1230", getMapValue(day, 11));
+        map.put("1300", getMapValue(day, 12));
+        map.put("1330", getMapValue(day, 13));
+        map.put("1400", getMapValue(day, 14));
+        map.put("1430", getMapValue(day, 15));
+        map.put("1500", getMapValue(day, 16));
+        map.put("1530", getMapValue(day, 17));
+        map.put("1600", getMapValue(day, 18));
+        map.put("1630", getMapValue(day, 19));
+        map.put("1700", getMapValue(day, 20));
+        map.put("1730", getMapValue(day, 21));
+        map.put("1800", getMapValue(day, 22));
+        map.put("1830", getMapValue(day, 23));
+        map.put("1900", getMapValue(day, 24));
+        map.put("1930", getMapValue(day, 25));
+        map.put("2000", getMapValue(day, 26));
+
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>(DAYS);
+
+        map.put("monday", toMapDay(0));
+        map.put("tuesday", toMapDay(1));
+        map.put("wednesday", toMapDay(2));
+        map.put("thursday", toMapDay(3));
+        map.put("friday", toMapDay(4));
+
+        return map;
     }
 
     @Override
     public String toString() {
-        return "ScheduleMap{" + "map=" + map + '}';
+        return "ScheduleMap{" + "map=" + scheduleMap + '}';
     }
 
 }

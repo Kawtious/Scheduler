@@ -38,17 +38,8 @@ public class HexManager {
 
     public static void write(List<IHexable> items, String filepath) {
         try {
-            StringBuilder sb = new StringBuilder();
-
-            // Store amount of items from the list
-            int itemsCount = items.size();
-            sb.append(HexUtils.intToHex(itemsCount, 8));
-
-            for (IHexable item : items) {
-                sb.append(item.toHex());
-            }
-
-            HexManager.writeToFile(filepath, sb.toString());
+            String hexString = convertToHex(items);
+            HexManager.writeToFile(filepath, hexString);
         } catch (IOException ex) {
             Logger.getLogger(HexManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -58,13 +49,27 @@ public class HexManager {
         List<IHexable> objects = new ArrayList<>();
 
         try {
-            String hexString = HexManager.readFile(filepath);
+            String hexString = HexManager.getFileHexString(filepath);
             objects = HexableFactory.build(hexableType, hexString);
         } catch (IOException ex) {
             Logger.getLogger(HexManager.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return objects;
+    }
+
+    private static String convertToHex(List<IHexable> items) {
+        StringBuilder sb = new StringBuilder();
+
+        // Store amount of items from the list
+        int itemsCount = items.size();
+        sb.append(HexUtils.intToHex(itemsCount, 8));
+
+        for (IHexable item : items) {
+            sb.append(item.toHex());
+        }
+
+        return sb.toString();
     }
 
     /**
@@ -75,7 +80,7 @@ public class HexManager {
      * @throws IOException If file, given by filepath, cannot be read.
      * @see HexUtils#bytesToHex(byte[])
      */
-    private static String readFile(String filepath) throws IOException {
+    private static String getFileHexString(String filepath) throws IOException {
         File file = new File(filepath);
         byte[] bytes = new byte[(int) file.length()];
 
@@ -97,9 +102,8 @@ public class HexManager {
      * @throws FileNotFoundException If file cannot be written due to unexpected condition.
      */
     private static void writeToFile(String filepath, String hexString) throws IOException, FileNotFoundException {
-        byte[] bytes = HexUtils.hexToBytes(hexString.toCharArray());
-
         try (final FileOutputStream fos = new FileOutputStream(new File(filepath))) {
+            byte[] bytes = HexUtils.hexToBytes(hexString.toCharArray());
             fos.write(bytes);
         }
     }

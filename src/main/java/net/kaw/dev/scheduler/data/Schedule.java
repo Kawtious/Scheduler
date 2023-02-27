@@ -20,12 +20,15 @@
  */
 package net.kaw.dev.scheduler.data;
 
+import java.util.HashMap;
+import java.util.Map;
+import net.kaw.dev.scheduler.data.interfaces.IMappable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
 /**
  * It is used to define the types of schedules that are available as options
  */
-public class Schedule implements ISeparable {
+public class Schedule implements IMappable, ISeparable {
 
     /*
      * Schedule type number
@@ -102,6 +105,18 @@ public class Schedule implements ISeparable {
     @Override
     public boolean validate() {
         return type >= 0 && offset >= 0 && !sessionMask.isEmpty() && !description.isEmpty();
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>(4);
+
+        map.put("type", type);
+        map.put("offset", offset);
+        map.put("sessionMask", sessionMask);
+        map.put("description", description);
+
+        return map;
     }
 
     @Override

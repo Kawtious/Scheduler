@@ -20,13 +20,16 @@
  */
 package net.kaw.dev.scheduler.data;
 
+import java.util.HashMap;
+import java.util.Map;
 import net.kaw.dev.scheduler.data.interfaces.IHexable;
+import net.kaw.dev.scheduler.data.interfaces.IMappable;
 import net.kaw.dev.scheduler.utils.HexUtils;
 
 /**
  * Contains information about the types of classrooms that exist and their schedule availability.
  */
-public class Classroom implements IHexable {
+public class Classroom implements IMappable, IHexable {
 
     /*
      * This represents the classroom type key for identification
@@ -40,16 +43,21 @@ public class Classroom implements IHexable {
      * then Wednesday and so on until Friday. Each integer represents the number of available classrooms
      * of that type in that “half hour”.
      */
-    private final ScheduleMap<Integer> scheduleMap;
+    private final ScheduleMap scheduleMap;
 
     public Classroom(String type) {
         this.type = type;
-        this.scheduleMap = new ScheduleMap<>(0);
+        this.scheduleMap = new ScheduleMap(0);
+    }
+
+    public Classroom(String type, ScheduleMap scheduleMap) {
+        this.type = type;
+        this.scheduleMap = scheduleMap;
     }
 
     public Classroom(String type, int valueToMap) {
         this.type = type;
-        this.scheduleMap = new ScheduleMap<>(valueToMap);
+        this.scheduleMap = new ScheduleMap(valueToMap);
     }
 
     public String getType() {
@@ -60,7 +68,7 @@ public class Classroom implements IHexable {
         this.type = type;
     }
 
-    public ScheduleMap<Integer> getScheduleMap() {
+    public ScheduleMap getScheduleMap() {
         return scheduleMap;
     }
 
@@ -75,6 +83,16 @@ public class Classroom implements IHexable {
             }
         }
         return sb.toString();
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>(4);
+
+        map.put("type", type);
+        map.put("scheduleMap", scheduleMap.toMap());
+
+        return map;
     }
 
     @Override
