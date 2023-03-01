@@ -20,9 +20,21 @@
  */
 package net.kaw.dev.scheduler.testing;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import net.kaw.dev.scheduler.data.Career;
+import net.kaw.dev.scheduler.data.Classroom;
+import net.kaw.dev.scheduler.data.Group;
 import net.kaw.dev.scheduler.data.HexableFactory.HexableType;
+import net.kaw.dev.scheduler.data.MappableFactory;
+import net.kaw.dev.scheduler.data.MappableFactory.MappableType;
+import net.kaw.dev.scheduler.data.Schedule;
+import net.kaw.dev.scheduler.data.ScheduleType;
 import net.kaw.dev.scheduler.data.SeparableFactory.SeparableType;
+import net.kaw.dev.scheduler.data.Subject;
+import net.kaw.dev.scheduler.data.Teacher;
+import net.kaw.dev.scheduler.data.University;
 import net.kaw.dev.scheduler.data.interfaces.IHexable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 import net.kaw.dev.scheduler.io.CsvManager;
@@ -67,10 +79,12 @@ public class RunTests {
     }
 
     public void run() {
-        createTestFilesCsv();
-        createTestFilesDat();
-        System.out.println(readTestFilesCsv());
-        System.out.println(readTestFilesDat());
+//        createTestFilesCsv();
+//        createTestFilesDat();
+//        System.out.println(readTestFilesCsv());
+//        System.out.println(readTestFilesDat());
+//        System.out.println(testCreateUniversity());
+        System.out.println(testGetCareerFromMap());
     }
 
     private void createTestFilesCsv() {
@@ -120,6 +134,78 @@ public class RunTests {
         HexManager.read(TAB_MAES, HexableType.TEACHER).forEach((item) -> sb.append(item).append("\n"));
 
         return sb.toString();
+    }
+
+    private Map<String, Object> testCreateUniversity() {
+        List<Career> careers = new ArrayList<>();
+
+        for (ISeparable dummyCareer : dummyCareers) {
+            Career career = (Career) dummyCareer;
+            careers.add(career);
+        }
+
+        List<Group> groups = new ArrayList<>();
+
+        for (ISeparable dummyGroup : dummyGroups) {
+            Group group = (Group) dummyGroup;
+            groups.add(group);
+        }
+
+        List<Schedule> schedules = new ArrayList<>();
+
+        for (ISeparable dummySchedule : dummySchedules) {
+            Schedule schedule = (Schedule) dummySchedule;
+            schedules.add(schedule);
+        }
+
+        List<ScheduleType> scheduleTypes = new ArrayList<>();
+
+        for (ISeparable dummyScheduleType : dummyScheduleTypes) {
+            ScheduleType scheduleType = (ScheduleType) dummyScheduleType;
+            scheduleTypes.add(scheduleType);
+        }
+
+        List<Subject> subjects = new ArrayList<>();
+
+        for (ISeparable dummySubject : dummySubjects) {
+            Subject subject = (Subject) dummySubject;
+            subjects.add(subject);
+        }
+
+        List<Classroom> classrooms = new ArrayList<>();
+
+        for (IHexable dummyClassroom : dummyClassrooms) {
+            Classroom classroom = (Classroom) dummyClassroom;
+            classrooms.add(classroom);
+        }
+
+        List<Teacher> teachers = new ArrayList<>();
+
+        for (ISeparable dummyTeacher : dummyTeachers) {
+            Teacher teacher = (Teacher) dummyTeacher;
+            teachers.add(teacher);
+        }
+
+        University university = new University(careers, groups, schedules, scheduleTypes, subjects, classrooms, teachers);
+
+        return university.toMap();
+    }
+
+    private Career testGetCareerFromMap() {
+        Career career = null;
+
+        Map<String, Object> university = testCreateUniversity();
+
+        @SuppressWarnings("unchecked")
+        Map<String, Object> careers = (Map<String, Object>) university.get("careers");
+
+        for (var entry : careers.entrySet()) {
+            System.out.println(entry.getValue());
+            career = (Career) MappableFactory.build(MappableType.CAREER, (Map<String, Object>) entry.getValue());
+            break;
+        }
+
+        return career;
     }
 
 }
