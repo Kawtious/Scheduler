@@ -71,25 +71,25 @@ public class MappableFactory {
     }
 
     private static Career buildCareer(Map<String, Object> map) {
-        String _id;
+        String _key;
         String _subjectKey;
         int _trajectoryStart;
         int _trajectoryEnd;
 
-        if (!map.containsKey("id") || !map.containsKey("subjectKey") || !map.containsKey("trajectoryStart") || !map.containsKey("trajectoryEnd")) {
+        if (!map.containsKey("key") || !map.containsKey("subjectKey") || !map.containsKey("trajectoryStart") || !map.containsKey("trajectoryEnd")) {
             return null;
         }
 
         try {
-            _id = (String) map.get("id");
+            _key = (String) map.get("key");
             _subjectKey = (String) map.get("subjectKey");
-            _trajectoryStart = Integer.parseInt((String) map.get("trajectoryStart"));
-            _trajectoryEnd = Integer.parseInt((String) map.get("trajectoryEnd"));
+            _trajectoryStart = (Integer) map.get("trajectoryStart");
+            _trajectoryEnd = (Integer) map.get("trajectoryEnd");
         } catch (NumberFormatException ex) {
             return null;
         }
 
-        return new Career(_id, _subjectKey, _trajectoryStart, _trajectoryEnd);
+        return new Career(_key, _subjectKey, _trajectoryStart, _trajectoryEnd);
     }
 
     @SuppressWarnings("unchecked")
@@ -122,7 +122,7 @@ public class MappableFactory {
 
         try {
             _type = (char) map.get("type");
-            _controlNumber = Integer.parseInt((String) map.get("controlNumber"));
+            _controlNumber = (Integer) map.get("controlNumber");
             _firstName = (String) map.get("firstName");
             _lastName = (String) map.get("lastName");
             _scheduleMap = buildScheduleMap((Map<String, Object>) map.get("scheduleMap"));
@@ -162,8 +162,8 @@ public class MappableFactory {
         }
 
         try {
-            _type = Integer.parseInt((String) map.get("type"));
-            _offset = Integer.parseInt((String) map.get("offset"));
+            _type = (Integer) map.get("type");
+            _offset = (Integer) map.get("offset");
             _sessionMask = (String) map.get("sessionMask");
             _description = (String) map.get("description");
         } catch (NumberFormatException ex) {
@@ -251,8 +251,8 @@ public class MappableFactory {
 
         try {
             _subjectKey = (String) map.get("subjectKey");
-            _int_1 = Integer.parseInt((String) map.get("int_1"));
-            _int_2 = Integer.parseInt((String) map.get("int_2"));
+            _int_1 = (Integer) map.get("int_1");
+            _int_2 = (Integer) map.get("int_2");
         } catch (NumberFormatException ex) {
             return null;
         }

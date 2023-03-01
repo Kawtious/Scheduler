@@ -22,6 +22,7 @@ package net.kaw.dev.scheduler.data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import net.kaw.dev.scheduler.data.interfaces.IHexable;
 import net.kaw.dev.scheduler.data.interfaces.IMappable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
@@ -33,6 +34,8 @@ import net.kaw.dev.scheduler.utils.HexUtils;
  * It is used to avoid having to type this data into the program that captures teacher schedules.
  */
 public class Teacher implements IMappable, ISeparable, IHexable {
+
+    private String id;
 
     /*
      * This indicates the type of teacher
@@ -63,6 +66,7 @@ public class Teacher implements IMappable, ISeparable, IHexable {
     private final ScheduleMap scheduleMap;
 
     protected Teacher(char type, int controlNumber, String firstName, String lastName) {
+        this.id = UUID.randomUUID().toString();
         this.type = type;
         this.controlNumber = controlNumber;
         this.firstName = firstName;
@@ -71,11 +75,20 @@ public class Teacher implements IMappable, ISeparable, IHexable {
     }
 
     protected Teacher(char type, int controlNumber, String firstName, String lastName, ScheduleMap scheduleMap) {
+        this.id = UUID.randomUUID().toString();
         this.type = type;
         this.controlNumber = controlNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.scheduleMap = scheduleMap;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public char getType() {
@@ -160,7 +173,7 @@ public class Teacher implements IMappable, ISeparable, IHexable {
 
     @Override
     public String toString() {
-        return "Teacher{" + "type=" + type + ", controlNumber=" + controlNumber + ", firstName=" + firstName + ", lastName=" + lastName + ", scheduleMap=" + scheduleMap + '}';
+        return "Teacher{" + "id=" + id + ", type=" + type + ", controlNumber=" + controlNumber + ", firstName=" + firstName + ", lastName=" + lastName + ", scheduleMap=" + scheduleMap + '}';
     }
 
 }

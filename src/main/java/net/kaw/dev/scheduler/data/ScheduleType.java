@@ -22,6 +22,7 @@ package net.kaw.dev.scheduler.data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import net.kaw.dev.scheduler.data.interfaces.IMappable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
@@ -29,6 +30,8 @@ import net.kaw.dev.scheduler.data.interfaces.ISeparable;
  * Contains the variants of the schedule types that exist
  */
 public class ScheduleType implements IMappable, ISeparable {
+
+    private String id;
 
     /*
      * Represents the name to describe the type of schedule
@@ -48,9 +51,18 @@ public class ScheduleType implements IMappable, ISeparable {
     private String sessionMask;
 
     protected ScheduleType(String description, String availableHours, String sessionMask) {
+        this.id = UUID.randomUUID().toString();
         this.description = description;
         this.availableHours = availableHours;
         this.sessionMask = sessionMask;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -100,7 +112,7 @@ public class ScheduleType implements IMappable, ISeparable {
 
     @Override
     public String toString() {
-        return "ScheduleType{" + "description=" + description + ", availableHours=" + availableHours + ", sessionMask=" + sessionMask + '}';
+        return "ScheduleType{" + "id=" + id + ", description=" + description + ", availableHours=" + availableHours + ", sessionMask=" + sessionMask + '}';
     }
 
 }

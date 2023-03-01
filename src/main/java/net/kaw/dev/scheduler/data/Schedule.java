@@ -22,6 +22,7 @@ package net.kaw.dev.scheduler.data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import net.kaw.dev.scheduler.data.interfaces.IMappable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
@@ -29,6 +30,8 @@ import net.kaw.dev.scheduler.data.interfaces.ISeparable;
  * It is used to define the types of schedules that are available as options
  */
 public class Schedule implements IMappable, ISeparable {
+
+    private String id;
 
     /*
      * Schedule type number
@@ -52,6 +55,7 @@ public class Schedule implements IMappable, ISeparable {
     private String description;
 
     protected Schedule(int type, int offset, String sessionMask, String description) {
+        this.id = UUID.randomUUID().toString();
         this.type = type;
         this.offset = offset;
         this.sessionMask = sessionMask;
@@ -59,10 +63,19 @@ public class Schedule implements IMappable, ISeparable {
     }
 
     protected Schedule(int type, int offset, ScheduleType scheduleType) {
+        this.id = UUID.randomUUID().toString();
         this.type = type;
         this.offset = offset;
         this.sessionMask = scheduleType.getSessionMask();
         this.description = scheduleType.getDescription();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getType() {
@@ -121,7 +134,7 @@ public class Schedule implements IMappable, ISeparable {
 
     @Override
     public String toString() {
-        return "Schedule{" + "type=" + type + ", offset=" + offset + ", sessionMask=" + sessionMask + ", description=" + description + '}';
+        return "Schedule{" + "id=" + id + ", type=" + type + ", offset=" + offset + ", sessionMask=" + sessionMask + ", description=" + description + '}';
     }
 
 }

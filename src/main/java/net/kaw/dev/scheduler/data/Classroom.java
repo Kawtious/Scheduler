@@ -22,6 +22,7 @@ package net.kaw.dev.scheduler.data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import net.kaw.dev.scheduler.data.interfaces.IHexable;
 import net.kaw.dev.scheduler.data.interfaces.IMappable;
 import net.kaw.dev.scheduler.utils.HexUtils;
@@ -30,6 +31,8 @@ import net.kaw.dev.scheduler.utils.HexUtils;
  * Contains information about the types of classrooms that exist and their schedule availability.
  */
 public class Classroom implements IMappable, IHexable {
+
+    private String id;
 
     /*
      * This represents the classroom type key for identification
@@ -46,18 +49,29 @@ public class Classroom implements IMappable, IHexable {
     private final ScheduleMap scheduleMap;
 
     public Classroom(String type) {
+        this.id = UUID.randomUUID().toString();
         this.type = type;
         this.scheduleMap = new ScheduleMap(0);
     }
 
     public Classroom(String type, ScheduleMap scheduleMap) {
+        this.id = UUID.randomUUID().toString();
         this.type = type;
         this.scheduleMap = scheduleMap;
     }
 
     public Classroom(String type, int valueToMap) {
+        this.id = UUID.randomUUID().toString();
         this.type = type;
         this.scheduleMap = new ScheduleMap(valueToMap);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getType() {
@@ -97,7 +111,7 @@ public class Classroom implements IMappable, IHexable {
 
     @Override
     public String toString() {
-        return "Classroom{" + "type=" + type + ", scheduleMap=" + scheduleMap + '}';
+        return "Classroom{" + "id=" + id + ", type=" + type + ", scheduleMap=" + scheduleMap + '}';
     }
 
 }

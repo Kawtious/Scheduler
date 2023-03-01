@@ -22,15 +22,18 @@ package net.kaw.dev.scheduler.data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import net.kaw.dev.scheduler.data.interfaces.IMappable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
 public class Career implements IMappable, ISeparable {
 
+    private String id;
+
     /*
      * Career semester identifier
      */
-    private String id;
+    private String key;
 
     /*
      * The subject's key
@@ -41,15 +44,17 @@ public class Career implements IMappable, ISeparable {
 
     private int trajectoryEnd;
 
-    protected Career(String id, String subjectKey, int trajectoryStart, int trajectoryEnd) {
-        this.id = id;
+    protected Career(String key, String subjectKey, int trajectoryStart, int trajectoryEnd) {
+        this.id = UUID.randomUUID().toString();
+        this.key = key;
         this.subjectKey = subjectKey;
         this.trajectoryStart = trajectoryStart;
         this.trajectoryEnd = trajectoryEnd;
     }
 
-    protected Career(String id, Subject subject, int trajectoryStart, int trajectoryEnd) {
-        this.id = id;
+    protected Career(String key, Subject subject, int trajectoryStart, int trajectoryEnd) {
+        this.id = UUID.randomUUID().toString();
+        this.key = key;
         this.subjectKey = subject.getSubjectKey();
         this.trajectoryStart = trajectoryStart;
         this.trajectoryEnd = trajectoryEnd;
@@ -61,6 +66,14 @@ public class Career implements IMappable, ISeparable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getSubjectKey() {
@@ -89,19 +102,19 @@ public class Career implements IMappable, ISeparable {
 
     @Override
     public String toCsv() {
-        return id + "," + subjectKey + "," + trajectoryStart + "," + trajectoryEnd;
+        return key + "," + subjectKey + "," + trajectoryStart + "," + trajectoryEnd;
     }
 
     @Override
     public boolean validate() {
-        return !id.isEmpty() && !subjectKey.isEmpty() && trajectoryStart >= 0 && trajectoryEnd >= -1;
+        return !key.isEmpty() && !subjectKey.isEmpty() && trajectoryStart >= 0 && trajectoryEnd >= -1;
     }
 
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(4);
 
-        map.put("id", id);
+        map.put("key", key);
         map.put("subjectKey", subjectKey);
         map.put("trajectoryStart", trajectoryStart);
         map.put("trajectoryEnd", trajectoryEnd);
@@ -111,7 +124,7 @@ public class Career implements IMappable, ISeparable {
 
     @Override
     public String toString() {
-        return "Career{" + "id=" + id + ", subjectKey=" + subjectKey + ", trajectoryStart=" + trajectoryStart + ", trajectoryEnd=" + trajectoryEnd + '}';
+        return "Career{" + "id=" + id + ", key=" + key + ", subjectKey=" + subjectKey + ", trajectoryStart=" + trajectoryStart + ", trajectoryEnd=" + trajectoryEnd + '}';
     }
 
 }

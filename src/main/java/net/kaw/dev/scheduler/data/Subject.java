@@ -22,6 +22,7 @@ package net.kaw.dev.scheduler.data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import net.kaw.dev.scheduler.data.interfaces.IMappable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
@@ -29,6 +30,8 @@ import net.kaw.dev.scheduler.data.interfaces.ISeparable;
  * Contains information about a subject
  */
 public class Subject implements IMappable, ISeparable {
+
+    private String id;
 
     /*
      * The subject's key
@@ -52,10 +55,19 @@ public class Subject implements IMappable, ISeparable {
     private String description;
 
     public Subject(String subjectKey, String classKey, String schedule, String description) {
+        this.id = UUID.randomUUID().toString();
         this.subjectKey = subjectKey;
         this.classKey = classKey;
         this.schedule = schedule;
         this.description = description;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getSubjectKey() {
@@ -114,7 +126,7 @@ public class Subject implements IMappable, ISeparable {
 
     @Override
     public String toString() {
-        return "Subject{" + "subjectKey=" + subjectKey + ", classKey=" + classKey + ", schedule=" + schedule + ", description=" + description + '}';
+        return "Subject{" + "id=" + id + ", subjectKey=" + subjectKey + ", classKey=" + classKey + ", schedule=" + schedule + ", description=" + description + '}';
     }
 
 }

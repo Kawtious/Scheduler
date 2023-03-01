@@ -22,10 +22,13 @@ package net.kaw.dev.scheduler.data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import net.kaw.dev.scheduler.data.interfaces.IMappable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
 public class Group implements IMappable, ISeparable {
+
+    private String id;
 
     /*
      * The subject's key
@@ -43,15 +46,25 @@ public class Group implements IMappable, ISeparable {
     private int int_2;
 
     protected Group(String subjectKey, int int_1, int int_2) {
+        this.id = UUID.randomUUID().toString();
         this.subjectKey = subjectKey;
         this.int_1 = int_1;
         this.int_2 = int_2;
     }
 
     protected Group(Subject subject, int int_1, int int_2) {
+        this.id = UUID.randomUUID().toString();
         this.subjectKey = subject.getSubjectKey();
         this.int_1 = int_1;
         this.int_2 = int_2;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getSubjectKey() {
@@ -101,7 +114,7 @@ public class Group implements IMappable, ISeparable {
 
     @Override
     public String toString() {
-        return "Group{" + "subjectKey=" + subjectKey + ", int_1=" + int_1 + ", int_2=" + int_2 + '}';
+        return "Group{" + "id=" + id + ", subjectKey=" + subjectKey + ", int_1=" + int_1 + ", int_2=" + int_2 + '}';
     }
 
 }

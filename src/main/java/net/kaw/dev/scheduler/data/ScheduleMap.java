@@ -123,7 +123,7 @@ public class ScheduleMap implements IMappable {
 
     @Override
     public String toString() {
-        return "ScheduleMap{" + "map=" + scheduleMap + '}';
+        return "ScheduleMap{" + "scheduleMap=" + scheduleMap + '}';
     }
 
 }
