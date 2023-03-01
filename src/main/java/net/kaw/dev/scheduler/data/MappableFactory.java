@@ -83,8 +83,20 @@ public class MappableFactory {
         _id = (String) map.get("id");
         _key = (String) map.get("key");
         _subjectKey = (String) map.get("subjectKey");
-        _trajectoryStart = (Integer) map.get("trajectoryStart");
-        _trajectoryEnd = (Integer) map.get("trajectoryEnd");
+
+        if (map.get("trajectoryStart") instanceof Double) {
+            Double __trajectoryStart = (Double) map.get("trajectoryStart");
+            _trajectoryStart = __trajectoryStart.intValue();
+        } else {
+            _trajectoryStart = (Integer) map.get("trajectoryStart");
+        }
+
+        if (map.get("trajectoryEnd") instanceof Double) {
+            Double __trajectoryEnd = (Double) map.get("trajectoryEnd");
+            _trajectoryEnd = __trajectoryEnd.intValue();
+        } else {
+            _trajectoryEnd = (Integer) map.get("trajectoryEnd");
+        }
 
         return new Career(_id, _key, _subjectKey, _trajectoryStart, _trajectoryEnd);
     }
@@ -121,8 +133,21 @@ public class MappableFactory {
         }
 
         _id = (String) map.get("id");
-        _type = (char) map.get("type");
-        _controlNumber = (Integer) map.get("controlNumber");
+
+        if (map.get("type") instanceof String) {
+            String __type = (String) map.get("type");
+            _type = __type.charAt(0);
+        } else {
+            _type = (char) map.get("type");
+        }
+
+        if (map.get("controlNumber") instanceof Double) {
+            Double __controlNumber = (Double) map.get("controlNumber");
+            _controlNumber = __controlNumber.intValue();
+        } else {
+            _controlNumber = (Integer) map.get("controlNumber");
+        }
+
         _firstName = (String) map.get("firstName");
         _lastName = (String) map.get("lastName");
         _scheduleMap = buildScheduleMap((Map<String, Object>) map.get("scheduleMap"));
@@ -163,7 +188,14 @@ public class MappableFactory {
 
         _id = (String) map.get("id");
         _type = (Integer) map.get("type");
-        _offset = (Integer) map.get("offset");
+
+        if (map.get("offset") instanceof Double) {
+            Double __offset = (Double) map.get("offset");
+            _offset = __offset.intValue();
+        } else {
+            _offset = (Integer) map.get("offset");
+        }
+
         _sessionMask = (String) map.get("sessionMask");
         _description = (String) map.get("description");
 
@@ -273,8 +305,20 @@ public class MappableFactory {
 
         _id = (String) map.get("id");
         _subjectKey = (String) map.get("subjectKey");
-        _int_1 = (Integer) map.get("int_1");
-        _int_2 = (Integer) map.get("int_2");
+
+        if (map.get("int_1") instanceof Double) {
+            Double __int_1 = (Double) map.get("int_1");
+            _int_1 = __int_1.intValue();
+        } else {
+            _int_1 = (Integer) map.get("int_1");
+        }
+
+        if (map.get("int_2") instanceof Double) {
+            Double __int_2 = (Double) map.get("int_2");
+            _int_2 = __int_2.intValue();
+        } else {
+            _int_2 = (Integer) map.get("int_2");
+        }
 
         return new Group(_id, _subjectKey, _int_1, _int_2);
     }
@@ -290,7 +334,13 @@ public class MappableFactory {
         }
 
         _id = (String) map.get("id");
-        _available = (Integer) map.get("available");
+
+        if (map.get("available") instanceof Double) {
+            Double __available = (Double) map.get("available");
+            _available = __available.intValue();
+        } else {
+            _available = (Integer) map.get("available");
+        }
 
         if (map.containsKey("comment")) {
             _comment = buildComment((Map<String, Object>) map.get("comment"));

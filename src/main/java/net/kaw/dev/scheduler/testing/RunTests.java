@@ -40,6 +40,7 @@ import net.kaw.dev.scheduler.data.interfaces.IHexable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 import net.kaw.dev.scheduler.io.CsvManager;
 import net.kaw.dev.scheduler.io.HexManager;
+import net.kaw.dev.scheduler.utils.JSONUtils;
 
 public class RunTests {
 
@@ -84,8 +85,9 @@ public class RunTests {
 //        createTestFilesDat();
 //        System.out.println(readTestFilesCsv());
 //        System.out.println(readTestFilesDat());
-        System.out.println(testCreateUniversity());
+        //System.out.println(JSONUtils.jsonToMap(JSONUtils.mapToJSON(testCreateUniversity())));
 //        System.out.println(testGetTeacherFromMap());
+        System.out.println(testGetCareerFromMap());
     }
 
     private void createTestFilesCsv() {
@@ -196,13 +198,13 @@ public class RunTests {
     private Career testGetCareerFromMap() {
         Career career = null;
 
-        Map<String, Object> university = testCreateUniversity();
+        Map<String, Object> university = JSONUtils.jsonToMap(JSONUtils.mapToJSON(testCreateUniversity()));
 
         @SuppressWarnings("unchecked")
         Map<String, Object> careers = (Map<String, Object>) university.get("careers");
 
         for (Entry<String, Object> entry : careers.entrySet()) {
-            System.out.println(entry.getValue());
+//            System.out.println(entry.getValue());
             career = (Career) MappableFactory.build(MappableType.CAREER, (Map<String, Object>) entry.getValue());
             break;
         }
@@ -214,7 +216,7 @@ public class RunTests {
     private Teacher testGetTeacherFromMap() {
         Teacher teacher = null;
 
-        Map<String, Object> university = testCreateUniversity();
+        Map<String, Object> university = JSONUtils.jsonToMap(JSONUtils.mapToJSON(testCreateUniversity()));
 
         @SuppressWarnings("unchecked")
         Map<String, Object> teachers = (Map<String, Object>) university.get("teachers");
