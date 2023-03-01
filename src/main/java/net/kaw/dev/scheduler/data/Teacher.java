@@ -71,11 +71,29 @@ public class Teacher implements IMappable, ISeparable, IHexable {
         this.controlNumber = controlNumber;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.scheduleMap = new ScheduleMap(0);
+        this.scheduleMap = new ScheduleMap(new HalfHour(0));
     }
 
     protected Teacher(char type, int controlNumber, String firstName, String lastName, ScheduleMap scheduleMap) {
         this.id = UUID.randomUUID().toString();
+        this.type = type;
+        this.controlNumber = controlNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.scheduleMap = scheduleMap;
+    }
+
+    public Teacher(String id, char type, int controlNumber, String firstName, String lastName) {
+        this.id = id;
+        this.type = type;
+        this.controlNumber = controlNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.scheduleMap = new ScheduleMap(new HalfHour(0));
+    }
+
+    public Teacher(String id, char type, int controlNumber, String firstName, String lastName, ScheduleMap scheduleMap) {
+        this.id = id;
         this.type = type;
         this.controlNumber = controlNumber;
         this.firstName = firstName;
@@ -146,7 +164,7 @@ public class Teacher implements IMappable, ISeparable, IHexable {
 
         for (int day = 0; day < ScheduleMap.DAYS; day++) {
             for (int halfhour = 0; halfhour < ScheduleMap.HALFHOURS; halfhour++) {
-                sb.append(HexUtils.intToHex(scheduleMap.getMapValue(day, halfhour), 8));
+                sb.append(HexUtils.intToHex(scheduleMap.getMapValue(day, halfhour).getAvailable(), 8));
             }
         }
 
@@ -162,6 +180,7 @@ public class Teacher implements IMappable, ISeparable, IHexable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(4);
 
+        map.put("id", id);
         map.put("type", type);
         map.put("controlNumber", controlNumber);
         map.put("firstName", firstName);

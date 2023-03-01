@@ -59,6 +59,20 @@ public class Group implements IMappable, ISeparable {
         this.int_2 = int_2;
     }
 
+    protected Group(String id, String subjectKey, int int_1, int int_2) {
+        this.id = id;
+        this.subjectKey = subjectKey;
+        this.int_1 = int_1;
+        this.int_2 = int_2;
+    }
+
+    protected Group(String id, Subject subject, int int_1, int int_2) {
+        this.id = id;
+        this.subjectKey = subject.getSubjectKey();
+        this.int_1 = int_1;
+        this.int_2 = int_2;
+    }
+
     public String getId() {
         return id;
     }
@@ -105,6 +119,7 @@ public class Group implements IMappable, ISeparable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(3);
 
+        map.put("id", id);
         map.put("subjectKey", subjectKey);
         map.put("int_1", int_1);
         map.put("int_2", int_2);

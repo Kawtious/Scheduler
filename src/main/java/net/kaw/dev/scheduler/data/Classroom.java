@@ -51,7 +51,7 @@ public class Classroom implements IMappable, IHexable {
     public Classroom(String type) {
         this.id = UUID.randomUUID().toString();
         this.type = type;
-        this.scheduleMap = new ScheduleMap(0);
+        this.scheduleMap = new ScheduleMap(new HalfHour(0));
     }
 
     public Classroom(String type, ScheduleMap scheduleMap) {
@@ -60,10 +60,28 @@ public class Classroom implements IMappable, IHexable {
         this.scheduleMap = scheduleMap;
     }
 
-    public Classroom(String type, int valueToMap) {
+    public Classroom(String type, Integer valueToMap) {
         this.id = UUID.randomUUID().toString();
         this.type = type;
-        this.scheduleMap = new ScheduleMap(valueToMap);
+        this.scheduleMap = new ScheduleMap(new HalfHour(valueToMap));
+    }
+
+    public Classroom(String id, String type) {
+        this.id = id;
+        this.type = type;
+        this.scheduleMap = new ScheduleMap(new HalfHour(0));
+    }
+
+    public Classroom(String id, String type, ScheduleMap scheduleMap) {
+        this.id = id;
+        this.type = type;
+        this.scheduleMap = scheduleMap;
+    }
+
+    public Classroom(String id, String type, Integer valueToMap) {
+        this.id = id;
+        this.type = type;
+        this.scheduleMap = new ScheduleMap(new HalfHour(valueToMap));
     }
 
     public String getId() {
@@ -93,7 +111,7 @@ public class Classroom implements IMappable, IHexable {
 
         for (int day = 0; day < ScheduleMap.DAYS; day++) {
             for (int halfhour = 0; halfhour < ScheduleMap.HALFHOURS; halfhour++) {
-                sb.append(HexUtils.intToHex(scheduleMap.getMapValue(day, halfhour), 8));
+                sb.append(HexUtils.intToHex(scheduleMap.getMapValue(day, halfhour).getAvailable(), 8));
             }
         }
         return sb.toString();
@@ -103,6 +121,7 @@ public class Classroom implements IMappable, IHexable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(4);
 
+        map.put("id", id);
         map.put("type", type);
         map.put("scheduleMap", scheduleMap.toMap());
 

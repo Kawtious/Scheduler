@@ -62,6 +62,14 @@ public class Subject implements IMappable, ISeparable {
         this.description = description;
     }
 
+    public Subject(String id, String subjectKey, String classKey, String schedule, String description) {
+        this.id = id;
+        this.subjectKey = subjectKey;
+        this.classKey = classKey;
+        this.schedule = schedule;
+        this.description = description;
+    }
+
     public String getId() {
         return id;
     }
@@ -116,6 +124,7 @@ public class Subject implements IMappable, ISeparable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(3);
 
+        map.put("id", id);
         map.put("subjectKey", subjectKey);
         map.put("classKey", classKey);
         map.put("schedule", schedule);

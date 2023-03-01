@@ -23,6 +23,7 @@ package net.kaw.dev.scheduler.testing;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import net.kaw.dev.scheduler.data.Career;
 import net.kaw.dev.scheduler.data.Classroom;
 import net.kaw.dev.scheduler.data.Group;
@@ -83,8 +84,8 @@ public class RunTests {
 //        createTestFilesDat();
 //        System.out.println(readTestFilesCsv());
 //        System.out.println(readTestFilesDat());
-//        System.out.println(testCreateUniversity());
-        System.out.println(testGetCareerFromMap());
+        System.out.println(testCreateUniversity());
+//        System.out.println(testGetTeacherFromMap());
     }
 
     private void createTestFilesCsv() {
@@ -186,11 +187,12 @@ public class RunTests {
             teachers.add(teacher);
         }
 
-        University university = new University(careers, groups, schedules, scheduleTypes, subjects, classrooms, teachers);
+        University university = new University("university", careers, groups, schedules, scheduleTypes, subjects, classrooms, teachers);
 
         return university.toMap();
     }
 
+    @SuppressWarnings("unchecked")
     private Career testGetCareerFromMap() {
         Career career = null;
 
@@ -199,13 +201,31 @@ public class RunTests {
         @SuppressWarnings("unchecked")
         Map<String, Object> careers = (Map<String, Object>) university.get("careers");
 
-        for (var entry : careers.entrySet()) {
+        for (Entry<String, Object> entry : careers.entrySet()) {
             System.out.println(entry.getValue());
             career = (Career) MappableFactory.build(MappableType.CAREER, (Map<String, Object>) entry.getValue());
             break;
         }
 
         return career;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Teacher testGetTeacherFromMap() {
+        Teacher teacher = null;
+
+        Map<String, Object> university = testCreateUniversity();
+
+        @SuppressWarnings("unchecked")
+        Map<String, Object> teachers = (Map<String, Object>) university.get("teachers");
+
+        for (Entry<String, Object> entry : teachers.entrySet()) {
+            //System.out.println(entry.getValue());
+            teacher = (Teacher) MappableFactory.build(MappableType.TEACHER, (Map<String, Object>) entry.getValue());
+            break;
+        }
+
+        return teacher;
     }
 
 }

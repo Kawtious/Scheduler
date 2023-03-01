@@ -60,6 +60,22 @@ public class Career implements IMappable, ISeparable {
         this.trajectoryEnd = trajectoryEnd;
     }
 
+    protected Career(String id, String key, String subjectKey, int trajectoryStart, int trajectoryEnd) {
+        this.id = id;
+        this.key = key;
+        this.subjectKey = subjectKey;
+        this.trajectoryStart = trajectoryStart;
+        this.trajectoryEnd = trajectoryEnd;
+    }
+
+    protected Career(String id, String key, Subject subject, int trajectoryStart, int trajectoryEnd) {
+        this.id = id;
+        this.key = key;
+        this.subjectKey = subject.getSubjectKey();
+        this.trajectoryStart = trajectoryStart;
+        this.trajectoryEnd = trajectoryEnd;
+    }
+
     public String getId() {
         return id;
     }
@@ -114,6 +130,7 @@ public class Career implements IMappable, ISeparable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(4);
 
+        map.put("id", id);
         map.put("key", key);
         map.put("subjectKey", subjectKey);
         map.put("trajectoryStart", trajectoryStart);

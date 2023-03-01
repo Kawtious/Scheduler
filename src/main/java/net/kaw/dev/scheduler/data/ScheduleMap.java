@@ -21,6 +21,7 @@
 package net.kaw.dev.scheduler.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,17 +33,19 @@ import net.kaw.dev.scheduler.data.interfaces.IMappable;
  */
 public class ScheduleMap implements IMappable {
 
+    private Cycle cycle;
+
     /*
      * A sequence that corresponds to the mapping matrix of half hours in the schedule,
      * the matrix is 5 rows and 28 columns, the first data corresponds to the first hour of Monday,
      * second, third until reaching 27, then continues the first hour on Tuesday, the second,....,
      * etc, then Wednesday and so on until Friday.
      */
-    private final List<List<Integer>> scheduleMap;
+    private final List<List<HalfHour>> scheduleMap;
 
     public static final int DAYS = 5, HALFHOURS = 28;
 
-    public ScheduleMap(Integer initValue) {
+    public ScheduleMap(HalfHour initValue) {
         this.scheduleMap = new ArrayList<>(DAYS);
 
         for (int i = 0; i < DAYS; i++) {
@@ -52,12 +55,12 @@ public class ScheduleMap implements IMappable {
         setAllMapValues(initValue);
     }
 
-    public ScheduleMap(List<List<Integer>> map) {
+    public ScheduleMap(List<List<HalfHour>> map) {
         this.scheduleMap = map;
     }
 
-    private void setAllMapValues(Integer value) {
-        for (List<Integer> day : scheduleMap) {
+    private void setAllMapValues(HalfHour value) {
+        for (List<HalfHour> day : scheduleMap) {
             day.clear();
 
             for (int i = 0; i < HALFHOURS; i++) {
@@ -66,44 +69,45 @@ public class ScheduleMap implements IMappable {
         }
     }
 
-    public void setMapValue(int day, int halfhour, Integer value) {
+    public void setMapValue(int day, int halfhour, HalfHour value) {
         scheduleMap.get(day).set(halfhour, value);
     }
 
-    public Integer getMapValue(int day, int halfhour) {
+    public HalfHour getMapValue(int day, int halfhour) {
         return scheduleMap.get(day).get(halfhour);
     }
 
     private Map<String, Object> toMapDay(int day) {
         Map<String, Object> map = new HashMap<>(HALFHOURS);
 
-        map.put("0700", getMapValue(day, 0));
-        map.put("0730", getMapValue(day, 1));
-        map.put("0800", getMapValue(day, 2));
-        map.put("0830", getMapValue(day, 3));
-        map.put("0900", getMapValue(day, 4));
-        map.put("0930", getMapValue(day, 5));
-        map.put("1000", getMapValue(day, 6));
-        map.put("1030", getMapValue(day, 7));
-        map.put("1100", getMapValue(day, 8));
-        map.put("1130", getMapValue(day, 9));
-        map.put("1200", getMapValue(day, 10));
-        map.put("1230", getMapValue(day, 11));
-        map.put("1300", getMapValue(day, 12));
-        map.put("1330", getMapValue(day, 13));
-        map.put("1400", getMapValue(day, 14));
-        map.put("1430", getMapValue(day, 15));
-        map.put("1500", getMapValue(day, 16));
-        map.put("1530", getMapValue(day, 17));
-        map.put("1600", getMapValue(day, 18));
-        map.put("1630", getMapValue(day, 19));
-        map.put("1700", getMapValue(day, 20));
-        map.put("1730", getMapValue(day, 21));
-        map.put("1800", getMapValue(day, 22));
-        map.put("1830", getMapValue(day, 23));
-        map.put("1900", getMapValue(day, 24));
-        map.put("1930", getMapValue(day, 25));
-        map.put("2000", getMapValue(day, 26));
+        map.put("0700", getMapValue(day, 0).toMap());
+        map.put("0730", getMapValue(day, 1).toMap());
+        map.put("0800", getMapValue(day, 2).toMap());
+        map.put("0830", getMapValue(day, 3).toMap());
+        map.put("0900", getMapValue(day, 4).toMap());
+        map.put("0930", getMapValue(day, 5).toMap());
+        map.put("1000", getMapValue(day, 6).toMap());
+        map.put("1030", getMapValue(day, 7).toMap());
+        map.put("1100", getMapValue(day, 8).toMap());
+        map.put("1130", getMapValue(day, 9).toMap());
+        map.put("1200", getMapValue(day, 10).toMap());
+        map.put("1230", getMapValue(day, 11).toMap());
+        map.put("1300", getMapValue(day, 12).toMap());
+        map.put("1330", getMapValue(day, 13).toMap());
+        map.put("1400", getMapValue(day, 14).toMap());
+        map.put("1430", getMapValue(day, 15).toMap());
+        map.put("1500", getMapValue(day, 16).toMap());
+        map.put("1530", getMapValue(day, 17).toMap());
+        map.put("1600", getMapValue(day, 18).toMap());
+        map.put("1630", getMapValue(day, 19).toMap());
+        map.put("1700", getMapValue(day, 20).toMap());
+        map.put("1730", getMapValue(day, 21).toMap());
+        map.put("1800", getMapValue(day, 22).toMap());
+        map.put("1830", getMapValue(day, 23).toMap());
+        map.put("1900", getMapValue(day, 24).toMap());
+        map.put("1930", getMapValue(day, 25).toMap());
+        map.put("2000", getMapValue(day, 26).toMap());
+        map.put("2030", getMapValue(day, 27).toMap());
 
         return map;
     }
@@ -111,6 +115,10 @@ public class ScheduleMap implements IMappable {
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(DAYS);
+
+        if (cycle != null) {
+            map.put("cycle", cycle.toMap());
+        }
 
         map.put("monday", toMapDay(0));
         map.put("tuesday", toMapDay(1));
@@ -124,6 +132,66 @@ public class ScheduleMap implements IMappable {
     @Override
     public String toString() {
         return "ScheduleMap{" + "scheduleMap=" + scheduleMap + '}';
+    }
+
+    public class Cycle implements IMappable {
+
+        private String id;
+
+        private String title;
+
+        private final Date start;
+
+        private final Date end;
+
+        public Cycle(String id, String title, Date start, Date end) {
+            this.id = id;
+            this.title = title;
+            this.start = start;
+            this.end = end;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public Date getStart() {
+            return new Date(start.getTime());
+        }
+
+        public Date getEnd() {
+            return new Date(end.getTime());
+        }
+
+        @Override
+        public Map<String, Object> toMap() {
+            Map<String, Object> map = new HashMap<>();
+
+            map.put("id", id);
+            map.put("title", title);
+            map.put("start", start);
+            map.put("end", end);
+
+            return map;
+        }
+
+        @Override
+        public String toString() {
+            return "Cycle{" + "id=" + id + ", title=" + title + ", start=" + start + ", end=" + end + '}';
+        }
+
     }
 
 }

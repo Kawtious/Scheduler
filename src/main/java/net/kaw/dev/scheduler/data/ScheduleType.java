@@ -57,6 +57,13 @@ public class ScheduleType implements IMappable, ISeparable {
         this.sessionMask = sessionMask;
     }
 
+    protected ScheduleType(String id, String description, String availableHours, String sessionMask) {
+        this.id = id;
+        this.description = description;
+        this.availableHours = availableHours;
+        this.sessionMask = sessionMask;
+    }
+
     public String getId() {
         return id;
     }
@@ -103,6 +110,7 @@ public class ScheduleType implements IMappable, ISeparable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(3);
 
+        map.put("id", id);
         map.put("description", description);
         map.put("availableHours", availableHours);
         map.put("sessionMask", sessionMask);

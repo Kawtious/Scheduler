@@ -70,6 +70,22 @@ public class Schedule implements IMappable, ISeparable {
         this.description = scheduleType.getDescription();
     }
 
+    protected Schedule(String id, int type, int offset, String sessionMask, String description) {
+        this.id = id;
+        this.type = type;
+        this.offset = offset;
+        this.sessionMask = sessionMask;
+        this.description = description;
+    }
+
+    protected Schedule(String id, int type, int offset, ScheduleType scheduleType) {
+        this.id = id;
+        this.type = type;
+        this.offset = offset;
+        this.sessionMask = scheduleType.getSessionMask();
+        this.description = scheduleType.getDescription();
+    }
+
     public String getId() {
         return id;
     }
@@ -124,6 +140,7 @@ public class Schedule implements IMappable, ISeparable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(4);
 
+        map.put("id", id);
         map.put("type", type);
         map.put("offset", offset);
         map.put("sessionMask", sessionMask);

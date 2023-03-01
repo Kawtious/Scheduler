@@ -24,9 +24,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import net.kaw.dev.scheduler.data.interfaces.IMappable;
 
 public class University implements IMappable {
+
+    private String id;
+
+    private String name;
 
     private final List<Career> careers;
 
@@ -42,7 +47,9 @@ public class University implements IMappable {
 
     private final List<Teacher> teachers;
 
-    public University(List<Career> careers, List<Group> groups, List<Schedule> schedules, List<ScheduleType> scheduleTypes, List<Subject> subjects, List<Classroom> classrooms, List<Teacher> teachers) {
+    public University(String name, List<Career> careers, List<Group> groups, List<Schedule> schedules, List<ScheduleType> scheduleTypes, List<Subject> subjects, List<Classroom> classrooms, List<Teacher> teachers) {
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
         this.careers = careers;
         this.groups = groups;
         this.schedules = schedules;
@@ -50,6 +57,22 @@ public class University implements IMappable {
         this.subjects = subjects;
         this.classrooms = classrooms;
         this.teachers = teachers;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Career> getCareers() {
@@ -120,6 +143,8 @@ public class University implements IMappable {
             teachersMap.put(teacher.getId(), teacher.toMap());
         }
 
+        map.put("id", id);
+        map.put("name", name);
         map.put("careers", careersMap);
         map.put("groups", groupsMap);
         map.put("schedules", schedulesMap);
@@ -133,7 +158,7 @@ public class University implements IMappable {
 
     @Override
     public String toString() {
-        return "University{" + "careers=" + careers + ", groups=" + groups + ", schedules=" + schedules + ", scheduleTypes=" + scheduleTypes + ", subjects=" + subjects + ", classrooms=" + classrooms + ", teachers=" + teachers + '}';
+        return "University{" + "id=" + id + ", name=" + name + ", careers=" + careers + ", groups=" + groups + ", schedules=" + schedules + ", scheduleTypes=" + scheduleTypes + ", subjects=" + subjects + ", classrooms=" + classrooms + ", teachers=" + teachers + '}';
     }
 
 }

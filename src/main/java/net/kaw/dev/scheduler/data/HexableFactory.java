@@ -154,7 +154,7 @@ public class HexableFactory {
 
                     for (int halfhour = 0; halfhour < ScheduleMap.HALFHOURS; halfhour++) {
                         String mapValue = mapValues[halfhour + (dayIndex)];
-                        classroom.getScheduleMap().setMapValue(day, halfhour, HexUtils.hexToInt(mapValue));
+                        classroom.getScheduleMap().setMapValue(day, halfhour, new HalfHour(HexUtils.hexToInt(mapValue)));
                     }
                 }
 
@@ -291,7 +291,7 @@ public class HexableFactory {
 
                     for (int halfhour = 0; halfhour < ScheduleMap.HALFHOURS; halfhour++) {
                         String mapValue = mapValues[halfhour + (dayIndex)];
-                        teacher.getScheduleMap().setMapValue(day, halfhour, HexUtils.hexToInt(mapValue));
+                        teacher.getScheduleMap().setMapValue(day, halfhour, new HalfHour(HexUtils.hexToInt(mapValue)));
                     }
                 }
 
