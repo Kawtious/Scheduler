@@ -20,6 +20,7 @@
  */
 package net.kaw.dev.scheduler.data;
 
+import java.util.Date;
 import java.util.Map;
 import net.kaw.dev.scheduler.data.interfaces.IMappable;
 
@@ -230,10 +231,14 @@ public class MappableFactory {
             "2030"
         };
 
+        int i = 0;
+
         for (String day : days) {
             if (!map.containsKey(day)) {
                 return null;
             }
+
+            int j = 0;
 
             Map<String, Object> dayMap = ((Map<String, Object>) map.get(day));
 
@@ -241,13 +246,16 @@ public class MappableFactory {
                 if (!dayMap.containsKey(hour)) {
                     return null;
                 }
+
+                _scheduleMap.setMapValue(i, j, buildHalfHour((Map<String, Object>) ((Map<String, Object>) map.get(days[i])).get(hours[j])));
+                j++;
             }
+
+            i++;
         }
 
-        for (int i = 0; i < ScheduleMap.DAYS; i++) {
-            for (int j = 0; j < ScheduleMap.HALFHOURS; j++) {
-                _scheduleMap.setMapValue(i, j, buildHalfHour((Map<String, Object>) ((Map<String, Object>) map.get(days[i])).get(hours[j])));
-            }
+        if (map.containsKey("cycle")) {
+            buildCycle((Map<String, Object>) map.get("cycle"));
         }
 
         return _scheduleMap;
@@ -278,7 +286,6 @@ public class MappableFactory {
         Comment _comment;
 
         if (!map.containsKey("id") || !map.containsKey("available")) {
-            System.out.println("augh");
             return null;
         }
 
@@ -298,7 +305,6 @@ public class MappableFactory {
         String _content;
 
         if (!map.containsKey("id") || !map.containsKey("content")) {
-            System.out.println("awooga");
             return null;
         }
 
@@ -306,6 +312,24 @@ public class MappableFactory {
         _content = (String) map.get("content");
 
         return new Comment(_id, _content);
+    }
+
+    private static Cycle buildCycle(Map<String, Object> map) {
+        String _id;
+        String _title;
+        Date _start;
+        Date _end;
+
+        if (!map.containsKey("id") || !map.containsKey("title") || !map.containsKey("start") || !map.containsKey("end")) {
+            return null;
+        }
+
+        _id = (String) map.get("id");
+        _title = (String) map.get("content");
+        _start = (Date) map.get("start");
+        _end = (Date) map.get("end");
+
+        return new Cycle(_id, _title, _start, _end);
     }
 
 }

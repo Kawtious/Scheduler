@@ -54,7 +54,7 @@ public class Subject implements IMappable, ISeparable {
      */
     private String description;
 
-    public Subject(String subjectKey, String classKey, String schedule, String description) {
+    protected Subject(String subjectKey, String classKey, String schedule, String description) {
         this.id = UUID.randomUUID().toString();
         this.subjectKey = subjectKey;
         this.classKey = classKey;
@@ -62,7 +62,7 @@ public class Subject implements IMappable, ISeparable {
         this.description = description;
     }
 
-    public Subject(String id, String subjectKey, String classKey, String schedule, String description) {
+    protected Subject(String id, String subjectKey, String classKey, String schedule, String description) {
         this.id = id;
         this.subjectKey = subjectKey;
         this.classKey = classKey;

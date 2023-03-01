@@ -31,12 +31,12 @@ public class Comment implements IMappable {
 
     private String content;
 
-    public Comment(String content) {
+    protected Comment(String content) {
         this.id = UUID.randomUUID().toString();
         this.content = content;
     }
 
-    public Comment(String id, String content) {
+    protected Comment(String id, String content) {
         this.id = id;
         this.content = content;
     }

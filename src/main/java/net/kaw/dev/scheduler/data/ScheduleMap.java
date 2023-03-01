@@ -45,7 +45,7 @@ public class ScheduleMap implements IMappable {
 
     public static final int DAYS = 5, HALFHOURS = 28;
 
-    public ScheduleMap(HalfHour initValue) {
+    protected ScheduleMap(HalfHour initValue) {
         this.scheduleMap = new ArrayList<>(DAYS);
 
         for (int i = 0; i < DAYS; i++) {
@@ -55,7 +55,7 @@ public class ScheduleMap implements IMappable {
         setAllMapValues(initValue);
     }
 
-    public ScheduleMap(List<List<HalfHour>> map) {
+    protected ScheduleMap(List<List<HalfHour>> map) {
         this.scheduleMap = map;
     }
 
@@ -75,6 +75,14 @@ public class ScheduleMap implements IMappable {
 
     public HalfHour getMapValue(int day, int halfhour) {
         return scheduleMap.get(day).get(halfhour);
+    }
+
+    public Cycle getCycle() {
+        return cycle;
+    }
+
+    public void setCycle(Cycle cycle) {
+        this.cycle = cycle;
     }
 
     private Map<String, Object> toMapDay(int day) {
@@ -131,67 +139,7 @@ public class ScheduleMap implements IMappable {
 
     @Override
     public String toString() {
-        return "ScheduleMap{" + "scheduleMap=" + scheduleMap + '}';
-    }
-
-    public class Cycle implements IMappable {
-
-        private String id;
-
-        private String title;
-
-        private final Date start;
-
-        private final Date end;
-
-        public Cycle(String id, String title, Date start, Date end) {
-            this.id = id;
-            this.title = title;
-            this.start = start;
-            this.end = end;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public Date getStart() {
-            return new Date(start.getTime());
-        }
-
-        public Date getEnd() {
-            return new Date(end.getTime());
-        }
-
-        @Override
-        public Map<String, Object> toMap() {
-            Map<String, Object> map = new HashMap<>();
-
-            map.put("id", id);
-            map.put("title", title);
-            map.put("start", start);
-            map.put("end", end);
-
-            return map;
-        }
-
-        @Override
-        public String toString() {
-            return "Cycle{" + "id=" + id + ", title=" + title + ", start=" + start + ", end=" + end + '}';
-        }
-
+        return "ScheduleMap{" + "cycle=" + cycle + ", scheduleMap=" + scheduleMap + '}';
     }
 
 }

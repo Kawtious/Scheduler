@@ -83,7 +83,7 @@ public class Teacher implements IMappable, ISeparable, IHexable {
         this.scheduleMap = scheduleMap;
     }
 
-    public Teacher(String id, char type, int controlNumber, String firstName, String lastName) {
+    protected Teacher(String id, char type, int controlNumber, String firstName, String lastName) {
         this.id = id;
         this.type = type;
         this.controlNumber = controlNumber;
@@ -92,7 +92,7 @@ public class Teacher implements IMappable, ISeparable, IHexable {
         this.scheduleMap = new ScheduleMap(new HalfHour(0));
     }
 
-    public Teacher(String id, char type, int controlNumber, String firstName, String lastName, ScheduleMap scheduleMap) {
+    protected Teacher(String id, char type, int controlNumber, String firstName, String lastName, ScheduleMap scheduleMap) {
         this.id = id;
         this.type = type;
         this.controlNumber = controlNumber;

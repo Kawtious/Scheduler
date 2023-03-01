@@ -20,39 +20,26 @@
  */
 package net.kaw.dev.scheduler.data;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import net.kaw.dev.scheduler.data.interfaces.IMappable;
 
-public class HalfHour implements IMappable {
+public class Cycle implements IMappable {
 
     private String id;
 
-    private Integer available;
+    private String title;
 
-    private Comment comment;
+    private final Date start;
 
-    protected HalfHour(Integer available) {
-        this.id = UUID.randomUUID().toString();
-        this.available = available;
-    }
+    private final Date end;
 
-    protected HalfHour(Integer available, Comment comment) {
-        this.id = UUID.randomUUID().toString();
-        this.available = available;
-        this.comment = comment;
-    }
-
-    protected HalfHour(String id, Integer available) {
+    protected Cycle(String id, String title, Date start, Date end) {
         this.id = id;
-        this.available = available;
-    }
-
-    protected HalfHour(String id, Integer available, Comment comment) {
-        this.id = id;
-        this.available = available;
-        this.comment = comment;
+        this.title = title;
+        this.start = start;
+        this.end = end;
     }
 
     public String getId() {
@@ -63,20 +50,20 @@ public class HalfHour implements IMappable {
         this.id = id;
     }
 
-    public Integer getAvailable() {
-        return available;
+    public String getTitle() {
+        return title;
     }
 
-    public void setAvailable(Integer available) {
-        this.available = available;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Comment getComment() {
-        return comment;
+    public Date getStart() {
+        return new Date(start.getTime());
     }
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
+    public Date getEnd() {
+        return new Date(end.getTime());
     }
 
     @Override
@@ -84,18 +71,16 @@ public class HalfHour implements IMappable {
         Map<String, Object> map = new HashMap<>();
 
         map.put("id", id);
-        map.put("available", available);
-
-        if (comment != null) {
-            map.put("comment", comment.toMap());
-        }
+        map.put("title", title);
+        map.put("start", start);
+        map.put("end", end);
 
         return map;
     }
 
     @Override
     public String toString() {
-        return "HalfHour{" + "id=" + id + ", available=" + available + ", comment=" + comment + '}';
+        return "Cycle{" + "id=" + id + ", title=" + title + ", start=" + start + ", end=" + end + '}';
     }
 
 }

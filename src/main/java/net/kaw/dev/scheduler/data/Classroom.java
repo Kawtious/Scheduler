@@ -48,37 +48,37 @@ public class Classroom implements IMappable, IHexable {
      */
     private final ScheduleMap scheduleMap;
 
-    public Classroom(String type) {
+    protected Classroom(String type) {
         this.id = UUID.randomUUID().toString();
         this.type = type;
         this.scheduleMap = new ScheduleMap(new HalfHour(0));
     }
 
-    public Classroom(String type, ScheduleMap scheduleMap) {
+    protected Classroom(String type, ScheduleMap scheduleMap) {
         this.id = UUID.randomUUID().toString();
         this.type = type;
         this.scheduleMap = scheduleMap;
     }
 
-    public Classroom(String type, Integer valueToMap) {
+    protected Classroom(String type, Integer valueToMap) {
         this.id = UUID.randomUUID().toString();
         this.type = type;
         this.scheduleMap = new ScheduleMap(new HalfHour(valueToMap));
     }
 
-    public Classroom(String id, String type) {
+    protected Classroom(String id, String type) {
         this.id = id;
         this.type = type;
         this.scheduleMap = new ScheduleMap(new HalfHour(0));
     }
 
-    public Classroom(String id, String type, ScheduleMap scheduleMap) {
+    protected Classroom(String id, String type, ScheduleMap scheduleMap) {
         this.id = id;
         this.type = type;
         this.scheduleMap = scheduleMap;
     }
 
-    public Classroom(String id, String type, Integer valueToMap) {
+    protected Classroom(String id, String type, Integer valueToMap) {
         this.id = id;
         this.type = type;
         this.scheduleMap = new ScheduleMap(new HalfHour(valueToMap));
