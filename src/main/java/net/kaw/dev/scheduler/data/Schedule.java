@@ -31,6 +31,16 @@ import net.kaw.dev.scheduler.data.interfaces.ISeparable;
  */
 public class Schedule implements IMappable, ISeparable {
 
+    public static final String ID_KEY = "id";
+
+    public static final String TYPE_KEY = "type";
+
+    public static final String OFFSET_KEY = "offset";
+
+    public static final String SESSION_MASK_KEY = "sessionMask";
+
+    public static final String DESCRIPTION_KEY = "description";
+
     private String id;
 
     /*
@@ -54,7 +64,7 @@ public class Schedule implements IMappable, ISeparable {
      */
     private String description;
 
-    protected Schedule(int type, int offset, String sessionMask, String description) {
+    public Schedule(int type, int offset, String sessionMask, String description) {
         this.id = UUID.randomUUID().toString();
         this.type = type;
         this.offset = offset;
@@ -62,7 +72,7 @@ public class Schedule implements IMappable, ISeparable {
         this.description = description;
     }
 
-    protected Schedule(int type, int offset, ScheduleType scheduleType) {
+    public Schedule(int type, int offset, ScheduleType scheduleType) {
         this.id = UUID.randomUUID().toString();
         this.type = type;
         this.offset = offset;
@@ -70,7 +80,7 @@ public class Schedule implements IMappable, ISeparable {
         this.description = scheduleType.getDescription();
     }
 
-    protected Schedule(String id, int type, int offset, String sessionMask, String description) {
+    public Schedule(String id, int type, int offset, String sessionMask, String description) {
         this.id = id;
         this.type = type;
         this.offset = offset;
@@ -78,7 +88,7 @@ public class Schedule implements IMappable, ISeparable {
         this.description = description;
     }
 
-    protected Schedule(String id, int type, int offset, ScheduleType scheduleType) {
+    public Schedule(String id, int type, int offset, ScheduleType scheduleType) {
         this.id = id;
         this.type = type;
         this.offset = offset;
@@ -140,11 +150,11 @@ public class Schedule implements IMappable, ISeparable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(4);
 
-        map.put("id", id);
-        map.put("type", type);
-        map.put("offset", offset);
-        map.put("sessionMask", sessionMask);
-        map.put("description", description);
+        map.put(ID_KEY, id);
+        map.put(TYPE_KEY, type);
+        map.put(OFFSET_KEY, offset);
+        map.put(SESSION_MASK_KEY, sessionMask);
+        map.put(DESCRIPTION_KEY, description);
 
         return map;
     }

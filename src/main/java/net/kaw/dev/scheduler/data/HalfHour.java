@@ -27,32 +27,22 @@ import net.kaw.dev.scheduler.data.interfaces.IMappable;
 
 public class HalfHour implements IMappable {
 
+    public static final String ID_KEY = "id";
+
+    public static final String AVAILABLE_KEY = "available";
+
     private String id;
 
     private Integer available;
 
-    private Comment comment;
-
-    protected HalfHour(Integer available) {
+    public HalfHour(Integer available) {
         this.id = UUID.randomUUID().toString();
         this.available = available;
     }
 
-    protected HalfHour(Integer available, Comment comment) {
-        this.id = UUID.randomUUID().toString();
-        this.available = available;
-        this.comment = comment;
-    }
-
-    protected HalfHour(String id, Integer available) {
+    public HalfHour(String id, Integer available) {
         this.id = id;
         this.available = available;
-    }
-
-    protected HalfHour(String id, Integer available, Comment comment) {
-        this.id = id;
-        this.available = available;
-        this.comment = comment;
     }
 
     public String getId() {
@@ -71,14 +61,6 @@ public class HalfHour implements IMappable {
         this.available = available;
     }
 
-    public Comment getComment() {
-        return comment;
-    }
-
-    public void setComment(Comment comment) {
-        this.comment = comment;
-    }
-
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
@@ -86,16 +68,12 @@ public class HalfHour implements IMappable {
         map.put("id", id);
         map.put("available", available);
 
-        if (comment != null) {
-            map.put("comment", comment.toMap());
-        }
-
         return map;
     }
 
     @Override
     public String toString() {
-        return "HalfHour{" + "id=" + id + ", available=" + available + ", comment=" + comment + '}';
+        return "HalfHour{" + "id=" + id + ", available=" + available + '}';
     }
 
 }

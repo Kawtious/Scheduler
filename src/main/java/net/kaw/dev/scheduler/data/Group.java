@@ -28,6 +28,14 @@ import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
 public class Group implements IMappable, ISeparable {
 
+    public static final String ID_KEY = "id";
+
+    public static final String SUBJECT_KEY_KEY = "subjectKey";
+
+    public static final String INT_1_KEY = "int_1";
+
+    public static final String INT_2_KEY = "int_2";
+
     private String id;
 
     /*
@@ -45,28 +53,28 @@ public class Group implements IMappable, ISeparable {
      */
     private int int_2;
 
-    protected Group(String subjectKey, int int_1, int int_2) {
+    public Group(String subjectKey, int int_1, int int_2) {
         this.id = UUID.randomUUID().toString();
         this.subjectKey = subjectKey;
         this.int_1 = int_1;
         this.int_2 = int_2;
     }
 
-    protected Group(Subject subject, int int_1, int int_2) {
+    public Group(Subject subject, int int_1, int int_2) {
         this.id = UUID.randomUUID().toString();
         this.subjectKey = subject.getSubjectKey();
         this.int_1 = int_1;
         this.int_2 = int_2;
     }
 
-    protected Group(String id, String subjectKey, int int_1, int int_2) {
+    public Group(String id, String subjectKey, int int_1, int int_2) {
         this.id = id;
         this.subjectKey = subjectKey;
         this.int_1 = int_1;
         this.int_2 = int_2;
     }
 
-    protected Group(String id, Subject subject, int int_1, int int_2) {
+    public Group(String id, Subject subject, int int_1, int int_2) {
         this.id = id;
         this.subjectKey = subject.getSubjectKey();
         this.int_1 = int_1;
@@ -119,10 +127,10 @@ public class Group implements IMappable, ISeparable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(3);
 
-        map.put("id", id);
-        map.put("subjectKey", subjectKey);
-        map.put("int_1", int_1);
-        map.put("int_2", int_2);
+        map.put(ID_KEY, id);
+        map.put(SUBJECT_KEY_KEY, subjectKey);
+        map.put(INT_1_KEY, int_1);
+        map.put(INT_2_KEY, int_2);
 
         return map;
     }

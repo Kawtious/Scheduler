@@ -24,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -32,8 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.kaw.dev.scheduler.data.SeparableFactory;
-import net.kaw.dev.scheduler.data.SeparableFactory.SeparableType;
+import net.kaw.dev.scheduler.data.factories.SeparableFactory;
+import net.kaw.dev.scheduler.data.factories.SeparableFactory.SeparableType;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
 public class CsvManager {
@@ -47,7 +48,13 @@ public class CsvManager {
                 file.createNewFile();
             }
 
-            Files.writeString(Paths.get(filepath), csv, StandardCharsets.UTF_8);
+            //calling writer.write() method with the string
+            try (final FileWriter wr = new FileWriter(file)) {
+                //calling writer.write() method with the string
+                wr.write(csv);
+                //flushing the writer
+                wr.flush();
+            }
         } catch (IOException ex) {
             Logger.getLogger(CsvManager.class.getName()).log(Level.SEVERE, null, ex);
         }

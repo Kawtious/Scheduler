@@ -20,24 +20,19 @@
  */
 package net.kaw.dev.scheduler.testing;
 
-import java.util.ArrayList;
+import com.google.gson.Gson;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 import net.kaw.dev.scheduler.data.Career;
-import net.kaw.dev.scheduler.data.Classroom;
-import net.kaw.dev.scheduler.data.Group;
-import net.kaw.dev.scheduler.data.HexableFactory.HexableType;
-import net.kaw.dev.scheduler.data.MappableFactory;
-import net.kaw.dev.scheduler.data.MappableFactory.MappableType;
-import net.kaw.dev.scheduler.data.Schedule;
-import net.kaw.dev.scheduler.data.ScheduleType;
-import net.kaw.dev.scheduler.data.SeparableFactory.SeparableType;
-import net.kaw.dev.scheduler.data.Subject;
-import net.kaw.dev.scheduler.data.Teacher;
-import net.kaw.dev.scheduler.data.University;
+import net.kaw.dev.scheduler.data.factories.HexableFactory.HexableType;
+import net.kaw.dev.scheduler.data.factories.MappableFactory;
+import net.kaw.dev.scheduler.data.factories.MappableFactory.MappableType;
+import net.kaw.dev.scheduler.data.factories.SeparableFactory.SeparableType;
 import net.kaw.dev.scheduler.data.interfaces.IHexable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
+import net.kaw.dev.scheduler.firebase.FirebaseControl;
 import net.kaw.dev.scheduler.io.CsvManager;
 import net.kaw.dev.scheduler.io.HexManager;
 import net.kaw.dev.scheduler.utils.JSONUtils;
@@ -72,25 +67,73 @@ public class RunTests {
     private final List<IHexable> dummyClassrooms = DummyData.getDummyClassrooms();
     private final List<IHexable> dummyTeachersHex = DummyData.getDummyTeachersHex();
 
-    /**
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException {
         new RunTests().run();
     }
 
-    public void run() {
-//        createTestFilesCsv();
-//        createTestFilesDat();
-//        System.out.println(readTestFilesCsv());
-//        System.out.println(readTestFilesDat());
-        //System.out.println(JSONUtils.jsonToMap(JSONUtils.mapToJSON(testCreateUniversity())));
-//        System.out.println(testGetTeacherFromMap());
-        System.out.println(testGetCareerFromMap());
+    public void run() throws InterruptedException, ExecutionException, TimeoutException {
+        //testIO();
+        testRest();
     }
 
-    private void createTestFilesCsv() {
+    private void testRest() throws InterruptedException, ExecutionException, TimeoutException {
+        String jsonString = "{"
+                + "\"trajectoryStart\":0,"
+                + "\"id\":\"123456\","
+                + "\"subjectKey\":\"EAC2\","
+                + "\"key\":\"IEC1\","
+                + "\"trajectoryEnd\":1"
+                + "}";
+
+        System.out.println("JSON String received from external source: " + jsonString);
+
+        Map<String, Object> map = JSONUtils.jsonToMap(jsonString);
+        String elementId = (String) map.get(Career.ID_KEY);
+
+        System.out.println("Convert JSON string to map to retrieve id: " + elementId);
+
+        System.out.println("Element exists in database? " + !testRestGetCareer(elementId).equals("null"));
+
+        System.out.print("Updating element in database... ");
+
+        testRestUpdateCareer(jsonString);
+
+        String careerJson = testRestGetCareer(elementId);
+
+        System.out.println("Element exists in database? " + !testRestGetCareer(elementId).equals("null"));
+
+        Career _career = (Career) MappableFactory.build(MappableType.CAREER, JSONUtils.jsonToMap(careerJson));
+
+        System.out.println("Convert JSON string to object: " + _career);
+
+        //System.out.println("Convert object to csv: " + _career.toCsv());
+        System.out.print("Removing element from database... ");
+
+        testRestRemoveCareer(elementId);
+
+        System.out.println("Element exists in database? " + !testRestGetCareer(elementId).equals("null"));
+    }
+
+    private void testRestUpdateCareer(String jsonString) throws InterruptedException, ExecutionException, TimeoutException {
+        FirebaseControl.Career.update(JSONUtils.jsonToMap(jsonString));
+    }
+
+    private String testRestGetCareer(String id) throws InterruptedException, ExecutionException, TimeoutException {
+        return JSONUtils.mapToJSON(FirebaseControl.Career.get(id));
+    }
+
+    private void testRestRemoveCareer(String id) throws InterruptedException, ExecutionException, TimeoutException {
+        FirebaseControl.Career.remove(id);
+    }
+
+    private void testIO() {
+        testCsvCreateFiles();
+        testDatCreateFiles();
+        System.out.println(testCsvReadFiles());
+        System.out.println(testDatReadFiles());
+    }
+
+    private void testCsvCreateFiles() {
         CsvManager.write(dummyTeachers, MAESTROS);
         CsvManager.write(dummyScheduleTypes, DEF_HORS);
         CsvManager.write(dummySchedules, TIPO_HORS);
@@ -99,12 +142,12 @@ public class RunTests {
         CsvManager.write(dummyGroups, TAB_GRUPOS);
     }
 
-    private void createTestFilesDat() {
+    private void testDatCreateFiles() {
         HexManager.write(dummyClassrooms, TAB_AULAS);
         HexManager.write(dummyTeachersHex, TAB_MAES);
     }
 
-    private String readTestFilesCsv() {
+    private String testCsvReadFiles() {
         StringBuilder sb = new StringBuilder();
 
         CsvManager.read(MAESTROS, SeparableType.TEACHER).forEach((item) -> sb.append(item).append("\n"));
@@ -128,7 +171,7 @@ public class RunTests {
         return sb.toString();
     }
 
-    private String readTestFilesDat() {
+    private String testDatReadFiles() {
         StringBuilder sb = new StringBuilder();
 
         HexManager.read(TAB_AULAS, HexableType.CLASSROOM).forEach((item) -> sb.append(item).append("\n"));
@@ -137,97 +180,6 @@ public class RunTests {
         HexManager.read(TAB_MAES, HexableType.TEACHER).forEach((item) -> sb.append(item).append("\n"));
 
         return sb.toString();
-    }
-
-    private Map<String, Object> testCreateUniversity() {
-        List<Career> careers = new ArrayList<>();
-
-        for (ISeparable dummyCareer : dummyCareers) {
-            Career career = (Career) dummyCareer;
-            careers.add(career);
-        }
-
-        List<Group> groups = new ArrayList<>();
-
-        for (ISeparable dummyGroup : dummyGroups) {
-            Group group = (Group) dummyGroup;
-            groups.add(group);
-        }
-
-        List<Schedule> schedules = new ArrayList<>();
-
-        for (ISeparable dummySchedule : dummySchedules) {
-            Schedule schedule = (Schedule) dummySchedule;
-            schedules.add(schedule);
-        }
-
-        List<ScheduleType> scheduleTypes = new ArrayList<>();
-
-        for (ISeparable dummyScheduleType : dummyScheduleTypes) {
-            ScheduleType scheduleType = (ScheduleType) dummyScheduleType;
-            scheduleTypes.add(scheduleType);
-        }
-
-        List<Subject> subjects = new ArrayList<>();
-
-        for (ISeparable dummySubject : dummySubjects) {
-            Subject subject = (Subject) dummySubject;
-            subjects.add(subject);
-        }
-
-        List<Classroom> classrooms = new ArrayList<>();
-
-        for (IHexable dummyClassroom : dummyClassrooms) {
-            Classroom classroom = (Classroom) dummyClassroom;
-            classrooms.add(classroom);
-        }
-
-        List<Teacher> teachers = new ArrayList<>();
-
-        for (ISeparable dummyTeacher : dummyTeachers) {
-            Teacher teacher = (Teacher) dummyTeacher;
-            teachers.add(teacher);
-        }
-
-        University university = new University("university", careers, groups, schedules, scheduleTypes, subjects, classrooms, teachers);
-
-        return university.toMap();
-    }
-
-    @SuppressWarnings("unchecked")
-    private Career testGetCareerFromMap() {
-        Career career = null;
-
-        Map<String, Object> university = JSONUtils.jsonToMap(JSONUtils.mapToJSON(testCreateUniversity()));
-
-        @SuppressWarnings("unchecked")
-        Map<String, Object> careers = (Map<String, Object>) university.get("careers");
-
-        for (Entry<String, Object> entry : careers.entrySet()) {
-//            System.out.println(entry.getValue());
-            career = (Career) MappableFactory.build(MappableType.CAREER, (Map<String, Object>) entry.getValue());
-            break;
-        }
-
-        return career;
-    }
-
-    @SuppressWarnings("unchecked")
-    private Teacher testGetTeacherFromMap() {
-        Teacher teacher = null;
-
-        Map<String, Object> university = JSONUtils.jsonToMap(JSONUtils.mapToJSON(testCreateUniversity()));
-
-        @SuppressWarnings("unchecked")
-        Map<String, Object> teachers = (Map<String, Object>) university.get("teachers");
-
-        for (Entry<String, Object> entry : teachers.entrySet()) {
-            //System.out.println(entry.getValue());
-            teacher = (Teacher) MappableFactory.build(MappableType.TEACHER, (Map<String, Object>) entry.getValue());
-            break;
-        }
-
-        return teacher;
     }
 
 }

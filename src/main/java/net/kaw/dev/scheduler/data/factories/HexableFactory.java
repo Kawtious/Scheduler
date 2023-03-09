@@ -18,12 +18,16 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package net.kaw.dev.scheduler.data;
+package net.kaw.dev.scheduler.data.factories;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.kaw.dev.scheduler.data.Classroom;
+import net.kaw.dev.scheduler.data.HalfHour;
+import net.kaw.dev.scheduler.data.ScheduleMap;
+import net.kaw.dev.scheduler.data.Teacher;
 import net.kaw.dev.scheduler.data.interfaces.IHexable;
 import net.kaw.dev.scheduler.utils.HexUtils;
 
@@ -267,7 +271,7 @@ public class HexableFactory {
                  * Now that we have defined all indexes, we now start extracting the data to create
                  * a Teacher object
                  */
-                char type = HexUtils.hexToString(data.substring(currentIndexTypeStart, currentIndexTypeEnd)).charAt(0);
+                String type = HexUtils.hexToString(data.substring(currentIndexTypeStart, currentIndexTypeEnd));
                 int controlNumber = HexUtils.hexToInt(data.substring(currentIndexControlNumberStart, currentIndexControlNumberEnd));
                 String firstName = HexUtils.hexToString(data.substring(currentIndexFirstNameStart, currentIndexFirstNameEnd));
                 String lastName = HexUtils.hexToString(data.substring(currentIndexLastNameStart, currentIndexLastNameEnd));

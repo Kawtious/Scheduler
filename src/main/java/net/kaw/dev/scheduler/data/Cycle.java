@@ -27,6 +27,14 @@ import net.kaw.dev.scheduler.data.interfaces.IMappable;
 
 public class Cycle implements IMappable {
 
+    public static final String ID_KEY = "id";
+
+    public static final String TITLE_KEY = "title";
+
+    public static final String START_KEY = "start";
+
+    public static final String END_KEY = "end";
+
     private String id;
 
     private String title;
@@ -35,7 +43,7 @@ public class Cycle implements IMappable {
 
     private final Date end;
 
-    protected Cycle(String id, String title, Date start, Date end) {
+    public Cycle(String id, String title, Date start, Date end) {
         this.id = id;
         this.title = title;
         this.start = start;
@@ -70,10 +78,10 @@ public class Cycle implements IMappable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
 
-        map.put("id", id);
-        map.put("title", title);
-        map.put("start", start);
-        map.put("end", end);
+        map.put(ID_KEY, id);
+        map.put(TITLE_KEY, title);
+        map.put(START_KEY, start);
+        map.put(END_KEY, end);
 
         return map;
     }

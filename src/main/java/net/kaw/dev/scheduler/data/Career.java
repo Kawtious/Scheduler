@@ -28,6 +28,16 @@ import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
 public class Career implements IMappable, ISeparable {
 
+    public static final String ID_KEY = "id";
+
+    public static final String KEY_KEY = "key";
+
+    public static final String SUBJECT_KEY_KEY = "subjectKey";
+
+    public static final String TRAJECTORY_START_KEY = "trajectoryStart";
+
+    public static final String TRAJECTORY_END_KEY = "trajectoryEnd";
+
     private String id;
 
     /*
@@ -44,7 +54,7 @@ public class Career implements IMappable, ISeparable {
 
     private int trajectoryEnd;
 
-    protected Career(String key, String subjectKey, int trajectoryStart, int trajectoryEnd) {
+    public Career(String key, String subjectKey, int trajectoryStart, int trajectoryEnd) {
         this.id = UUID.randomUUID().toString();
         this.key = key;
         this.subjectKey = subjectKey;
@@ -52,7 +62,7 @@ public class Career implements IMappable, ISeparable {
         this.trajectoryEnd = trajectoryEnd;
     }
 
-    protected Career(String key, Subject subject, int trajectoryStart, int trajectoryEnd) {
+    public Career(String key, Subject subject, int trajectoryStart, int trajectoryEnd) {
         this.id = UUID.randomUUID().toString();
         this.key = key;
         this.subjectKey = subject.getSubjectKey();
@@ -60,7 +70,7 @@ public class Career implements IMappable, ISeparable {
         this.trajectoryEnd = trajectoryEnd;
     }
 
-    protected Career(String id, String key, String subjectKey, int trajectoryStart, int trajectoryEnd) {
+    public Career(String id, String key, String subjectKey, int trajectoryStart, int trajectoryEnd) {
         this.id = id;
         this.key = key;
         this.subjectKey = subjectKey;
@@ -68,7 +78,7 @@ public class Career implements IMappable, ISeparable {
         this.trajectoryEnd = trajectoryEnd;
     }
 
-    protected Career(String id, String key, Subject subject, int trajectoryStart, int trajectoryEnd) {
+    public Career(String id, String key, Subject subject, int trajectoryStart, int trajectoryEnd) {
         this.id = id;
         this.key = key;
         this.subjectKey = subject.getSubjectKey();
@@ -130,11 +140,11 @@ public class Career implements IMappable, ISeparable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(4);
 
-        map.put("id", id);
-        map.put("key", key);
-        map.put("subjectKey", subjectKey);
-        map.put("trajectoryStart", trajectoryStart);
-        map.put("trajectoryEnd", trajectoryEnd);
+        map.put(ID_KEY, id);
+        map.put(KEY_KEY, key);
+        map.put(SUBJECT_KEY_KEY, subjectKey);
+        map.put(TRAJECTORY_START_KEY, trajectoryStart);
+        map.put(TRAJECTORY_END_KEY, trajectoryEnd);
 
         return map;
     }

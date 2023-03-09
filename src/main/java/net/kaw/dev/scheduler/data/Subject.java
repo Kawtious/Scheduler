@@ -31,6 +31,16 @@ import net.kaw.dev.scheduler.data.interfaces.ISeparable;
  */
 public class Subject implements IMappable, ISeparable {
 
+    public static final String ID_KEY = "id";
+
+    public static final String SUBJECT_KEY_KEY = "subjectKey";
+
+    public static final String CLASS_KEY_KEY = "classKey";
+
+    public static final String SCHEDULE_KEY = "schedule";
+
+    public static final String DESCRIPTION_KEY = "description";
+
     private String id;
 
     /*
@@ -54,7 +64,7 @@ public class Subject implements IMappable, ISeparable {
      */
     private String description;
 
-    protected Subject(String subjectKey, String classKey, String schedule, String description) {
+    public Subject(String subjectKey, String classKey, String schedule, String description) {
         this.id = UUID.randomUUID().toString();
         this.subjectKey = subjectKey;
         this.classKey = classKey;
@@ -62,7 +72,7 @@ public class Subject implements IMappable, ISeparable {
         this.description = description;
     }
 
-    protected Subject(String id, String subjectKey, String classKey, String schedule, String description) {
+    public Subject(String id, String subjectKey, String classKey, String schedule, String description) {
         this.id = id;
         this.subjectKey = subjectKey;
         this.classKey = classKey;
@@ -124,11 +134,11 @@ public class Subject implements IMappable, ISeparable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(3);
 
-        map.put("id", id);
-        map.put("subjectKey", subjectKey);
-        map.put("classKey", classKey);
-        map.put("schedule", schedule);
-        map.put("description", description);
+        map.put(ID_KEY, id);
+        map.put(SUBJECT_KEY_KEY, subjectKey);
+        map.put(CLASS_KEY_KEY, classKey);
+        map.put(SCHEDULE_KEY, schedule);
+        map.put(DESCRIPTION_KEY, description);
 
         return map;
     }

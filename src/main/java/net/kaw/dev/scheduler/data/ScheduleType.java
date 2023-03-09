@@ -31,6 +31,14 @@ import net.kaw.dev.scheduler.data.interfaces.ISeparable;
  */
 public class ScheduleType implements IMappable, ISeparable {
 
+    public static final String ID_KEY = "id";
+
+    public static final String DESCRIPTION_KEY = "description";
+
+    public static final String AVAILABLE_HOURS_KEY = "availableHours";
+
+    public static final String SESSION_MASK_KEY = "sessionMask";
+
     private String id;
 
     /*
@@ -50,14 +58,14 @@ public class ScheduleType implements IMappable, ISeparable {
      */
     private String sessionMask;
 
-    protected ScheduleType(String description, String availableHours, String sessionMask) {
+    public ScheduleType(String description, String availableHours, String sessionMask) {
         this.id = UUID.randomUUID().toString();
         this.description = description;
         this.availableHours = availableHours;
         this.sessionMask = sessionMask;
     }
 
-    protected ScheduleType(String id, String description, String availableHours, String sessionMask) {
+    public ScheduleType(String id, String description, String availableHours, String sessionMask) {
         this.id = id;
         this.description = description;
         this.availableHours = availableHours;
@@ -110,10 +118,10 @@ public class ScheduleType implements IMappable, ISeparable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(3);
 
-        map.put("id", id);
-        map.put("description", description);
-        map.put("availableHours", availableHours);
-        map.put("sessionMask", sessionMask);
+        map.put(ID_KEY, id);
+        map.put(DESCRIPTION_KEY, description);
+        map.put(AVAILABLE_HOURS_KEY, availableHours);
+        map.put(SESSION_MASK_KEY, sessionMask);
 
         return map;
     }

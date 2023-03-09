@@ -24,13 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 import net.kaw.dev.scheduler.data.Career;
 import net.kaw.dev.scheduler.data.Group;
-import net.kaw.dev.scheduler.data.HexableFactory;
-import net.kaw.dev.scheduler.data.HexableFactory.HexableType;
 import net.kaw.dev.scheduler.data.Schedule;
 import net.kaw.dev.scheduler.data.ScheduleType;
-import net.kaw.dev.scheduler.data.SeparableFactory;
 import net.kaw.dev.scheduler.data.Subject;
 import net.kaw.dev.scheduler.data.Teacher;
+import net.kaw.dev.scheduler.data.factories.HexableFactory;
+import net.kaw.dev.scheduler.data.factories.HexableFactory.HexableType;
+import net.kaw.dev.scheduler.data.factories.SeparableFactory;
 import net.kaw.dev.scheduler.data.interfaces.IHexable;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 

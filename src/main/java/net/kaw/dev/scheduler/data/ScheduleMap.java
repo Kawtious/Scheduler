@@ -21,17 +21,18 @@
 package net.kaw.dev.scheduler.data;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.kaw.dev.scheduler.data.interfaces.IMappable;
 
-/**
- *
- * @author Waffle#4265 on Discord
- */
 public class ScheduleMap implements IMappable {
+
+    public static final String CYCLE_KEY = "cycle";
+
+    public static final String SCHEDULE_MAP_KEY = "scheduleMap";
+
+    public static final String COMMENTS_KEY = "comments";
 
     private Cycle cycle;
 
@@ -43,9 +44,11 @@ public class ScheduleMap implements IMappable {
      */
     private final List<List<HalfHour>> scheduleMap;
 
+    private final List<Comment> comments = new ArrayList<>();
+
     public static final int DAYS = 5, HALFHOURS = 28;
 
-    protected ScheduleMap(HalfHour initValue) {
+    public ScheduleMap(HalfHour initValue) {
         this.scheduleMap = new ArrayList<>(DAYS);
 
         for (int i = 0; i < DAYS; i++) {
@@ -55,7 +58,7 @@ public class ScheduleMap implements IMappable {
         setAllMapValues(initValue);
     }
 
-    protected ScheduleMap(List<List<HalfHour>> map) {
+    public ScheduleMap(List<List<HalfHour>> map) {
         this.scheduleMap = map;
     }
 
@@ -83,6 +86,18 @@ public class ScheduleMap implements IMappable {
 
     public void setCycle(Cycle cycle) {
         this.cycle = cycle;
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
+
+    public void removeComment(int index) {
+        this.comments.remove(index);
+    }
+
+    public Comment getComment(int index) {
+        return this.comments.get(index);
     }
 
     private Map<String, Object> toMapDay(int day) {
@@ -125,7 +140,17 @@ public class ScheduleMap implements IMappable {
         Map<String, Object> map = new HashMap<>(DAYS);
 
         if (cycle != null) {
-            map.put("cycle", cycle.toMap());
+            map.put(CYCLE_KEY, cycle.toMap());
+        }
+
+        if (!comments.isEmpty()) {
+            Map<String, Object> commentsMap = new HashMap<>();
+
+            for (Comment comment : comments) {
+                commentsMap.put(comment.getId(), comment.toMap());
+            }
+
+            map.put(COMMENTS_KEY, commentsMap);
         }
 
         map.put("monday", toMapDay(0));
@@ -139,7 +164,7 @@ public class ScheduleMap implements IMappable {
 
     @Override
     public String toString() {
-        return "ScheduleMap{" + "cycle=" + cycle + ", scheduleMap=" + scheduleMap + '}';
+        return "ScheduleMap{" + "cycle=" + cycle + ", scheduleMap=" + scheduleMap + ", comments=" + comments + '}';
     }
 
 }

@@ -18,10 +18,16 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package net.kaw.dev.scheduler.data;
+package net.kaw.dev.scheduler.data.factories;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.kaw.dev.scheduler.data.Career;
+import net.kaw.dev.scheduler.data.Group;
+import net.kaw.dev.scheduler.data.Schedule;
+import net.kaw.dev.scheduler.data.ScheduleType;
+import net.kaw.dev.scheduler.data.Subject;
+import net.kaw.dev.scheduler.data.Teacher;
 import net.kaw.dev.scheduler.data.interfaces.ISeparable;
 
 public class SeparableFactory {
@@ -96,7 +102,7 @@ public class SeparableFactory {
 
     private static Teacher buildTeacher(String[] teacherValues) {
         try {
-            char type = teacherValues[0].charAt(0);
+            String type = teacherValues[0];
             int controlNumber = Integer.parseInt(teacherValues[1]);
             String firstName = teacherValues[2];
             String lastName = teacherValues[3];

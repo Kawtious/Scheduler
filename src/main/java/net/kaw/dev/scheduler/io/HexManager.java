@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.kaw.dev.scheduler.data.HexableFactory;
-import net.kaw.dev.scheduler.data.HexableFactory.HexableType;
+import net.kaw.dev.scheduler.data.factories.HexableFactory;
+import net.kaw.dev.scheduler.data.factories.HexableFactory.HexableType;
 import net.kaw.dev.scheduler.data.interfaces.IHexable;
 import net.kaw.dev.scheduler.utils.HexUtils;
 

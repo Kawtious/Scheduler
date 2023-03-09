@@ -18,10 +18,24 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package net.kaw.dev.scheduler.data;
+package net.kaw.dev.scheduler.data.factories;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import net.kaw.dev.scheduler.data.Career;
+import net.kaw.dev.scheduler.data.Classroom;
+import net.kaw.dev.scheduler.data.Comment;
+import net.kaw.dev.scheduler.data.Cycle;
+import net.kaw.dev.scheduler.data.Group;
+import net.kaw.dev.scheduler.data.HalfHour;
+import net.kaw.dev.scheduler.data.Schedule;
+import net.kaw.dev.scheduler.data.ScheduleMap;
+import net.kaw.dev.scheduler.data.ScheduleType;
+import net.kaw.dev.scheduler.data.Subject;
+import net.kaw.dev.scheduler.data.Teacher;
 import net.kaw.dev.scheduler.data.interfaces.IMappable;
 
 public class MappableFactory {
@@ -76,26 +90,26 @@ public class MappableFactory {
         int _trajectoryStart;
         int _trajectoryEnd;
 
-        if (!map.containsKey("id") || !map.containsKey("key") || !map.containsKey("subjectKey") || !map.containsKey("trajectoryStart") || !map.containsKey("trajectoryEnd")) {
+        if (!map.containsKey(Career.ID_KEY) || !map.containsKey(Career.KEY_KEY) || !map.containsKey(Career.SUBJECT_KEY_KEY) || !map.containsKey(Career.TRAJECTORY_START_KEY) || !map.containsKey(Career.TRAJECTORY_END_KEY)) {
             return null;
         }
 
-        _id = (String) map.get("id");
-        _key = (String) map.get("key");
-        _subjectKey = (String) map.get("subjectKey");
+        _id = (String) map.get(Career.ID_KEY);
+        _key = (String) map.get(Career.KEY_KEY);
+        _subjectKey = (String) map.get(Career.SUBJECT_KEY_KEY);
 
-        if (map.get("trajectoryStart") instanceof Double) {
-            Double __trajectoryStart = (Double) map.get("trajectoryStart");
+        if (map.get(Career.TRAJECTORY_START_KEY) instanceof Number) {
+            Number __trajectoryStart = (Number) map.get(Career.TRAJECTORY_START_KEY);
             _trajectoryStart = __trajectoryStart.intValue();
         } else {
-            _trajectoryStart = (Integer) map.get("trajectoryStart");
+            _trajectoryStart = (Integer) map.get(Career.TRAJECTORY_START_KEY);
         }
 
-        if (map.get("trajectoryEnd") instanceof Double) {
-            Double __trajectoryEnd = (Double) map.get("trajectoryEnd");
+        if (map.get(Career.TRAJECTORY_END_KEY) instanceof Number) {
+            Number __trajectoryEnd = (Number) map.get(Career.TRAJECTORY_END_KEY);
             _trajectoryEnd = __trajectoryEnd.intValue();
         } else {
-            _trajectoryEnd = (Integer) map.get("trajectoryEnd");
+            _trajectoryEnd = (Integer) map.get(Career.TRAJECTORY_END_KEY);
         }
 
         return new Career(_id, _key, _subjectKey, _trajectoryStart, _trajectoryEnd);
@@ -107,13 +121,13 @@ public class MappableFactory {
         String _type;
         ScheduleMap _scheduleMap;
 
-        if (!map.containsKey("id") || !map.containsKey("type") || !map.containsKey("scheduleMap")) {
+        if (!map.containsKey(Classroom.ID_KEY) || !map.containsKey(Classroom.TYPE_KEY) || !map.containsKey(Classroom.SCHEDULE_MAP_KEY)) {
             return null;
         }
 
-        _id = (String) map.get("id");
-        _type = (String) map.get("type");
-        _scheduleMap = buildScheduleMap((Map<String, Object>) map.get("scheduleMap"));
+        _id = (String) map.get(Classroom.ID_KEY);
+        _type = (String) map.get(Classroom.TYPE_KEY);
+        _scheduleMap = buildScheduleMap((Map<String, Object>) map.get(Classroom.SCHEDULE_MAP_KEY));
 
         return new Classroom(_id, _type, _scheduleMap);
     }
@@ -121,36 +135,30 @@ public class MappableFactory {
     @SuppressWarnings("unchecked")
     private static Teacher buildTeacher(Map<String, Object> map) {
         String _id;
-        char _type;
+        String _type;
         int _controlNumber;
         String _firstName;
         String _lastName;
         ScheduleMap _scheduleMap;
 
-        if (!map.containsKey("id") || !map.containsKey("type") || !map.containsKey("controlNumber")
-                || !map.containsKey("firstName") || !map.containsKey("lastName") || !map.containsKey("scheduleMap")) {
+        if (!map.containsKey(Teacher.ID_KEY) || !map.containsKey(Teacher.TYPE_KEY) || !map.containsKey(Teacher.CONTROL_NUMBER_KEY)
+                || !map.containsKey(Teacher.FIRST_NAME_KEY) || !map.containsKey(Teacher.LAST_NAME_KEY) || !map.containsKey(Teacher.SCHEDULE_MAP_KEY)) {
             return null;
         }
 
-        _id = (String) map.get("id");
+        _id = (String) map.get(Teacher.ID_KEY);
+        _type = (String) map.get(Teacher.TYPE_KEY);
 
-        if (map.get("type") instanceof String) {
-            String __type = (String) map.get("type");
-            _type = __type.charAt(0);
-        } else {
-            _type = (char) map.get("type");
-        }
-
-        if (map.get("controlNumber") instanceof Double) {
-            Double __controlNumber = (Double) map.get("controlNumber");
+        if (map.get(Teacher.CONTROL_NUMBER_KEY) instanceof Number) {
+            Number __controlNumber = (Number) map.get(Teacher.CONTROL_NUMBER_KEY);
             _controlNumber = __controlNumber.intValue();
         } else {
-            _controlNumber = (Integer) map.get("controlNumber");
+            _controlNumber = (Integer) map.get(Teacher.CONTROL_NUMBER_KEY);
         }
 
-        _firstName = (String) map.get("firstName");
-        _lastName = (String) map.get("lastName");
-        _scheduleMap = buildScheduleMap((Map<String, Object>) map.get("scheduleMap"));
+        _firstName = (String) map.get(Teacher.FIRST_NAME_KEY);
+        _lastName = (String) map.get(Teacher.LAST_NAME_KEY);
+        _scheduleMap = buildScheduleMap((Map<String, Object>) map.get(Teacher.SCHEDULE_MAP_KEY));
 
         return new Teacher(_id, _type, _controlNumber, _firstName, _lastName, _scheduleMap);
     }
@@ -162,15 +170,15 @@ public class MappableFactory {
         String _schedule;
         String _description;
 
-        if (!map.containsKey("id") || !map.containsKey("subjectKey") || !map.containsKey("classKey") || !map.containsKey("schedule") || !map.containsKey("description")) {
+        if (!map.containsKey(Subject.ID_KEY) || !map.containsKey(Subject.SUBJECT_KEY_KEY) || !map.containsKey("classKey") || !map.containsKey("schedule") || !map.containsKey("description")) {
             return null;
         }
 
-        _id = (String) map.get("id");
-        _subjectKey = (String) map.get("subjectKey");
-        _classKey = (String) map.get("classKey");
-        _schedule = (String) map.get("schedule");
-        _description = (String) map.get("description");
+        _id = (String) map.get(Subject.ID_KEY);
+        _subjectKey = (String) map.get(Subject.SUBJECT_KEY_KEY);
+        _classKey = (String) map.get(Subject.CLASS_KEY_KEY);
+        _schedule = (String) map.get(Subject.SCHEDULE_KEY);
+        _description = (String) map.get(Subject.DESCRIPTION_KEY);
 
         return new Subject(_id, _subjectKey, _classKey, _schedule, _description);
     }
@@ -182,22 +190,22 @@ public class MappableFactory {
         String _sessionMask;
         String _description;
 
-        if (!map.containsKey("id") || !map.containsKey("type") || !map.containsKey("offset") || !map.containsKey("sessionMask") || !map.containsKey("description")) {
+        if (!map.containsKey(Schedule.ID_KEY) || !map.containsKey(Schedule.TYPE_KEY) || !map.containsKey(Schedule.OFFSET_KEY) || !map.containsKey(Schedule.SESSION_MASK_KEY) || !map.containsKey(Schedule.DESCRIPTION_KEY)) {
             return null;
         }
 
-        _id = (String) map.get("id");
-        _type = (Integer) map.get("type");
+        _id = (String) map.get(Schedule.ID_KEY);
+        _type = (Integer) map.get(Schedule.TYPE_KEY);
 
-        if (map.get("offset") instanceof Double) {
-            Double __offset = (Double) map.get("offset");
+        if (map.get(Schedule.OFFSET_KEY) instanceof Number) {
+            Number __offset = (Number) map.get(Schedule.OFFSET_KEY);
             _offset = __offset.intValue();
         } else {
-            _offset = (Integer) map.get("offset");
+            _offset = (Integer) map.get(Schedule.OFFSET_KEY);
         }
 
-        _sessionMask = (String) map.get("sessionMask");
-        _description = (String) map.get("description");
+        _sessionMask = (String) map.get(Schedule.SESSION_MASK_KEY);
+        _description = (String) map.get(Schedule.DESCRIPTION_KEY);
 
         return new Schedule(_id, _type, _offset, _sessionMask, _description);
     }
@@ -208,14 +216,14 @@ public class MappableFactory {
         String _availableHours;
         String _sessionMask;
 
-        if (!map.containsKey("id") || !map.containsKey("description") || !map.containsKey("availableHours") || !map.containsKey("sessionMask")) {
+        if (!map.containsKey(ScheduleType.ID_KEY) || !map.containsKey(ScheduleType.DESCRIPTION_KEY) || !map.containsKey(ScheduleType.AVAILABLE_HOURS_KEY) || !map.containsKey(ScheduleType.SESSION_MASK_KEY)) {
             return null;
         }
 
-        _id = (String) map.get("id");
-        _description = (String) map.get("description");
-        _availableHours = (String) map.get("availableHours");
-        _sessionMask = (String) map.get("sessionMask");
+        _id = (String) map.get(ScheduleType.ID_KEY);
+        _description = (String) map.get(ScheduleType.DESCRIPTION_KEY);
+        _availableHours = (String) map.get(ScheduleType.AVAILABLE_HOURS_KEY);
+        _sessionMask = (String) map.get(ScheduleType.SESSION_MASK_KEY);
 
         return new ScheduleType(_id, _description, _availableHours, _sessionMask);
     }
@@ -286,8 +294,16 @@ public class MappableFactory {
             i++;
         }
 
-        if (map.containsKey("cycle")) {
-            buildCycle((Map<String, Object>) map.get("cycle"));
+        if (map.containsKey(ScheduleMap.CYCLE_KEY)) {
+            _scheduleMap.setCycle(buildCycle((Map<String, Object>) map.get(ScheduleMap.CYCLE_KEY)));
+        }
+
+        if (map.containsKey(ScheduleMap.COMMENTS_KEY)) {
+            Map<String, Object> comments = (Map<String, Object>) map.get(ScheduleMap.COMMENTS_KEY);
+
+            for (Entry<String, Object> entry : comments.entrySet()) {
+                _scheduleMap.addComment(buildComment((Map<String, Object>) entry));
+            }
         }
 
         return _scheduleMap;
@@ -299,25 +315,25 @@ public class MappableFactory {
         int _int_1;
         int _int_2;
 
-        if (!map.containsKey("id") || !map.containsKey("subjectKey") || !map.containsKey("int_1") || !map.containsKey("int_2")) {
+        if (!map.containsKey(Group.ID_KEY) || !map.containsKey(Group.SUBJECT_KEY_KEY) || !map.containsKey(Group.INT_1_KEY) || !map.containsKey(Group.INT_2_KEY)) {
             return null;
         }
 
-        _id = (String) map.get("id");
-        _subjectKey = (String) map.get("subjectKey");
+        _id = (String) map.get(Group.ID_KEY);
+        _subjectKey = (String) map.get(Group.SUBJECT_KEY_KEY);
 
-        if (map.get("int_1") instanceof Double) {
-            Double __int_1 = (Double) map.get("int_1");
+        if (map.get(Group.INT_1_KEY) instanceof Number) {
+            Number __int_1 = (Number) map.get(Group.INT_1_KEY);
             _int_1 = __int_1.intValue();
         } else {
-            _int_1 = (Integer) map.get("int_1");
+            _int_1 = (Integer) map.get(Group.INT_1_KEY);
         }
 
-        if (map.get("int_2") instanceof Double) {
-            Double __int_2 = (Double) map.get("int_2");
+        if (map.get(Group.INT_2_KEY) instanceof Number) {
+            Number __int_2 = (Number) map.get(Group.INT_2_KEY);
             _int_2 = __int_2.intValue();
         } else {
-            _int_2 = (Integer) map.get("int_2");
+            _int_2 = (Integer) map.get(Group.INT_2_KEY);
         }
 
         return new Group(_id, _subjectKey, _int_1, _int_2);
@@ -327,39 +343,47 @@ public class MappableFactory {
     private static HalfHour buildHalfHour(Map<String, Object> map) {
         String _id;
         Integer _available;
-        Comment _comment;
 
-        if (!map.containsKey("id") || !map.containsKey("available")) {
+        if (!map.containsKey(HalfHour.ID_KEY) || !map.containsKey(HalfHour.AVAILABLE_KEY)) {
             return null;
         }
 
-        _id = (String) map.get("id");
+        _id = (String) map.get(HalfHour.ID_KEY);
 
-        if (map.get("available") instanceof Double) {
-            Double __available = (Double) map.get("available");
+        if (map.get(HalfHour.AVAILABLE_KEY) instanceof Number) {
+            Number __available = (Number) map.get(HalfHour.AVAILABLE_KEY);
             _available = __available.intValue();
         } else {
-            _available = (Integer) map.get("available");
-        }
-
-        if (map.containsKey("comment")) {
-            _comment = buildComment((Map<String, Object>) map.get("comment"));
-            return new HalfHour(_id, _available, _comment);
+            _available = (Integer) map.get(HalfHour.AVAILABLE_KEY);
         }
 
         return new HalfHour(_id, _available);
     }
 
+    @SuppressWarnings("unchecked")
     private static Comment buildComment(Map<String, Object> map) {
         String _id;
         String _content;
+        List<HalfHour> _halfHours;
 
-        if (!map.containsKey("id") || !map.containsKey("content")) {
+        if (!map.containsKey(Comment.ID_KEY) || !map.containsKey(Comment.CONTENT_KEY)) {
             return null;
         }
 
-        _id = (String) map.get("id");
-        _content = (String) map.get("content");
+        _id = (String) map.get(Comment.ID_KEY);
+        _content = (String) map.get(Comment.CONTENT_KEY);
+
+        if (map.containsKey(Comment.HALF_HOURS_KEY)) {
+            _halfHours = new ArrayList<>();
+
+            Map<String, Object> halfHoursMap = (Map<String, Object>) map.get(Comment.HALF_HOURS_KEY);
+
+            for (Entry<String, Object> entry : halfHoursMap.entrySet()) {
+                _halfHours.add(buildHalfHour((Map<String, Object>) entry.getValue()));
+            }
+
+            return new Comment(_id, _content, _halfHours);
+        }
 
         return new Comment(_id, _content);
     }
@@ -370,14 +394,14 @@ public class MappableFactory {
         Date _start;
         Date _end;
 
-        if (!map.containsKey("id") || !map.containsKey("title") || !map.containsKey("start") || !map.containsKey("end")) {
+        if (!map.containsKey(Cycle.ID_KEY) || !map.containsKey(Cycle.TITLE_KEY) || !map.containsKey(Cycle.START_KEY) || !map.containsKey(Cycle.END_KEY)) {
             return null;
         }
 
-        _id = (String) map.get("id");
-        _title = (String) map.get("content");
-        _start = (Date) map.get("start");
-        _end = (Date) map.get("end");
+        _id = (String) map.get(Cycle.ID_KEY);
+        _title = (String) map.get(Cycle.TITLE_KEY);
+        _start = (Date) map.get(Cycle.START_KEY);
+        _end = (Date) map.get(Cycle.END_KEY);
 
         return new Cycle(_id, _title, _start, _end);
     }

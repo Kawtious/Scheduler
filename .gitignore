@@ -11,4 +11,6 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 nb-configuration.xml
 
+/docs
+/secret
 /output

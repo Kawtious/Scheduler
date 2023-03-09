@@ -20,23 +20,43 @@
  */
 package net.kaw.dev.scheduler.data;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import net.kaw.dev.scheduler.data.interfaces.IMappable;
 
 public class Comment implements IMappable {
 
+    public static final String ID_KEY = "id";
+
+    public static final String CONTENT_KEY = "content";
+
+    public static final String HALF_HOURS_KEY = "halfHours";
+
     private String id;
 
     private String content;
 
-    protected Comment(String content) {
+    private List<HalfHour> halfHours;
+
+    public Comment(String content) {
         this.id = UUID.randomUUID().toString();
         this.content = content;
     }
 
-    protected Comment(String id, String content) {
+    public Comment(String id, String content) {
+        this.id = id;
+        this.content = content;
+    }
+
+    public Comment(String content, List<HalfHour> halfHours) {
+        this.id = UUID.randomUUID().toString();
+        this.content = content;
+    }
+
+    public Comment(String id, String content, List<HalfHour> halfHours) {
         this.id = id;
         this.content = content;
     }
@@ -57,12 +77,24 @@ public class Comment implements IMappable {
         this.content = content;
     }
 
+    public List<HalfHour> getHalfHours() {
+        return Collections.unmodifiableList(halfHours);
+    }
+
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
 
-        map.put("id", id);
-        map.put("content", content);
+        map.put(ID_KEY, id);
+        map.put(CONTENT_KEY, content);
+
+        Map<String, Object> halfHoursMap = new HashMap<>();
+
+        for (HalfHour halfHour : halfHours) {
+            halfHoursMap.put(halfHour.getId(), halfHour.toMap());
+        }
+
+        map.put(HALF_HOURS_KEY, halfHoursMap);
 
         return map;
     }

@@ -35,12 +35,24 @@ import net.kaw.dev.scheduler.utils.HexUtils;
  */
 public class Teacher implements IMappable, ISeparable, IHexable {
 
+    public static final String ID_KEY = "id";
+
+    public static final String TYPE_KEY = "type";
+
+    public static final String CONTROL_NUMBER_KEY = "controlNumber";
+
+    public static final String FIRST_NAME_KEY = "firstName";
+
+    public static final String LAST_NAME_KEY = "lastName";
+
+    public static final String SCHEDULE_MAP_KEY = "scheduleMap";
+
     private String id;
 
     /*
      * This indicates the type of teacher
      */
-    private char type;
+    private String type;
 
     /*
      * The teacher's control number
@@ -65,7 +77,7 @@ public class Teacher implements IMappable, ISeparable, IHexable {
      */
     private final ScheduleMap scheduleMap;
 
-    protected Teacher(char type, int controlNumber, String firstName, String lastName) {
+    public Teacher(String type, int controlNumber, String firstName, String lastName) {
         this.id = UUID.randomUUID().toString();
         this.type = type;
         this.controlNumber = controlNumber;
@@ -74,7 +86,7 @@ public class Teacher implements IMappable, ISeparable, IHexable {
         this.scheduleMap = new ScheduleMap(new HalfHour(0));
     }
 
-    protected Teacher(char type, int controlNumber, String firstName, String lastName, ScheduleMap scheduleMap) {
+    public Teacher(String type, int controlNumber, String firstName, String lastName, ScheduleMap scheduleMap) {
         this.id = UUID.randomUUID().toString();
         this.type = type;
         this.controlNumber = controlNumber;
@@ -83,7 +95,7 @@ public class Teacher implements IMappable, ISeparable, IHexable {
         this.scheduleMap = scheduleMap;
     }
 
-    protected Teacher(String id, char type, int controlNumber, String firstName, String lastName) {
+    public Teacher(String id, String type, int controlNumber, String firstName, String lastName) {
         this.id = id;
         this.type = type;
         this.controlNumber = controlNumber;
@@ -92,7 +104,7 @@ public class Teacher implements IMappable, ISeparable, IHexable {
         this.scheduleMap = new ScheduleMap(new HalfHour(0));
     }
 
-    protected Teacher(String id, char type, int controlNumber, String firstName, String lastName, ScheduleMap scheduleMap) {
+    public Teacher(String id, String type, int controlNumber, String firstName, String lastName, ScheduleMap scheduleMap) {
         this.id = id;
         this.type = type;
         this.controlNumber = controlNumber;
@@ -109,11 +121,11 @@ public class Teacher implements IMappable, ISeparable, IHexable {
         this.id = id;
     }
 
-    public char getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(char type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -154,7 +166,7 @@ public class Teacher implements IMappable, ISeparable, IHexable {
     public String toHex() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(HexUtils.stringToHex(Character.toString(type), 8));
+        sb.append(HexUtils.stringToHex(type, 8));
 
         sb.append(HexUtils.intToHex(controlNumber, 8));
 
@@ -180,12 +192,12 @@ public class Teacher implements IMappable, ISeparable, IHexable {
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>(4);
 
-        map.put("id", id);
-        map.put("type", type);
-        map.put("controlNumber", controlNumber);
-        map.put("firstName", firstName);
-        map.put("lastName", lastName);
-        map.put("scheduleMap", scheduleMap.toMap());
+        map.put(ID_KEY, id);
+        map.put(TYPE_KEY, type);
+        map.put(CONTROL_NUMBER_KEY, controlNumber);
+        map.put(FIRST_NAME_KEY, firstName);
+        map.put(LAST_NAME_KEY, lastName);
+        map.put(SCHEDULE_MAP_KEY, scheduleMap.toMap());
 
         return map;
     }
